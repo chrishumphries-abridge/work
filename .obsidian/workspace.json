@@ -199,6 +199,8 @@
   },
   "active": "2a613c1a13a4b9b9",
   "lastOpenFiles": [
+    "Daily Plans/2026-W03-weekly-plan.md",
+    "Daily Plans/2026-01-09-daily-plan.md",
     "VA-Intel-Slack-Digest-Options.md",
     "Reviews/2025-reviews-working-doc.md",
     "Daily Plans/2026-01-08-daily-plan.md",
@@ -232,8 +234,6 @@
     "projects/commercial_segment_updates/flow_approval_orchestration_research.md",
     "projects/claude-code/MCP Server Setup.md",
     "projects/forecast_module_team_changes/salesforce-forecasting-team-changes-best-practices.md",
-    "projects/commercial_segment_updates/salesforce_build_instructions copy.md",
-    "projects/commercial_segment_updates/salesforce_build_instructions.md",
-    "forecast_module_team_changes/salesforce-forecasting-team-changes-best-practices.md"
+    "projects/commercial_segment_updates/salesforce_build_instructions copy.md"
   ]
 }
