@@ -116,6 +116,62 @@ These tasks often have subtasks added from meeting action items:
 | **reconcile** | Just compare Notion → Asana and add tasks with approval |
 | **what's next** | Get additional tasks after completing Analog card items |
 | **close up shop** | End of day: check delta since last update, reconcile new items, close out daily plan |
+| **close out week** | Friday EOD: wins, deferrals, blocked tasks, weekly report, next week plan |
+
+---
+
+## Weekly Close-Out Workflow (Fridays)
+
+When user says "close out week" or similar on Friday:
+
+### 1. Analyze the Week
+- Pull tasks modified this week from Asana (`modified_on_after`)
+- Check task stories to find **deferred tasks** (due_date_changed events)
+- Check task dependencies to find **blocked tasks** and their owners
+- Count completions for wins section
+
+### 2. Update Daily Plan with Close-Out Section
+Add to Friday's daily plan:
+- **Wins this week** — what actually shipped (grouped by theme, not raw task list)
+- **Not completed** — what's carrying forward
+- **Deferred this week** — table: task, from date, to date
+- **Blocked tasks** — table: task, blocker, owner
+
+### 3. Create Weekly Report
+- Save to `/Users/chris/obsidian/Weekly Reports/YYYY-WXX-weekly-report.md`
+- Include: summary, shipped items, completed count, deferred table, blocked table, next week focus
+
+### 4. Create Next Week Plan
+- Save to `/Users/chris/obsidian/Daily Plans/YYYY-WXX-weekly-plan.md`
+- **Priority order: unfinished → deferred → new**
+- Day-by-day breakdown (Mon-Fri only — user doesn't work weekends)
+- Sunday due dates = Monday in practice
+- Flag blocked tasks with owner and suggested action
+- Monday Analog Card ready to go
+
+### 5. Cleanup
+- Move loose project docs to appropriate `projects/` subfolder
+- Delete stray screenshots
+- Check for duplicate folder structures
+- Git commit and push
+
+---
+
+## File Structure
+
+```
+obsidian/
+├── Daily Plans/           # Daily plans + weekly plans
+│   └── YYYY-WXX-weekly-plan.md
+├── Weekly Reports/        # Friday close-out reports
+│   └── YYYY-WXX-weekly-report.md
+├── projects/              # Project-specific docs
+│   ├── va-intel/          # VA Intel monitoring pipeline
+│   ├── commercial_segment_updates/
+│   └── ...
+├── Reviews/               # Performance reviews
+└── reference/             # Templates, workflows
+```
 
 ---
 
@@ -145,3 +201,30 @@ These tasks often have subtasks added from meeting action items:
 - User reviews and approves before any Asana tasks are created
 - Tasks assigned to user only; user manages project placement
 - Always link Asana tasks back to source Notion page
+
+---
+
+## External Dependencies & Gotchas
+
+### OpenAI API Keys
+- Dev team periodically rotates/deletes OpenAI API keys
+- This breaks Tray workflows that use OpenAI (e.g., VA Intel LLM vetting)
+- No alerting currently in place — discovered when workflow fails
+- Task to address: `1212722772937719` (due Jan 24)
+
+### Tray.io Workflows
+- VA Intel pipeline has 6 workflows across 3 layers (capture → process → output)
+- Layer 2 (LLM vetting) depends on OpenAI API
+- If digest stops working, check OpenAI key first
+
+---
+
+## Active Projects Context
+
+### VA Intel Slack Digest
+- **Status**: Built, launching Monday Jan 13
+- **Docs**: `projects/va-intel/`
+- **Sources**: Orange Slices, Reddit (3 subs), veterans.house.gov, LinkedIn (Shulkin, Paul)
+- **Architecture**: Layer 1 (capture) → Layer 2 (LLM vetting) → Layer 3 (daily digest)
+- **Slack channel**: TBD (need to confirm with Julia)
+- **Dependency**: OpenAI API key for LLM vetting
