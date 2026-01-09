@@ -1,0 +1,239 @@
+{
+  "main": {
+    "id": "89cef8ac5b5e8c5a",
+    "type": "split",
+    "children": [
+      {
+        "id": "b402b2fd17ccbbd1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2a613c1a13a4b9b9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Daily Plans/2026-01-09-daily-plan.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2026-01-09-daily-plan"
+            }
+          },
+          {
+            "id": "d4b4a4a0e00626f9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "offboarding.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "offboarding"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ebad97b4b637af93",
+    "type": "split",
+    "children": [
+      {
+        "id": "89260f064306366e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1b803a4c0895709e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "66996fceeeea1d84",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "248747ef59a37235",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "7502a298db7088cd",
+    "type": "split",
+    "children": [
+      {
+        "id": "e1940a6a914fca5a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e56e4e9f7319a8ec",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "projects/commercial_segment_updates/approval_workflow_planning.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for approval_workflow_planning"
+            }
+          },
+          {
+            "id": "4971898984d0c51e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "projects/commercial_segment_updates/approval_workflow_planning.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from approval_workflow_planning"
+            }
+          },
+          {
+            "id": "0cd6dcac4380c3fa",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "41de9afee5731679",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "433cf6b9cf537f5a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "projects/commercial_segment_updates/approval_workflow_planning.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of approval_workflow_planning"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "2a613c1a13a4b9b9",
+  "lastOpenFiles": [
+    "VA-Intel-Slack-Digest-Options.md",
+    "Reviews/2025-reviews-working-doc.md",
+    "Daily Plans/2026-01-08-daily-plan.md",
+    "Daily Plans/2026-01-07-daily-plan.md",
+    "Reviews",
+    "projects/salesforce/Manager-Territory-Team-Field-Flow-Instructions.md",
+    "Manager-Territory-Team-Field-Flow-Instructions.md",
+    "Daily Plans/2026-01-06-daily-plan.md",
+    "offboarding.md",
+    "offboarding",
+    "claude.md",
+    "README.md",
+    "Daily Plans",
+    "projects/commercial_segment_updates/CLAUDE.md",
+    "weekly/2026-W02.md",
+    "tasks/weekly_task_review.md",
+    "reference/claude-code-workflows.md",
+    "daily/2026-01-06.md",
+    "projects/commercial_segment_updates/approval_workflow_planning.md",
+    "projects/mcp_testing/weekly_task_review.md",
+    "reference/templates/project-readme.md",
+    "reference/templates/daily-brief.md",
+    "reference/templates",
+    "projects/tray",
+    "projects/salesforce",
+    "archive",
+    "tasks",
+    "reference",
+    "meetings",
+    "projects/commercial_segment_updates/custom_approval_architecture.md",
+    "projects/commercial_segment_updates/flow_approval_orchestration_research.md",
+    "projects/claude-code/MCP Server Setup.md",
+    "projects/forecast_module_team_changes/salesforce-forecasting-team-changes-best-practices.md",
+    "projects/commercial_segment_updates/salesforce_build_instructions copy.md",
+    "projects/commercial_segment_updates/salesforce_build_instructions.md",
+    "forecast_module_team_changes/salesforce-forecasting-team-changes-best-practices.md"
+  ]
+}

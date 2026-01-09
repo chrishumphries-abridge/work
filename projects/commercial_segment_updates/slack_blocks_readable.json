@@ -1,0 +1,94 @@
+{
+  "_note": "Human-readable Slack Block Kit. Edit here, then stringify with wrapper for Tray.",
+  "_tray_format_note": "For Tray raw_blocks: stringify this ENTIRE object (not just the blocks array)",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "Approval Request",
+        "emoji": true
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Account:* REPLACE_ACCOUNT_NAME"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Process:* REPLACE_PROCESS_TYPE"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Trigger Value:* REPLACE_TRIGGER_VALUE"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Reason:* REPLACE_REASON"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Requested by:* REPLACE_REQUESTED_BY"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<REPLACE_SALESFORCE_URL|View in Salesforce>"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "actions",
+      "elements": [
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Approve",
+            "emoji": true
+          },
+          "style": "primary",
+          "action_id": "approve_commercial",
+          "value": "REPLACE_ACCOUNT_ID"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Reject",
+            "emoji": true
+          },
+          "style": "danger",
+          "action_id": "reject_commercial",
+          "value": "REPLACE_ACCOUNT_ID"
+        }
+      ]
+    }
+  ],
+  "_tray_interpolation_syntax": "Use single curly brackets: {$.steps.trigger.body.fieldname}",
+  "_field_mappings": {
+    "account_name": "{$.steps.trigger.body.account_name}",
+    "process_type": "{$.steps.trigger.body.process_type}",
+    "trigger_value": "{$.steps.trigger.body.trigger_value}",
+    "reason": "{$.steps.trigger.body.reason}",
+    "requested_by": "{$.steps.trigger.body.requested_by}",
+    "salesforce_record_url": "{$.steps.trigger.body.salesforce_record_url}",
+    "account_id": "{$.steps.trigger.body.account_id}"
+  }
+}

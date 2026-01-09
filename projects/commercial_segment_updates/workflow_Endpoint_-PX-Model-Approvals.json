@@ -1,0 +1,318 @@
+ {
+  "tray_export_version": 4,
+  "export_type": "workflow",
+  "workflows": [
+    {
+      "id": "bb3aa626-946e-4ef8-be24-9f8e956a36b9",
+      "created": "2026-01-05T16:27:46.618622Z",
+      "workspace_id": "872fe400-6304-4349-aa9e-169b4049f653",
+      "project_id": "d51f2546-3a0a-47bc-a070-67ba22b3ee7e",
+      "group": "8647980b-c6a2-4252-bc23-7f1a57b5f4a5",
+      "creator": "8358210d-ccf4-4d0f-8fed-9609825c34e2",
+      "version": {
+        "id": "bc9e8205-8a6e-425b-aa7d-33e4deb28ad7",
+        "created": "2026-01-05T17:02:04.018011Z"
+      },
+      "title": "Endpoint: PX Model Approvals",
+      "description": "Test",
+      "enabled": false,
+      "tags": [],
+      "settings": {
+        "config": {
+          "abridge_300_slack_icon": ":abridge--300:",
+          "abridge_300_slack_username": "Abridge 300",
+          "implementation_alert_name": "Pilot End Date Alert",
+          "live": true,
+          "salesforce_url": "https://abridgeai.lightning.force.com/",
+          "statuspage_dev_page_group_id": "gcnvzsf30dtd",
+          "statuspage_dev_page_id": "fnpl1zfw04dv",
+          "statuspage_prod_group_id": "bh8kl89rbjp8",
+          "statuspage_prod_page_id": "9tfv4dgd43br",
+          "statuspage_test": true,
+          "statuspage_prod_nebula": "7hb8fqdvy2df"
+        },
+        "alerting_workflow_id": "5f3bdf6a-68ab-4463-926b-e3809bb9dd21",
+        "input_schema": {},
+        "output_schema": {}
+      },
+      "steps_structure": [
+        {
+          "name": "trigger",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "slack-1",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "trigger-reply-1",
+          "type": "normal",
+          "content": {}
+        }
+      ],
+      "steps": {
+        "slack-1": {
+          "title": "Send Approval Request",
+          "connector": {
+            "name": "slack",
+            "version": "11.0"
+          },
+          "operation": "send_message",
+          "output_schema": {},
+          "error_handling": {},
+          "authentication": {
+            "group": "f18da84d-119c-4cc2-bde0-a7dc119443fc",
+            "title": "Tray.AI Bot Agent Trigger",
+            "service_icon": {
+              "icon_type": "url",
+              "value": "//s3.amazonaws.com/images.tray.io/artisan/icons/6632c308-2cd1-4f68-8128-e521e552a66b.png"
+            },
+            "scopes": [
+              "im:history",
+              "chat:write",
+              "users:read",
+              "mpim:history",
+              "groups:history",
+              "channels:history"
+            ],
+            "service_name": "slack",
+            "service_version": 5
+          },
+          "properties": {
+            "use_user_token": {
+              "type": "boolean",
+              "value": false
+            },
+            "username": {
+              "type": "string",
+              "value": "Commercial Approvals"
+            },
+            "parse": {
+              "type": "string",
+              "value": "none"
+            },
+            "link_names": {
+              "type": "boolean",
+              "value": false
+            },
+            "reply_broadcast": {
+              "type": "boolean",
+              "value": false
+            },
+            "channel": {
+              "type": "string",
+              "value": "C08QT1QV9JM"
+            },
+            "blocks": {
+              "type": "object",
+              "value": {
+                "raw_blocks": {
+                  "type": "string",
+                  "value": "{\"blocks\":[{\"type\":\"header\",\"text\":{\"type\":\"plain_text\",\"text\":\"Approval Request\",\"emoji\":true}},{\"type\":\"section\",\"fields\":[{\"type\":\"mrkdwn\",\"text\":\"*Account:* {$.steps.trigger.body.account_name}\"},{\"type\":\"mrkdwn\",\"text\":\"*Process:* {$.steps.trigger.body.process_type}\"}]},{\"type\":\"section\",\"fields\":[{\"type\":\"mrkdwn\",\"text\":\"*Trigger Value:* {$.steps.trigger.body.trigger_value}\"},{\"type\":\"mrkdwn\",\"text\":\"*Reason:* {$.steps.trigger.body.reason}\"}]},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Requested by:* {$.steps.trigger.body.requested_by}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"<{$.steps.trigger.body.salesforce_record_url}|View in Salesforce>\"}},{\"type\":\"divider\"},{\"type\":\"actions\",\"elements\":[{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Approve\",\"emoji\":true},\"style\":\"primary\",\"action_id\":\"approve_commercial\",\"value\":\"{$.steps.trigger.body.account_id}\"},{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Reject\",\"emoji\":true},\"style\":\"danger\",\"action_id\":\"reject_commercial\",\"value\":\"{$.steps.trigger.body.account_id}\"}]}]}"
+                }
+              }
+            },
+            "text": {
+              "type": "string",
+              "value": "Test"
+            }
+          }
+        },
+        "trigger": {
+          "title": "API Operation",
+          "connector": {
+            "name": "api-operation-trigger",
+            "version": "1.0"
+          },
+          "operation": "request_response",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "request": {
+              "type": "object",
+              "value": {
+                "headers": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "x-tray-apim-client-id": {
+                        "type": "string",
+                        "title": "Client ID"
+                      },
+                      "x-forwarded-for": {
+                        "type": "string",
+                        "title": "IP Address"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "body": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "account_id": {
+                        "type": "string",
+                        "title": "Salesforce Account ID"
+                      },
+                      "account_name": {
+                        "type": "string",
+                        "title": "Account Name"
+                      },
+                      "process_type": {
+                        "type": "string",
+                        "title": "Process Type"
+                      },
+                      "trigger_value": {
+                        "type": "string",
+                        "title": "Trigger Value"
+                      },
+                      "reason": {
+                        "type": "string",
+                        "title": "Reason"
+                      },
+                      "requested_by": {
+                        "type": "string",
+                        "title": "Requested By"
+                      },
+                      "salesforce_record_url": {
+                        "type": "string",
+                        "title": "Salesforce Record URL"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                }
+              }
+            },
+            "response": {
+              "type": "object",
+              "value": {
+                "success": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "title": "message",
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "invalidInput": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "message"
+                    ],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "internalError": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "message"
+                    ],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "forbidden": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "message"
+                    ],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                }
+              }
+            },
+            "nonStrictMode": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        },
+        "trigger-reply-1": {
+          "title": "trigger-reply",
+          "connector": {
+            "name": "trigger-reply",
+            "version": "1.1"
+          },
+          "operation": "trigger-reply",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "response": {
+              "type": "object",
+              "value": {
+                "successBody": {
+                  "type": "object",
+                  "value": {
+                    "message": {
+                      "type": "string",
+                      "value": "Approval request sent"
+                    }
+                  },
+                  "tag": "DynamicObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "legacy_error_handling": false,
+      "dependencies": [
+        {
+          "id": "5f3bdf6a-68ab-4463-926b-e3809bb9dd21",
+          "name": "Error Handling"
+        }
+      ]
+    }
+  ],
+  "projects": [],
+  "data_tables": [],
+  "vector_tables": [],
+  "agents": [],
+  "apim_operations": []
+}
