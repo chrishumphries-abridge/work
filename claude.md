@@ -219,12 +219,23 @@ obsidian/
 
 ---
 
+## Session Startup
+
+**At the start of each session**, proactively:
+1. Read today's daily plan (`Daily Plans/YYYY-MM-DD-daily-plan.md`) if it exists
+2. Check active project docs for any in-progress work (see Active Projects below)
+3. Review recent git commits to understand what changed recently
+
+This prevents the user from having to re-explain context. Come prepared.
+
+---
+
 ## Active Projects Context
 
 ### VA Intel Slack Digest
-- **Status**: Built, launching Monday Jan 13
-- **Docs**: `projects/va-intel/`
+- **Status**: In progress — finishing Slack/Canvas integration (as of Jan 12)
+- **Docs**: `projects/va-intel/VA-Intel-Slack-Digest-Options.md` ← **check Build Status section**
 - **Sources**: Orange Slices, Reddit (3 subs), veterans.house.gov, LinkedIn (Shulkin, Paul)
-- **Architecture**: Layer 1 (capture) → Layer 2 (LLM vetting) → Layer 3 (daily digest)
-- **Slack channel**: TBD (need to confirm with Julia)
+- **Architecture**: Layer 1 (capture) → Layer 2 (LLM vetting) → Layer 3 (daily digest via Slack Canvas)
+- **Current blockers**: Canvas create JSON formatting, Google News workflow fine-tuning
 - **Dependency**: OpenAI API key for LLM vetting

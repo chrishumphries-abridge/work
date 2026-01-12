@@ -349,6 +349,80 @@ Query: "Veterans Affairs" OR "VA healthcare" OR "Oracle Health VA"
 
 ---
 
+## Build Status (Jan 12, 2026)
+
+### Current Status: Final Formatting Issues
+
+**What's working:**
+- All 6 Tray workflows (Layer 1-3) are built and functional
+- Data ingestion and LLM vetting operational
+- Canvas API calls succeeding
+
+**Blockers to resolve (pick up Wednesday Jan 15):**
+
+1. **Canvas Create JSON formatting issue**
+   - `canvases.create` request throwing JSON errors
+   - Likely escaping issue with markdown content containing special characters
+   - May need to sanitize/escape the LLM output before embedding in JSON payload
+
+2. **Canvas access/sharing**
+   - Using `canvases.access.set` after create to grant channel access
+   - Need `include_raw_body: true` in Tray HTTP connector
+   - Flow: create → access.set → chat.postMessage
+
+3. **Slack message formatting**
+   - Canvas links don't auto-unfurl
+   - Solution: Use button block for "Open Digest" CTA instead of relying on unfurl
+   - Button approach tested and working
+
+4. **Google News Alerts workflow**
+   - Skeleton workflow exists, needs fine-tuning
+   - New sources added today need to be configured
+   - Review query structure and polling schedule
+
+**API Reference (for Wednesday):**
+
+Canvas Create:
+```
+POST https://slack.com/api/canvases.create
+{
+  "title": "VA Intel Digest — {date}",
+  "document_content": {
+    "type": "markdown",
+    "markdown": "{LLM output}"
+  }
+}
+```
+
+Access Set:
+```
+POST https://slack.com/api/canvases.access.set
+{
+  "canvas_id": "{from create response}",
+  "access_level": "read",
+  "channel_ids": ["C08QT1QV9JM"]
+}
+```
+
+Post with Button:
+```json
+{
+  "channel": "C08QT1QV9JM",
+  "text": "VA Intel Digest ready",
+  "blocks": [{
+    "type": "section",
+    "text": {"type": "mrkdwn", "text": "📋 *VA Intel Digest — {date}*"},
+    "accessory": {
+      "type": "button",
+      "text": {"type": "plain_text", "text": "Open Digest"},
+      "url": "https://abridge.slack.com/docs/{team_id}/{canvas_id}"
+    }
+  }]
+}
+```
+
+---
+
 ## Build Status (Jan 9, 2026)
 
 ### Executive Summary
@@ -431,3 +505,6 @@ Query: "Veterans Affairs" OR "VA healthcare" OR "Oracle Health VA"
 - Tray DB docs: https://tray.io/documentation/connectors/service/tray-data-storage/
 - RSS connector: Built-in
 - HTTP connector: For SerpAPI calls
+
+
+  - Group items by relevance: "Top Stories" (0.7+) vs "Also Noted" (0.5-0.7)
