@@ -18,20 +18,20 @@
 
 ## Tuesday Jan 21
 
-**TOP PRIORITY: Buying Group LWC Launch**
+**TOP PRIORITIES: Buying Group LWC Launch + VA Intel Iteration**
 
 | # | Task | Type | Due | Blocked? |
 |---|------|------|-----|----------|
 | 1 | [Buying Group LWC Updates](https://app.asana.com/1/1135694209242791/task/1212478458325360) | **LAUNCH** | This week | No |
 | 2 | Create Buying Group enablement videos | Launch prep | This week | No |
-| 3 | [Clinical Notes Solution Value](https://app.asana.com/1/1135694209242791/task/1212779907481935) | Unfinished | Jan 16 | No |
+| 3 | VA Intel: Check Julia's feedback + iterate | **PRIORITY** | Ongoing | No |
 
 **Analog Card:**
 1. Buying Group LWC — finalize for launch
 2. Create Buying Group enablement videos
-3. Clinical Notes Solution Value — if time
+3. VA Intel — check feedback, iterate as needed
 
-Notes: Hit the ground running — Buying Group is #1 focus. Get videos created and feature out the door.
+Notes: Hit the ground running — Buying Group + VA Intel are the two priorities this week.
 
 ---
 
@@ -40,11 +40,11 @@ Notes: Hit the ground running — Buying Group is #1 focus. Get videos created a
 | # | Task | Type | Blocked? |
 |---|------|------|----------|
 | 1 | Buying Group LWC — continue launch prep | **LAUNCH** | No |
-| 2 | [Statuspage Alignment Report](https://app.asana.com/1/1135694209242791/task/1212532826042825) | Unfinished | No |
-| 3 | VA Intel: Review Julia's feedback | Iteration | No |
+| 2 | VA Intel: VA Newsletter Feeds + iteration | **PRIORITY** | No |
+| 3 | [Statuspage Alignment Report](https://app.asana.com/1/1135694209242791/task/1212532826042825) | Unfinished | No |
 | 4 | [OpenAI API Key Alerting](https://app.asana.com/1/1135694209242791/task/1212722772937719) | New | No |
 
-Notes: Continue Buying Group launch. Statuspage moved from Tuesday. OpenAI alerting due Jan 24.
+Notes: Continue both priorities. Statuspage if time. OpenAI alerting due Jan 24.
 
 ---
 
@@ -115,16 +115,17 @@ These items were planned for W03 but not started. Consider reprioritizing or clo
 ## Tuesday Analog Card (Ready)
 
 1. **Buying Group LWC** — finalize and prep for launch
-2. **Create enablement videos** — for Buying Group feature
-3. **Clinical Notes Solution Value** — if time after Buying Group
+2. **VA Intel** — check Julia's feedback, iterate
+3. **Create enablement videos** — for Buying Group feature
 
 ---
 
 ## Notes
 
 - **Monday OFF** — MLK Day / PTO
-- **TOP PRIORITY: Buying Group LWC Launch** — videos + feature ship this week
-- VA Intel is live — iterate based on Julia's feedback
+- **TWO PRIORITIES THIS WEEK:**
+  1. **Buying Group LWC Launch** — videos + feature ship
+  2. **VA Intel iteration** — keep building on momentum, iterate based on Julia's feedback
 - Ironclad blocked 2 weeks — escalate if no response by Wednesday
 - OpenAI API key alerting due Jan 24
-- 4-day week — Buying Group first, everything else secondary
+- 4-day week — focus on the two priorities, secondary items as time allows
