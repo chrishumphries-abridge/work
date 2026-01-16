@@ -130,101 +130,249 @@ Query: "Veterans Affairs" OR "VA healthcare" OR "Oracle Health VA"
 
 ---
 
-### Workflow Architecture
+### Workflow Architecture (Implemented)
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         LAYER 1: CAPTURE                                    │
-│                    (Multiple workflows, dumb ingestion)                     │
-│                                                                             │
-│  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────────┐ │
-│  │  RSS x4   │ │  SerpAPI  │ │ Sales Nav │ │  SerpAPI  │ │    SerpAPI    │ │
-│  │ Reddit +  │ │  site:    │ │   Email   │ │  Google   │ │ site:linkedin │ │
-│  │ OSlices   │ │ veterans  │ │  Alerts   │ │   News    │ │   /posts      │ │
-│  │           │ │ .house.gov│ │           │ │  (VA)     │ │   (backup)    │ │
-│  └─────┬─────┘ └─────┬─────┘ └─────┬─────┘ └─────┬─────┘ └───────┬───────┘ │
-│        │             │             │             │               │         │
-│        └─────────────┴─────────────┴──────┬──────┴───────────────┘         │
-│                                           ▼                                 │
-│                              ┌─────────────────────┐                        │
-│                              │   Normalize Item    │                        │
-│                              │   Check Duplicate   │                        │
-│                              │   Write to DB       │                        │
-│                              │   (vetted = null)   │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │      Tray DB        │                        │
-│                              │   va_intel_items    │                        │
-│                              └─────────────────────┘                        │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                              LAYER 1: CAPTURE                                   │
+│                         (8 workflows, various triggers)                         │
+│                                                                                 │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐                 │
+│  │ RSS-Orange-     │  │ RSS-Reddit-VA   │  │ RSS-Reddit-     │                 │
+│  │ Slices          │  │                 │  │ Cerner          │                 │
+│  │ (Scheduled)     │  │ (Scheduled)     │  │ (Scheduled)     │                 │
+│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘                 │
+│           │                    │                    │                          │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐                 │
+│  │ RSS-Reddit-     │  │ SerpAPI-        │  │ SerpAPI-        │                 │
+│  │ GovCon          │  │ Veterans_Gov    │  │ Google News     │                 │
+│  │ (Scheduled)     │  │ (Scheduled)     │  │ (Scheduled)     │                 │
+│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘                 │
+│           │                    │                    │                          │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐                 │
+│  │ SerpAPI-        │  │ SerpAPI-        │  │ Email - VA      │                 │
+│  │ LinkedIn-       │  │ LinkedIn-       │  │ Newsletters     │                 │
+│  │ Shulkin         │  │ Paul            │  │ (Email trigger) │                 │
+│  │ (Scheduled)     │  │ (Scheduled)     │  │                 │                 │
+│  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘                 │
+│           │                    │                    │                          │
+│           └────────────────────┴────────────────────┘                          │
+│                                │                                               │
+│                    ┌───────────▼───────────┐                                   │
+│                    │      Tray DB          │                                   │
+│                    │   va_intel_items      │                                   │
+│                    │   (vetted = null)     │                                   │
+│                    └───────────┬───────────┘                                   │
+└────────────────────────────────┼───────────────────────────────────────────────┘
+                                 │
+┌────────────────────────────────┼───────────────────────────────────────────────┐
+│                    LAYER 2: PROCESS                                            │
+│                                ▼                                               │
+│                    ┌───────────────────────┐                                   │
+│                    │     LLM Scoring       │                                   │
+│                    │     (Scheduled)       │                                   │
+│                    │                       │                                   │
+│                    │  • Query unvetted     │                                   │
+│                    │  • Veterans/LI check  │                                   │
+│                    │  • Fetch URL (cond.)  │                                   │
+│                    │  • Score relevance    │                                   │
+│                    │  • Generate summary   │                                   │
+│                    │  • Update DB          │                                   │
+│                    └───────────┬───────────┘                                   │
+│                                │                                               │
+│                    ┌───────────▼───────────┐                                   │
+│                    │      Tray DB          │                                   │
+│                    │   vetted = true       │                                   │
+│                    │   relevance_score     │                                   │
+│                    │   llm_summary         │                                   │
+│                    └───────────┬───────────┘                                   │
+└────────────────────────────────┼───────────────────────────────────────────────┘
+                                 │
+┌────────────────────────────────┼───────────────────────────────────────────────┐
+│                    LAYER 3: OUTPUT                                             │
+│                                ▼                                               │
+│                    ┌───────────────────────┐                                   │
+│                    │     Slack Digest      │                                   │
+│                    │  (Scheduled - 8am CT) │                                   │
+│                    └───────────┬───────────┘                                   │
+│                                │                                               │
+│    ┌───────────────────────────┼───────────────────────────────────────────┐   │
+│    │                           ▼                                           │   │
+│    │  Get Intel ──► Filter Vetted ──► Date Filter ──► Relevance Filter    │   │
+│    │                                                                       │   │
+│    │       ▼                                                               │   │
+│    │  OpenAI Generate Digest ──► Sanitize/Escape                          │   │
+│    │                                                                       │   │
+│    │       ▼                                                               │   │
+│    │  Create Canvas ──► Set Canvas Access ──► Post Canvas to Slack        │   │
+│    │                                                                       │   │
+│    └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                                │
+└────────────────────────────────────────────────────────────────────────────────┘
+```
 
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         LAYER 2: PROCESS                                    │
-│                      (One workflow, LLM vetting)                            │
-│                                                                             │
-│                              ┌─────────────────────┐                        │
-│                              │  Scheduled trigger  │                        │
-│                              │  (every 30 min?)    │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   Query Tray DB     │                        │
-│                              │  WHERE vetted=null  │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   Loop: For each    │                        │
-│                              │   unvetted item     │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   LLM API Call      │                        │
-│                              │   - Relevance score │                        │
-│                              │   - Summary         │                        │
-│                              │   - Tags            │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   Update Tray DB    │                        │
-│                              │   vetted = true/    │                        │
-│                              │   false + metadata  │                        │
-│                              └─────────────────────┘                        │
-└─────────────────────────────────────────────────────────────────────────────┘
+### Tray Workflow Inventory
 
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         LAYER 3: OUTPUT                                     │
-│                    (One workflow, digest generation)                        │
-│                                                                             │
-│                              ┌─────────────────────┐                        │
-│                              │  Scheduled trigger  │                        │
-│                              │     (8am CT)        │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   Query Tray DB     │                        │
-│                              │  WHERE vetted=true  │                        │
-│                              │  AND included_in_   │                        │
-│                              │  digest IS NULL     │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   LLM API Call      │                        │
-│                              │   Generate digest   │                        │
-│                              │   from vetted items │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   Post to Slack     │                        │
-│                              │   #va-intel         │                        │
-│                              └──────────┬──────────┘                        │
-│                                         ▼                                   │
-│                              ┌─────────────────────┐                        │
-│                              │   Update Tray DB    │                        │
-│                              │   included_in_      │                        │
-│                              │   digest = NOW()    │                        │
-│                              └─────────────────────┘                        │
-└─────────────────────────────────────────────────────────────────────────────┘
+| Layer | Workflow Name | Trigger | Source | Purpose |
+|-------|---------------|---------|--------|---------|
+| **1** | RSS-Orange-Slices | Scheduled | Orange Slices RSS | Ingest VA intel articles |
+| **1** | RSS-Reddit-VA | Scheduled | r/VeteransAffairs | Ingest Reddit posts |
+| **1** | RSS-Reddit-Cerner | Scheduled | r/cernercorporation | Ingest Reddit posts |
+| **1** | RSS-Reddit-GovCon | Scheduled | r/govcon | Ingest Reddit posts |
+| **1** | SerpAPI-Veterans_Gov | Scheduled | veterans.house.gov | Scrape legislative updates |
+| **1** | SerpAPI-Google News | Scheduled | Google News | Broad VA news coverage |
+| **1** | SerpAPI-LinkedIn-Shulkin | Scheduled | LinkedIn (David Shulkin) | Monitor exec posts |
+| **1** | SerpAPI-LinkedIn-Paul | Scheduled | LinkedIn (Kshemendra Paul) | Monitor exec posts |
+| **1** | Email - VA Newsletters | Email trigger | Forwarded newsletters | Manual newsletter capture |
+| **2** | LLM Scoring | Scheduled | Tray DB (unvetted) | Score relevance, summarize, tag |
+| **3** | Slack Digest | Scheduled (8am CT) | Tray DB (vetted) | Generate + post Canvas digest |
+| **—** | Loop | Manual | Utility | Date filtering helper |
+
+### Layer 1: Capture Workflow Pattern
+
+Each capture workflow follows the same pattern:
+
+```
+Trigger (Scheduled/Email)
+    │
+    ▼
+Fetch Source (RSS GET / SerpAPI HTTP / Email parse)
+    │
+    ▼
+Check Results Exist? ──── No ──► Terminate
+    │
+   Yes
+    │
+    ▼
+Loop through items
+    │
+    ├──► Lookup row in Tray DB (by URL/ID)
+    │
+    ├──► Row exists? ──── Yes ──► Skip (dedupe)
+    │         │
+    │        No
+    │         │
+    │         ▼
+    │    Create row in Tray DB
+    │    - id, source, title, url, content
+    │    - author, published_at, ingested_at
+    │    - vetted = null
+    │
+    ▼
+Terminate
+```
+
+### Layer 2: LLM Scoring Workflow
+
+```
+Scheduled Trigger
+    │
+    ▼
+List rows WHERE vetted = null
+    │
+    ▼
+Loop through unvetted items
+    │
+    ├──► Is source = veterans_house OR linkedin?
+    │         │
+    │        Yes ──► HTTP GET URL content
+    │         │
+    │         ▼
+    │    LLM: Check date validity (exclude if stale)
+    │
+    ├──► LLM Scoring API call
+    │    - Input: title, content, url, (fetched page if applicable)
+    │    - Output: relevance_score (0-1), llm_summary, tags
+    │
+    ├──► Update row in Tray DB
+    │    - vetted = true
+    │    - relevance_score = {score}
+    │    - llm_summary = {summary}
+    │
+    ▼
+Terminate
+```
+
+### Layer 3: Slack Digest Workflow
+
+```
+Scheduled Trigger (8am CT)
+    │
+    ▼
+Get Intel: Query Tray DB
+    - WHERE vetted = true
+    - AND included_in_digest IS NULL
+    │
+    ▼
+Filter Vetted ──► Date Filter ──► Relevance Filter (≥0.5)
+    │
+    ▼
+Filter out items with no LLM summary
+    │
+    ▼
+OpenAI Generate Digest
+    - Input: filtered items as JSON
+    - Output: formatted markdown digest
+    │
+    ▼
+Sanitize/Escape markdown for JSON
+    - Replace newlines with \n
+    - Escape quotes, backslashes
+    │
+    ▼
+Create Canvas (Slack API)
+    - POST canvases.create
+    - title: "VA Intel Digest — {date}"
+    - document_content: {sanitized markdown}
+    │
+    ▼
+Set Canvas Access (Slack API)
+    - POST canvases.access.set
+    - channel_ids: ["C08QT1QV9JM"]
+    │
+    ▼
+Post Canvas to Slack
+    - POST chat.postMessage
+    - Button block linking to Canvas
+    │
+    ▼
+Update Tray DB
+    - SET included_in_digest = NOW()
+    │
+    ▼
+Terminate
+```
+
+---
+
+## LLM Prompts
+
+### Digest Generation Prompt (Layer 3)
+
+```
+You are a VA Intel analyst preparing a daily Slack digest for the Abridge policy team.
+
+INPUT: A list of articles/posts with metadata including source, title, URL, and summary.
+
+OUTPUT: A single markdown document. Output ONLY the markdown, no preamble.
+
+FORMATTING RULES:
+- Group items by source type (infer logical groupings from the source field)
+- Use an appropriate emoji for each section header
+- Use horizontal rules (---) between sections
+- Each item gets an H3 with linked title, followed by summary
+- Add "**Why it matters:**" for substantive articles (news, legislative, executive posts)
+- For community posts (Reddit, forums), use bullet format: **[Title](url)** — Key takeaway
+- Omit empty sections
+- End with: *Generated automatically from VA Intel pipeline*
+
+STRUCTURE:
+- Lead with curated intel sources (newsletters, specialized feeds)
+- Then community/social signals
+- Then official sources (legislative, government)
+- Then executive/influencer content
+
+Let the data shape the output. Adapt section names and groupings based on what's actually present in the input.
 ```
 
 ---
@@ -258,6 +406,49 @@ Query: "Veterans Affairs" OR "VA healthcare" OR "Oracle Health VA"
 | # | Workflow | Trigger | Schedule | Purpose |
 |---|----------|---------|----------|---------|
 | 7 | Daily Digest | Scheduled | 8am CT | Generate digest from vetted items, post to Slack |
+
+---
+
+## Google News Source Tags
+
+Source tags for Google News topics ingested via SerpAPI.
+
+### Federal Acquisition & Procurement
+| Topic | Source Tag |
+|-------|------------|
+| federal acquisition regulation (FAR) | `google_news_far` |
+| government procurement reform | `google_news_procurement_reform` |
+
+### Federal IT & Technology Policy
+| Topic | Source Tag |
+|-------|------------|
+| federal IT modernization | `google_news_fed_it_mod` |
+| OMB memorandum | `google_news_omb` |
+| executive order technology | `google_news_eo_tech` |
+| federal AI policy | `google_news_fed_ai` |
+| NIST standards update | `google_news_nist` |
+| FedRAMP authorization | `google_news_fedramp` |
+| FedRAMP High | `google_news_fedramp_high` |
+| federal cloud security | `google_news_fed_cloud` |
+| public sector cybersecurity | `google_news_pubsec_cyber` |
+| government data sharing | `google_news_gov_data` |
+| digital transformation government | `google_news_gov_dx` |
+
+### VA Leadership
+| Topic | Source Tag |
+|-------|------------|
+| VA Secretary | `google_news_va_secretary` |
+| Douglas A. Collins | `google_news_collins` |
+| Under Secretary for Health | `google_news_va_ush` |
+| John Bartrum | `google_news_bartrum` |
+| Veterans Health Administration | `google_news_vha` |
+| EHR Modernization Integration Office | `google_news_ehrm` |
+
+### Congressional Oversight
+| Topic | Source Tag |
+|-------|------------|
+| Senate Veterans Affairs Committee | `google_news_svac` |
+| House Veterans Affairs Committee | `google_news_hvac` |
 
 ---
 
@@ -346,6 +537,60 @@ Query: "Veterans Affairs" OR "VA healthcare" OR "Oracle Health VA"
 - [ ] Desired frequency: real-time vs. daily digest vs. both?
 - [ ] Single Slack channel or split?
 - [ ] High-priority keywords for real-time alerts?
+- [ ] **LinkedIn date filtering** — need better approach (see notes below)
+- [ ] **RFP tracking** — monitor VA contract opportunities/solicitations (no solution yet, needs scoping)
+
+### LinkedIn Date Filtering Challenge
+
+SerpAPI returns Google-indexed results, not native LinkedIn timestamps. Options:
+
+1. **SerpAPI `tbs` param** — `tbs=qdr:d` (past 24h), `tbs=qdr:w` (past week). Filters by Google index date, not post date. Rough but simple.
+
+2. **Dedupe-only approach** — Don't filter by date at all. Store URLs, only process new ones. Relies on deduplication rather than date filtering.
+
+3. **Parse snippet for date clues** — LinkedIn snippets sometimes include "2d ago", "1w ago". Could regex parse and convert to approximate date. Fragile.
+
+4. **Accept lag** — LinkedIn monitoring is inherently delayed (depends on Google indexing). Treat it as "catch eventually" rather than real-time.
+
+**Recommendation:** Start with option 1 (`tbs=qdr:d`) + deduplication. If too noisy or missing posts, revisit.
+
+### URL Date Validation (Legislative + LinkedIn)
+
+SerpAPI results for veterans.house.gov and LinkedIn can return stale content that Google recently re-indexed. Before including in digest:
+
+**Option A: LLM pre-check**
+- In Layer 2 vetting, have LLM check if the URL content appears recent
+- Prompt: "Based on the title and snippet, does this appear to be from the last 7 days? Look for date indicators in the text."
+- Flag or exclude items that look dated
+
+**Option B: Fetch and parse**
+- HTTP GET the URL in Layer 1
+- Parse for publish date in meta tags (`article:published_time`, `og:updated_time`) or page content
+- Store actual publish date, filter in Layer 3
+
+**Option C: Manual title scan**
+- Legislative URLs often have dates in the title or DocumentID pattern
+- LinkedIn posts sometimes show "2d", "1w" in snippets
+- Regex check before DB insert
+
+**Recommendation:** Start with Option A (LLM pre-check during vetting). Lower lift than parsing, catches most stale content. Add Option B later if false positives persist.
+
+### RFP Tracking (Future)
+
+**Goal:** Monitor VA contract opportunities and solicitations relevant to clinical documentation, health IT, AI.
+
+**Potential sources:**
+- SAM.gov (official federal procurement site) — has API
+- GovWin / Deltek (paid intel)
+- FedBizOpps successor feeds
+- SEWP, T4NG, and other GWAC award notices
+
+**Approaches to explore:**
+- SAM.gov API with keyword filters (VA + health IT + documentation + AI)
+- SerpAPI monitoring `site:sam.gov "Veterans Affairs"`
+- Paid service with alerting (GovWin)
+
+**Status:** Not started. Needs scoping call with Julia to understand priority and detail level needed.
 
 ---
 
