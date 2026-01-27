@@ -7,12 +7,19 @@ description: Scaffold a new project with standard structure. Use when the user s
 
 Create a new project with consistent structure.
 
-## Usage
+## When to Use
 
-User says something like:
-- "new project: CRM data cleanup"
-- "start a project for the Q2 planning initiative"
-- "create project for Slack bot migration"
+Recognize new project intent when user:
+- Mentions starting something new that needs tracking
+- Describes a body of work that doesn't fit existing projects
+- Says they need to organize something
+
+Examples:
+- "I need to start working on the CRM cleanup"
+- "there's this Q2 planning thing I should track"
+- "new initiative around Slack bot migration"
+
+**No command needed.** If they're describing new work that needs a home, offer to scaffold it.
 
 ## Scaffold Flow
 

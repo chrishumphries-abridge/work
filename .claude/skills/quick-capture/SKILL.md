@@ -7,13 +7,21 @@ description: Quickly capture an idea, note, or task without friction. Use when t
 
 Frictionless capture of ideas, notes, and tasks into the second brain.
 
-## Usage
+## When to Use
 
-User says something like:
-- "capture: idea for improving the forecast module"
-- "quick note: Ramon mentioned Q2 budget review"
-- "jot down: check if HockeyStack supports custom events"
-- "remember this: API rate limit is 100/min"
+Recognize capture intent when user:
+- Dumps a thought without asking a question
+- Mentions something someone said
+- States a fact they want to remember
+- Shares an idea or observation
+
+Examples:
+- "Ramon mentioned Q2 budget review"
+- "idea for improving the forecast module"
+- "API rate limit is 100/min"
+- "check if HockeyStack supports custom events"
+
+**No command needed.** If it's not a question and not an action request, capture it.
 
 ## Capture Flow
 

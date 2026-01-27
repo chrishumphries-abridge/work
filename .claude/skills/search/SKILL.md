@@ -7,13 +7,21 @@ description: Search across all notes, projects, and references in the second bra
 
 Find information across the entire second brain.
 
-## Usage
+## When to Use
 
-User says something like:
+Recognize search intent when user:
+- Asks what they know about something
+- Asks where something is documented
+- Asks about a person, project, or concept
+- Seems to be looking for past information
+
+Examples:
 - "what do I know about HockeyStack?"
-- "find notes on approval workflows"
-- "search for Reba"
-- "where did I document the API rate limits?"
+- "where did I put the API rate limits?"
+- "Reba" (if context suggests looking for info)
+- "that approval workflow thing"
+
+**No command needed.** If they're asking about something that might be in their notes, search for it.
 
 ## Search Flow
 

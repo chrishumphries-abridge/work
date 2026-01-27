@@ -119,20 +119,22 @@ These tasks often have subtasks added from meeting action items:
 
 ---
 
-## Commands & Skills
+## How to Use This
 
-| Command | Action |
-|---------|--------|
-| **plan my day** | Full workflow: calendar, Asana, Notion, Analog card, reconciliation |
-| **reconcile** | Just compare Notion → Asana and add tasks with approval |
-| **what's next** | Get additional tasks after completing Analog card items |
-| **close up shop** | End of day: check delta since last update, reconcile new items, close out daily plan |
-| **close out week** | Friday EOD: wins, deferrals, blocked tasks, weekly report, next week plan |
-| **capture: {note}** | Quick capture an idea/note to `_capture/` inbox |
-| **search: {query}** | Search across all notes, projects, and references |
-| **new project: {name}** | Scaffold a new project with CLAUDE.md |
-| **archive project: {name}** | Move completed project to `archive/` |
-| **monthly review** | Review and prune the second brain (see below) |
+**Just talk naturally.** I'll figure out what to do.
+
+| You say something like... | I do... |
+|---------------------------|---------|
+| "plan my day" | Run daily planning workflow |
+| "close up shop" | End of day close-out |
+| "Reba mentioned budget concerns" | Capture it |
+| "what do I know about HockeyStack?" | Search everything |
+| "start a project for the CRM cleanup" | Scaffold new project |
+| "va-intel is done" | Archive it |
+| "it's Friday" / "close out week" | Weekly close-out |
+| "monthly review" | System maintenance |
+
+**No special syntax needed.** If you dump a thought, I capture it. If you ask a question, I search. If you mention finishing something, I archive.
 
 ---
 

@@ -7,12 +7,20 @@ description: Archive a completed project while preserving context. Use when user
 
 Move completed projects out of active view while preserving learnings.
 
-## Usage
+## When to Use
 
-User says something like:
-- "archive the commercial_segment_updates project"
-- "project va-intel is done, archive it"
-- "close out the ai_charter_roadmap project"
+Recognize archive intent when user:
+- Says a project is done/finished/shipped
+- Mentions wrapping something up
+- Asks to clean up a completed initiative
+
+Examples:
+- "va-intel is done"
+- "we shipped the approval workflows"
+- "that charter thing is wrapped up"
+- "clean up the old projects"
+
+**No command needed.** If they indicate something is finished, offer to archive it.
 
 ## Archive Flow
 
