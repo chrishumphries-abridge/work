@@ -9,6 +9,7 @@
 | Roadmap | `ai_roadmap.md` | Complete |
 | Presentation Outline | `presentation_outline.md` | 14 slides drafted |
 | Mockup: Next Steps Hygiene | `mockups/next_steps_hygiene.html` | Ready (Live feature) |
+| Mockup: Personal Forecast | — | Needs screenshot from live feature |
 | Mockup: Deal Risk Signals | `mockups/deal_risk_signals.html` | Ready (Ready to launch) |
 | Mockup: Deal Intelligence Card | `mockups/deal_intelligence_card.html` | Ready (Ready to launch) |
 | Mockup: Meeting Prep Brief | `mockups/meeting_prep_brief.html` | Ready (Exploring) |
@@ -49,13 +50,15 @@
 
 1. **Foundation first** — 2025 was about building the data layer (Buying Group, Email Sync, Conversation Intelligence). Without it, AI is useless.
 
-2. **Next Steps Hygiene is live** — Real feature, shipping value today. AI suggests what to do next based on your activity.
+2. **Two AI features are live** — Next Steps Hygiene and Buying Group Members. Real value shipping today.
 
-3. **More is ready** — Deal Risk Signals and Deal Intelligence are built. Ready to turn on.
+3. **More is ready** — Personal Forecast and Deal Risk Signals built and tested. Ready to turn on.
 
-4. **The roadmap is practical** — Meeting Prep, expanded Buying Group research. Not promises, just plans.
+4. **Personal Forecast** — AI confidence scoring on every deal. Know which commits are solid vs at risk, backed by activity data.
 
-5. **The standard** — We're not building AI for AI's sake. We're making you more effective.
+5. **The roadmap is practical** — Meeting Prep, expanded Buying Group research. Not promises, just plans.
+
+6. **The standard** — We're not building AI for AI's sake. We're making you more effective.
 
 ---
 

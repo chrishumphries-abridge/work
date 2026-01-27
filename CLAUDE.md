@@ -7,12 +7,14 @@
 - **User**: Chris Humphries (ID: `1210002869511639`)
 - **Main Project**: RevOps & Systems/Analytics Request & Backlog Board (ID: `1209756254866607`)
 
-### Zapier (Notion + Google Calendar) — FUTURE SETUP
-- **Notion Database**: AI Meeting Notes (ID: `2a9c967bdf0980dd9fe2ff3e33203734`)
+### chris-mcp (Tray.io: Notion + Google Calendar)
+- **Server name**: `chris-mcp`
+- **Notion**: AI Meeting Notes database
+  - **Data source ID**: `2a9c967b-df09-804a-a924-000b5e1a2d5d` (use this for queries)
   - Properties: Name (title with date), Action Items (rich_text)
   - Note: Transcription blocks inside pages are not accessible via API
 - **Google Calendar**: chris.humphries@abridge.com
-- *Currently not configured — user will set up later*
+- **Note**: Ignore the Asana tool in this server — use the dedicated Asana MCP instead
 
 ### GitHub (Backup)
 - **Repo**: `chrishumphries-abridge/obsidian` (private)
@@ -34,6 +36,7 @@ When user says "plan my day" or similar:
 - Save to `/Users/chris/work/Daily Plans/YYYY-MM-DD-daily-plan.md`
 - Include:
   - Today's schedule with meeting prep notes
+  - **Time blocks** — suggested task allocation based on calendar gaps
   - Asana tasks (next 2-3 days)
   - Recent meeting action items from Notion
   - **Analog Card section** (see below)
@@ -309,3 +312,8 @@ Check each project's CLAUDE.md for current status and context.
 ### Meeting Notes Processing
 - **Docs**: `meeting_notes/CLAUDE.md`
 - **Summary**: Workflow for processing meeting transcripts into action items
+
+### LaunchDarkly <> Slack
+- **Docs**: `projects/launchdarkly-slack/approval-request-integration.md`
+- **Summary**: Slack-triggered approval requests to add users to feature flags
+- **Asana**: `1212660736378965` (due Jan 30)

@@ -122,6 +122,7 @@ We built the data infrastructure:
 |---------|-----|--------|
 | **Next Steps Hygiene** | Sales | Live |
 | **Buying Group Members** | Sales | Live |
+| **Personal Forecast** | Sales | Ready to Launch |
 | **Deal Risk Signals** | Sales | Ready to Launch |
 | **Buying Group Expansion** | Ent/Strat/National | In Progress |
 | **Meeting Prep Brief** | Sales, PS | Exploring |

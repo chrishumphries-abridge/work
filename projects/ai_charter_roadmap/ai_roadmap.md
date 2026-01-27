@@ -51,6 +51,25 @@ See who's involved in every deal at a glance.
 
 ---
 
+## Personal Forecast
+**Status:** Ready to Launch (Q1 2026)
+**For:** Sales
+
+AI-powered pipeline forecast view with confidence scoring.
+
+| What It Does | The Impact |
+|--------------|------------|
+| Shows deals by forecast category | Commit, Best Case, Pipeline at a glance |
+| AI confidence scoring per deal | Know which commits are solid vs at risk |
+| Deal signals and risk indicators | See why a deal is flagged |
+| AI predictions with evidence | Forecast backed by activity data, not gut feel |
+
+**How it works:** Combines activity recency, buying group health, and next step hygiene into a confidence score. Highlights deals where forecast category doesn't match reality.
+
+**Foundation Used:** Buying Group + Email Activity + Conversation Intelligence
+
+---
+
 ## Buying Group Expansion — Ent/Strat/National
 **Status:** In Progress (Q1 2026)
 **For:** Sales, Operations
@@ -240,7 +259,10 @@ Every AI feature above runs on data. In 2025, we built the data foundation. In 2
 
 | Feature | Sales | Partner Success | Leadership | Supporting |
 |---------|-------|-----------------|------------|------------|
-| Revenue Intelligence | Primary | — | Secondary | — |
+| Next Steps Hygiene | Primary | — | Secondary | — |
+| Buying Group Members | Primary | — | Secondary | — |
+| Personal Forecast | Primary | — | Secondary | — |
+| Deal Risk Signals | Primary | — | Secondary | — |
 | Meeting Prep Brief | Primary | Primary | — | — |
 | Next Best Action | Primary | Secondary | — | — |
 | Account Health (Planhat) | — | Primary | Secondary | — |

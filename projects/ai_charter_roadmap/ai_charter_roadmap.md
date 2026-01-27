@@ -317,8 +317,10 @@ We're building a **self-updating intelligence layer** — where context is alway
 |-------|--------|
 | **Foundation** | Complete |
 | Buying Group, Email Sync, Call Intelligence | Shipped 2025 |
-| **First AI Application** | Live |
-| Revenue Intelligence — My Pipeline | Shipped Jan 2026 |
+| **My Pipeline — AI Features** | Live |
+| Next Steps Hygiene, Buying Group Members | Shipped Jan 2026 |
+| **Ready to Launch** | Built |
+| Personal Forecast, Deal Risk Signals | Q1 2026 |
 | **What's Next** | Exploring |
 | Meeting prep, relationship intel, proactive coaching | Possibilities |
 
