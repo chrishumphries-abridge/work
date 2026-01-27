@@ -28,6 +28,7 @@ When user says "plan my day" or similar:
 - **Calendar**: Get today's events from Google Calendar
 - **Asana**: Get tasks due in next 2-3 days assigned to "me"
 - **Notion**: Get recent meeting notes (last 1-2 days) with action items
+- **Capture inbox**: Check `_capture/` for yesterday's quick captures
 
 ### 2. Write Daily Plan
 - Save to `/Users/chris/work/Daily Plans/YYYY-MM-DD-daily-plan.md`
@@ -118,7 +119,7 @@ These tasks often have subtasks added from meeting action items:
 
 ---
 
-## Commands
+## Commands & Skills
 
 | Command | Action |
 |---------|--------|
@@ -127,6 +128,11 @@ These tasks often have subtasks added from meeting action items:
 | **what's next** | Get additional tasks after completing Analog card items |
 | **close up shop** | End of day: check delta since last update, reconcile new items, close out daily plan |
 | **close out week** | Friday EOD: wins, deferrals, blocked tasks, weekly report, next week plan |
+| **capture: {note}** | Quick capture an idea/note to `_capture/` inbox |
+| **search: {query}** | Search across all notes, projects, and references |
+| **new project: {name}** | Scaffold a new project with CLAUDE.md |
+| **archive project: {name}** | Move completed project to `archive/` |
+| **monthly review** | Review and prune the second brain (see below) |
 
 ---
 
@@ -167,23 +173,55 @@ Add to Friday's daily plan:
 
 ---
 
+## Monthly Review Workflow
+
+When user says "monthly review" (or first Friday of month):
+
+### 1. Review Capture Inbox
+- Check `_capture/` for unprocessed items
+- For each: move to project, create task, or delete
+- Goal: empty inbox
+
+### 2. Review Projects
+- List all projects in `projects/`
+- For each, ask: Active? Stalled? Done?
+- **Active**: Keep, update CLAUDE.md if needed
+- **Stalled**: Discuss blockers, decide to push or archive
+- **Done**: Run archive workflow
+
+### 3. Prune Reference
+- List files in `reference/` older than 60 days
+- For each: still useful? Delete or keep?
+- Move any project-specific docs to their project folders
+
+### 4. Review Active Projects Section
+- Update the Active Projects section in this file
+- Remove archived projects
+- Add any new projects
+
+### 5. System Health Check
+- Any skills not working well? Adjust.
+- Any new patterns emerging? Document.
+- Git commit and push
+
+---
+
 ## File Structure
 
 ```
 work/
 ├── CLAUDE.md              # This file - main context
+├── _capture/              # Quick capture inbox (daily files)
 ├── Daily Plans/           # Daily plans + weekly plans
 ├── Weekly Reports/        # Friday close-out reports
 ├── meeting_notes/         # Meeting transcript processing (has own CLAUDE.md)
 ├── projects/              # Active projects (each has own CLAUDE.md)
-│   ├── va-intel/
-│   ├── commercial_segment_updates/
-│   ├── ai_charter_roadmap/
-│   └── buying-group-scoring/
+├── archive/               # Completed projects (preserved with context)
 ├── resource_requests/     # Slack block templates
 ├── reference/             # One-off docs, guides, templates
+│   └── templates/         # Project templates
 ├── Reviews/               # Performance reviews
-└── .claude/skills/        # Custom skills (plan-my-day)
+└── .claude/skills/        # Custom skills
 ```
 
 ---

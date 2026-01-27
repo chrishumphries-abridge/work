@@ -199,6 +199,9 @@
   },
   "active": "1b803a4c0895709e",
   "lastOpenFiles": [
+    "reference/templates/project-CLAUDE-template.md",
+    "archive",
+    "_capture",
     "projects/va-intel/CLAUDE.md",
     "reference/weekly_task_review.md",
     "reference/offboarding.md",
@@ -225,15 +228,12 @@
     "projects/ai_charter_roadmap/mockups/next_steps_hygiene.html",
     "projects/ai_charter_roadmap/ai_charter.md",
     "projects/ai_charter_roadmap/visual_concepts.md",
-    "projects/ai_charter_roadmap/mockups/deal_intelligence_card.html",
-    "projects/ai_charter_roadmap/mockups",
     "projects/ai_charter_roadmap/ai_charter_roadmap.md",
     "projects/ai_charter_roadmap/ai_roadmap.md",
     "reference/salesforce-certificate-update-guide.md",
     "offboarding.md",
     "projects/commercial_segment_updates/remaining_tasks.md",
     "projects/commercial_segment_updates/tray_interaction_handler_filtering.md",
-    "Daily Plans/2026-W04-weekly-plan.md",
-    "Weekly Reports/2026-W03-weekly-report.md"
+    "Daily Plans/2026-W04-weekly-plan.md"
   ]
 }
