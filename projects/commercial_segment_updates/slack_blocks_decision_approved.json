@@ -1,0 +1,62 @@
+{
+  "_description": "Updated Slack message after approval - replaces original message",
+  "_note": "Removes buttons, shows who approved with timestamp",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": ":white_check_mark: Approved",
+        "emoji": true
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "{PROCESS_TYPE} • {ACCOUNT_NAME}"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{OPPORTUNITY_NAME}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Amount:*\n${AMOUNT}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Approved by:* {APPROVER_NAME}\n*Notes:* {NOTES}"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "Approved on {TIMESTAMP}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<{SALESFORCE_URL}|View in Salesforce>"
+      }
+    }
+  ]
+}

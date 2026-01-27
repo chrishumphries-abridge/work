@@ -1,0 +1,60 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*ATP Request*"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<@{Laura_User_ID}> <@{Sales_Rep_User_ID}>, please create codes and respond within 1 calendar day."
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Requester:*\n{CreatedBy_Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Account:*\n{Account_Name}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{Opportunity}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*ATP Agreement Signed?:*\n{ATP_Agreement}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Preferred Date & Time:*\n{Preferred_Dates_Times}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Comments:*\n{Request_Context}"
+      }
+    }
+  ]
+}

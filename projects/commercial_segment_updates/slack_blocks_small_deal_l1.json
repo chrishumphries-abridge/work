@@ -1,0 +1,106 @@
+{
+  "_description": "Slack Block Kit for Small Deal Level 1 approval request",
+  "_approvers": "JVH or Aamir (either can approve)",
+  "_tray_interpolation": "Use {$.steps.STEP_NAME.field} syntax",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "Small Deal Approval Request",
+        "emoji": true
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "Level 1 of 2 • Requires Sales Leadership approval"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Account:*\n{$.steps.salesforce-get-account.records[0].Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Physician Count:*\n{$.steps.salesforce-get-account.records[0].Total_Physician_Count_F__c}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{$.steps.salesforce-get-opportunity.records[0].Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Amount:*\n${$.steps.salesforce-get-opportunity.records[0].Amount}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Requested by:* {$.steps.salesforce-get-opportunity.records[0].Owner.Name}"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<https://abridgeai.lightning.force.com/lightning/r/Opportunity/{$.steps.trigger.body.opportunity_id}/view|View Opportunity in Salesforce>"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<@SLACK_USER_ID_JVH> <@SLACK_USER_ID_AAMIR> — Please review and approve/reject this small deal request."
+      }
+    },
+    {
+      "type": "actions",
+      "block_id": "approval_actions",
+      "elements": [
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Approve",
+            "emoji": true
+          },
+          "style": "primary",
+          "action_id": "approve_commercial",
+          "value": "{$.steps.trigger.body.approval_record_id}"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Reject",
+            "emoji": true
+          },
+          "style": "danger",
+          "action_id": "reject_commercial",
+          "value": "{$.steps.trigger.body.approval_record_id}"
+        }
+      ]
+    }
+  ],
+  "_stringified_for_tray": "Copy the blocks array above, wrap in {\"blocks\": [...]}, stringify, and paste into raw_blocks"
+}

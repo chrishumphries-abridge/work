@@ -1,0 +1,51 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Deployment Success Request*"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<@{Taylor_Myers_User_ID}> <@{Sales_Rep_User_ID}>"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Account:*\n{Account_Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Segment:*\n{DED_Territory_Team}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{Opportunity}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Preferred Date & Time:*\n{Preferred_Dates_Times}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Comments & Special Requests:*\n{Request_Context}"
+      }
+    }
+  ]
+}

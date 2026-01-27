@@ -1,0 +1,109 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*ROI Call Request - Nursing*"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<@{Brad_User_ID}> <@{Sales_Rep_User_ID}>"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Account:*\n{Account_Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{Opportunity}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Product:*\n{Resource_Request_Product}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Clinical Setting:*\n{Clinical_Setting}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Preferred Date & Time:*\n{Preferred_Dates_Times}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Comments & Special Requests:*\n{Request_Context}"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Client Metrics*"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Implementation Fee:*\n{Implementation_Fee}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Total Number of RNs:*\n{Total_Number_of_RNs}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Total RN FTEs for Med/Surg:*\n{Total_Number_of_RN_FTEs_for_Med_Surg}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Total Beds in Med/Surg:*\n{Total_Number_of_Staffed_Beds_in_Med_Surg}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Monthly Cost Per Staffed Bed:*\n{Monthly_Cost_Per_Staffed_Bed}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Total Pt Days for Med/Surg:*\n{Total_Patient_Days_for_Med_Surg}"
+        }
+      ]
+    }
+  ]
+}

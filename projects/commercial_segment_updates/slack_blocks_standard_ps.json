@@ -1,0 +1,112 @@
+{
+  "_description": "Slack Block Kit for Standard PS Model approval request",
+  "_approvers": "Meghan or Madeleine (either can approve)",
+  "_note": "Single level approval, shows reason (H2H/Connection)",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "Standard PS Model Approval Request",
+        "emoji": true
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "Requires PS Leadership approval"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Account:*\n{$.steps.salesforce-get-account.records[0].Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Segment:*\n{$.steps.salesforce-get-account.records[0].Account_Segment__c}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{$.steps.salesforce-get-opportunity.records[0].Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Amount:*\n${$.steps.salesforce-get-opportunity.records[0].Amount}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Reason for Standard PS Model:*\n{$.steps.salesforce-get-approval.records[0].Request_Reason__c}"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Requested by:* {$.steps.salesforce-get-opportunity.records[0].Owner.Name}"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<https://abridgeai.lightning.force.com/lightning/r/Opportunity/{$.steps.trigger.body.opportunity_id}/view|View Opportunity in Salesforce>"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<@SLACK_USER_ID_MEGHAN> <@SLACK_USER_ID_MADELEINE> — Please review and approve/reject this Standard PS Model request."
+      }
+    },
+    {
+      "type": "actions",
+      "block_id": "approval_actions",
+      "elements": [
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Approve",
+            "emoji": true
+          },
+          "style": "primary",
+          "action_id": "approve_commercial",
+          "value": "{$.steps.trigger.body.approval_record_id}"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Reject",
+            "emoji": true
+          },
+          "style": "danger",
+          "action_id": "reject_commercial",
+          "value": "{$.steps.trigger.body.approval_record_id}"
+        }
+      ]
+    }
+  ]
+}

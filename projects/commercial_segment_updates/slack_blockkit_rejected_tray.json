@@ -1,0 +1,60 @@
+{
+    "blocks": [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "❌ Rejected",
+                "emoji": true
+            }
+        },
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": "{$.steps.object-helpers-1.process_type} • {$.steps.object-helpers-1.account_name}"
+                }
+            ]
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "section",
+            "fields": [
+                {
+                    "type": "mrkdwn",
+                    "text": "*Opportunity:* {$.steps.object-helpers-1.opportunity_name}"
+                },
+                {
+                    "type": "mrkdwn",
+                    "text": "*Amount:* ${$.steps.object-helpers-1.amount}"
+                }
+            ]
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "*Rejected by:* {$.steps.trigger.result.user.name}"
+            }
+        },
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": "Rejected just now"
+                }
+            ]
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "<https://abridgeai.lightning.force.com/lightning/r/Opportunity/{$.steps.object-helpers-1.opportunity_id}/view|View in Salesforce>"
+            }
+        }
+    ]
+}

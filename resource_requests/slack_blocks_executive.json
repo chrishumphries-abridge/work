@@ -1,0 +1,63 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Executive Engagement Request*"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<@{Aamir_User_ID}> <@{Carrie_User_ID}> <@{Sales_Rep_User_ID}>"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Account:*\n{Account_Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{Opportunity}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Executive Requested:*\n{Exec_Requested}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Preferred Date & Time:*\n{Preferred_Dates_Times}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Comments & Special Requests:*\n{Request_Context}"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "If approved, please proceed with scheduling with Holly or the relevant exec admin, per the <https://www.notion.so/abridge/Executive-Sales-Engagement-Prep-Sheet-702e96f96d0d4e16bd43767e28bb4a95|process documented here>."
+        }
+      ]
+    }
+  ]
+}

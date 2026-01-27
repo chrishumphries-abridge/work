@@ -1,0 +1,204 @@
+{
+  "tray_export_version": 4,
+  "export_type": "workflow",
+  "_documentation": {
+    "description": "Handles Slack button clicks (Approve/Reject). Opens modal for notes, then updates Salesforce Opportunity_Approval__c record.",
+    "trigger": "Slack interaction webhook (button click)",
+    "flow": [
+      "1. User clicks Approve/Reject button in Slack",
+      "2. Tray receives interaction payload with action_id and value (approval_record_id)",
+      "3. Tray opens modal with text input for notes",
+      "4. User submits modal",
+      "5. Tray receives modal submission with notes",
+      "6. Tray updates Opportunity_Approval__c: Status, Approver, Notes, Decision_Date",
+      "7. Record-Triggered Flow in SFDC handles sequencing (creates Level 2 or updates Opp)",
+      "8. Tray updates original Slack message to show decision"
+    ]
+  },
+  "workflows": [
+    {
+      "id": "REPLACE_WITH_NEW_WORKFLOW_ID",
+      "title": "Interaction: Commercial Approval Button Handler",
+      "description": "Handles Approve/Reject button clicks from Slack. Opens modal, updates Salesforce, updates Slack message.",
+      "enabled": false,
+      "steps_structure": [
+        { "name": "trigger", "type": "normal", "content": {} },
+        { "name": "branch-action-type", "type": "branch", "content": {} }
+      ],
+      "steps": {
+        "trigger": {
+          "title": "Slack Interaction Trigger",
+          "connector": { "name": "slack-trigger", "version": "3.0" },
+          "operation": "interaction",
+          "_note": "Receives both button clicks (type: block_actions) and modal submissions (type: view_submission)",
+          "authentication": {
+            "group": "f18da84d-119c-4cc2-bde0-a7dc119443fc",
+            "title": "Tray.AI Bot Agent Trigger"
+          },
+          "_payload_structure": {
+            "button_click": {
+              "type": "block_actions",
+              "actions[0].action_id": "approve_commercial | reject_commercial",
+              "actions[0].value": "approval_record_id",
+              "user.name": "Approver name",
+              "channel.id": "Channel where message was posted",
+              "message.ts": "Original message timestamp (for updating)"
+            },
+            "modal_submission": {
+              "type": "view_submission",
+              "view.callback_id": "approval_notes_modal",
+              "view.private_metadata": "JSON with approval_record_id, action, channel_id, message_ts",
+              "view.state.values.notes_block.notes_input.value": "User's notes"
+            }
+          }
+        },
+        "branch-action-type": {
+          "title": "Button Click or Modal Submit?",
+          "connector": { "name": "branch", "version": "1.0" },
+          "_branches": {
+            "button_click": {
+              "condition": "$.steps.trigger.type == 'block_actions'",
+              "action": "Open modal for notes"
+            },
+            "modal_submit": {
+              "condition": "$.steps.trigger.type == 'view_submission'",
+              "action": "Update Salesforce and Slack message"
+            }
+          }
+        },
+        "_button_click_branch": {
+          "slack-open-modal": {
+            "title": "Open Notes Modal",
+            "connector": { "name": "slack", "version": "11.0" },
+            "operation": "views_open",
+            "_note": "Opens modal with text input for approval notes. Stores context in private_metadata.",
+            "properties": {
+              "trigger_id": { "type": "jsonpath", "value": "$.steps.trigger.trigger_id" },
+              "view": {
+                "type": "object",
+                "value": {
+                  "type": { "type": "string", "value": "modal" },
+                  "callback_id": { "type": "string", "value": "approval_notes_modal" },
+                  "private_metadata": {
+                    "type": "string",
+                    "_note": "JSON stringify: approval_record_id, action (approve/reject), channel_id, message_ts",
+                    "value": "{\"approval_record_id\":\"{$.steps.trigger.actions[0].value}\",\"action\":\"{$.steps.trigger.actions[0].action_id}\",\"channel_id\":\"{$.steps.trigger.channel.id}\",\"message_ts\":\"{$.steps.trigger.message.ts}\"}"
+                  },
+                  "title": {
+                    "type": "object",
+                    "value": {
+                      "type": { "type": "string", "value": "plain_text" },
+                      "text": { "type": "string", "value": "Approval Notes" }
+                    }
+                  },
+                  "submit": {
+                    "type": "object",
+                    "value": {
+                      "type": { "type": "string", "value": "plain_text" },
+                      "text": { "type": "string", "value": "Submit" }
+                    }
+                  },
+                  "close": {
+                    "type": "object",
+                    "value": {
+                      "type": { "type": "string", "value": "plain_text" },
+                      "text": { "type": "string", "value": "Cancel" }
+                    }
+                  },
+                  "blocks": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "object",
+                        "value": {
+                          "type": { "type": "string", "value": "input" },
+                          "block_id": { "type": "string", "value": "notes_block" },
+                          "optional": { "type": "boolean", "value": true },
+                          "label": {
+                            "type": "object",
+                            "value": {
+                              "type": { "type": "string", "value": "plain_text" },
+                              "text": { "type": "string", "value": "Add any notes (optional)" }
+                            }
+                          },
+                          "element": {
+                            "type": "object",
+                            "value": {
+                              "type": { "type": "string", "value": "plain_text_input" },
+                              "action_id": { "type": "string", "value": "notes_input" },
+                              "multiline": { "type": "boolean", "value": true },
+                              "placeholder": {
+                                "type": "object",
+                                "value": {
+                                  "type": { "type": "string", "value": "plain_text" },
+                                  "text": { "type": "string", "value": "Enter any comments about this decision..." }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "_modal_submit_branch": {
+          "parse-metadata": {
+            "title": "Parse Private Metadata",
+            "connector": { "name": "object-helpers", "version": "3.0" },
+            "operation": "parse_json",
+            "_note": "Parse the private_metadata JSON to get approval_record_id, action, etc.",
+            "properties": {
+              "json_string": { "type": "jsonpath", "value": "$.steps.trigger.view.private_metadata" }
+            }
+          },
+          "salesforce-update-approval": {
+            "title": "Update Approval Record",
+            "connector": { "name": "salesforce", "version": "8.0" },
+            "operation": "update_record",
+            "_note": "Update Opportunity_Approval__c with decision",
+            "properties": {
+              "object": { "type": "string", "value": "Opportunity_Approval__c" },
+              "id": { "type": "jsonpath", "value": "$.steps.parse-metadata.approval_record_id" },
+              "fields": {
+                "type": "object",
+                "value": {
+                  "Status__c": {
+                    "_note": "Map action_id to status: approve_commercial -> Approved, reject_commercial -> Rejected",
+                    "type": "string",
+                    "value": "_CONDITIONAL_BASED_ON_ACTION_"
+                  },
+                  "Approver__c": { "type": "jsonpath", "value": "$.steps.trigger.user.name" },
+                  "Notes__c": { "type": "jsonpath", "value": "$.steps.trigger.view.state.values.notes_block.notes_input.value" },
+                  "Decision_Date__c": { "type": "string", "value": "{$.date.now}" }
+                }
+              }
+            }
+          },
+          "slack-update-message": {
+            "title": "Update Original Slack Message",
+            "connector": { "name": "slack", "version": "11.0" },
+            "operation": "update_message",
+            "_note": "Update the original message to show who approved/rejected",
+            "properties": {
+              "channel": { "type": "jsonpath", "value": "$.steps.parse-metadata.channel_id" },
+              "ts": { "type": "jsonpath", "value": "$.steps.parse-metadata.message_ts" },
+              "blocks": {
+                "type": "object",
+                "value": {
+                  "raw_blocks": {
+                    "type": "string",
+                    "_note": "Updated blocks showing decision - see slack_blocks_decision.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

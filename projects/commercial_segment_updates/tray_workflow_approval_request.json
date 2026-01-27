@@ -1,0 +1,198 @@
+{
+  "tray_export_version": 4,
+  "export_type": "workflow",
+  "_documentation": {
+    "description": "Handles approval requests from Salesforce. Queries SFDC for Opp/Account details, sends Slack message with Approve/Reject buttons.",
+    "trigger": "Webhook from Salesforce Flow (via External Service or HTTP callout)",
+    "payload_from_salesforce": {
+      "approval_record_id": "a0BXXXXXXXXXX (Opportunity_Approval__c ID)",
+      "opportunity_id": "006XXXXXXXXXX",
+      "process_type": "Small Deal | Standard PS Model",
+      "level": 1
+    }
+  },
+  "workflows": [
+    {
+      "id": "REPLACE_WITH_NEW_WORKFLOW_ID",
+      "title": "Endpoint: Commercial Approval Request",
+      "description": "Receives approval request from Salesforce, queries for details, sends Slack message with buttons. Supports tiered approvals.",
+      "enabled": false,
+      "steps_structure": [
+        { "name": "trigger", "type": "normal", "content": {} },
+        { "name": "salesforce-get-approval", "type": "normal", "content": {} },
+        { "name": "salesforce-get-opportunity", "type": "normal", "content": {} },
+        { "name": "salesforce-get-account", "type": "normal", "content": {} },
+        { "name": "branch-process-type", "type": "branch", "content": {} },
+        { "name": "trigger-reply-1", "type": "normal", "content": {} }
+      ],
+      "steps": {
+        "trigger": {
+          "title": "Webhook Trigger",
+          "connector": { "name": "api-operation-trigger", "version": "1.0" },
+          "operation": "request_response",
+          "properties": {
+            "request": {
+              "type": "object",
+              "value": {
+                "body": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "approval_record_id": { "type": "string", "title": "Approval Record ID" },
+                      "opportunity_id": { "type": "string", "title": "Opportunity ID" },
+                      "process_type": { "type": "string", "title": "Process Type" },
+                      "level": { "type": "number", "title": "Approval Level" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "salesforce-get-approval": {
+          "title": "Get Approval Record",
+          "connector": { "name": "salesforce", "version": "8.0" },
+          "operation": "find_records",
+          "_note": "Query Opportunity_Approval__c for Request_Reason__c, Approver_Role__c",
+          "properties": {
+            "object": { "type": "string", "value": "Opportunity_Approval__c" },
+            "conditions": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "field": { "type": "string", "value": "Id" },
+                    "operator": { "type": "string", "value": "Equal to" },
+                    "value": { "type": "jsonpath", "value": "$.steps.trigger.body.approval_record_id" }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "salesforce-get-opportunity": {
+          "title": "Get Opportunity",
+          "connector": { "name": "salesforce", "version": "8.0" },
+          "operation": "find_records",
+          "_note": "Query Opportunity for Name, Owner.Name, Amount, etc.",
+          "properties": {
+            "object": { "type": "string", "value": "Opportunity" },
+            "conditions": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "field": { "type": "string", "value": "Id" },
+                    "operator": { "type": "string", "value": "Equal to" },
+                    "value": { "type": "jsonpath", "value": "$.steps.trigger.body.opportunity_id" }
+                  }
+                }
+              ]
+            },
+            "fields": {
+              "type": "array",
+              "value": ["Id", "Name", "AccountId", "Amount", "Owner.Name", "StageName"]
+            }
+          }
+        },
+        "salesforce-get-account": {
+          "title": "Get Account",
+          "connector": { "name": "salesforce", "version": "8.0" },
+          "operation": "find_records",
+          "_note": "Query Account for Name, Total_Physician_Count_F__c, PS_Model__c",
+          "properties": {
+            "object": { "type": "string", "value": "Account" },
+            "conditions": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "field": { "type": "string", "value": "Id" },
+                    "operator": { "type": "string", "value": "Equal to" },
+                    "value": { "type": "jsonpath", "value": "$.steps.salesforce-get-opportunity.records[0].AccountId" }
+                  }
+                }
+              ]
+            },
+            "fields": {
+              "type": "array",
+              "value": ["Id", "Name", "Total_Physician_Count_F__c", "PS_Model__c", "Account_Segment__c"]
+            }
+          }
+        },
+        "branch-process-type": {
+          "title": "Branch by Process Type",
+          "connector": { "name": "branch", "version": "1.0" },
+          "_note": "Different Slack messages for Small Deal vs Standard PS Model, and Level 1 vs Level 2",
+          "_branches": {
+            "small_deal_level_1": "Small Deal, Level 1 - mentions JVH/Aamir",
+            "small_deal_level_2": "Small Deal, Level 2 - mentions Reba, shows Level 1 approval info",
+            "standard_ps_model": "Standard PS Model - mentions Meghan/Madeleine, shows reason"
+          }
+        },
+        "slack-small-deal-l1": {
+          "title": "Send Small Deal Level 1 Message",
+          "connector": { "name": "slack", "version": "11.0" },
+          "operation": "send_message",
+          "_note": "See slack_blocks_small_deal_l1.json for block structure",
+          "authentication": {
+            "group": "f18da84d-119c-4cc2-bde0-a7dc119443fc",
+            "title": "Tray.AI Bot Agent Trigger"
+          },
+          "properties": {
+            "channel": { "type": "string", "value": "REPLACE_WITH_CHANNEL_ID" },
+            "username": { "type": "string", "value": "Commercial Approvals" },
+            "blocks": {
+              "type": "object",
+              "value": {
+                "raw_blocks": {
+                  "type": "string",
+                  "value": "_SEE_BLOCK_KIT_FILES_"
+                }
+              }
+            }
+          }
+        },
+        "salesforce-update-slack-id": {
+          "title": "Store Slack Message ID",
+          "connector": { "name": "salesforce", "version": "8.0" },
+          "operation": "update_record",
+          "_note": "Store Slack message ts on approval record for later updates",
+          "properties": {
+            "object": { "type": "string", "value": "Opportunity_Approval__c" },
+            "id": { "type": "jsonpath", "value": "$.steps.trigger.body.approval_record_id" },
+            "fields": {
+              "type": "object",
+              "value": {
+                "Slack_Message_Id__c": { "type": "jsonpath", "value": "$.steps.slack-small-deal-l1.ts" }
+              }
+            }
+          }
+        },
+        "trigger-reply-1": {
+          "title": "Return Success",
+          "connector": { "name": "trigger-reply", "version": "1.1" },
+          "operation": "trigger-reply",
+          "properties": {
+            "response": {
+              "type": "object",
+              "value": {
+                "successBody": {
+                  "type": "object",
+                  "value": {
+                    "message": { "type": "string", "value": "Approval request sent to Slack" },
+                    "slack_ts": { "type": "jsonpath", "value": "$.steps.slack-small-deal-l1.ts" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

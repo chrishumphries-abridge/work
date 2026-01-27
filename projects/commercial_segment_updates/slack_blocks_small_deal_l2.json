@@ -1,0 +1,115 @@
+{
+  "_description": "Slack Block Kit for Small Deal Level 2 approval request (Reba)",
+  "_approvers": "Reba (required, after Level 1)",
+  "_context": "Shows Level 1 approval info",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "Small Deal Approval - Final Review",
+        "emoji": true
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "Level 2 of 2 • Requires Finance approval"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Account:*\n{$.steps.salesforce-get-account.records[0].Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Physician Count:*\n{$.steps.salesforce-get-account.records[0].Total_Physician_Count_F__c}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{$.steps.salesforce-get-opportunity.records[0].Name}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Amount:*\n${$.steps.salesforce-get-opportunity.records[0].Amount}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Requested by:* {$.steps.salesforce-get-opportunity.records[0].Owner.Name}"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": ":white_check_mark: *Level 1 Approved* by {$.steps.salesforce-get-level1.records[0].Approver__c}\n_{$.steps.salesforce-get-level1.records[0].Notes__c}_"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<https://abridgeai.lightning.force.com/lightning/r/Opportunity/{$.steps.trigger.body.opportunity_id}/view|View Opportunity in Salesforce>"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<@SLACK_USER_ID_REBA> — Please review and provide final approval/rejection."
+      }
+    },
+    {
+      "type": "actions",
+      "block_id": "approval_actions",
+      "elements": [
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Approve",
+            "emoji": true
+          },
+          "style": "primary",
+          "action_id": "approve_commercial",
+          "value": "{$.steps.trigger.body.approval_record_id}"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Reject",
+            "emoji": true
+          },
+          "style": "danger",
+          "action_id": "reject_commercial",
+          "value": "{$.steps.trigger.body.approval_record_id}"
+        }
+      ]
+    }
+  ]
+}

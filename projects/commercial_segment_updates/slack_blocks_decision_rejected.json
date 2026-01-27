@@ -1,0 +1,62 @@
+{
+  "_description": "Updated Slack message after rejection - replaces original message",
+  "_note": "Removes buttons, shows who rejected with timestamp",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": ":x: Rejected",
+        "emoji": true
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "{PROCESS_TYPE} • {ACCOUNT_NAME}"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Opportunity:*\n{OPPORTUNITY_NAME}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Amount:*\n${AMOUNT}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Rejected by:* {APPROVER_NAME}\n*Reason:* {NOTES}"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "Rejected on {TIMESTAMP}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<{SALESFORCE_URL}|View in Salesforce>"
+      }
+    }
+  ]
+}

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Prep Brief — Future Concept</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #f8f9fb 0%, #f3f3f3 100%);
+            padding: 2rem;
+            min-height: 100vh;
+            color: #181818;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Card */
+        .prep-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .prep-header {
+            background: linear-gradient(135deg, #0176d3 0%, #014486 100%);
+            color: white;
+            padding: 1.5rem;
+        }
+        .prep-time {
+            font-size: 0.8125rem;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+        .prep-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 0.375rem;
+        }
+        .prep-subtitle {
+            font-size: 0.9375rem;
+            opacity: 0.9;
+        }
+
+        /* Section */
+        .prep-section {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .prep-section:last-child {
+            border-bottom: none;
+        }
+        .section-title {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: #706e6b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Attendees */
+        .attendee-grid {
+            display: flex;
+            gap: 1rem;
+        }
+        .attendee-card {
+            flex: 1;
+            background: #f8f9fb;
+            border-radius: 8px;
+            padding: 0.875rem;
+            text-align: center;
+        }
+        .attendee-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #0176d3;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 0 auto 0.5rem;
+        }
+        .attendee-avatar.you {
+            background: #04844b;
+        }
+        .attendee-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #181818;
+        }
+        .attendee-title {
+            font-size: 0.75rem;
+            color: #706e6b;
+        }
+        .engagement-dots {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 0.5rem;
+        }
+        .engagement-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e5e5e5;
+        }
+        .engagement-dot.filled {
+            background: #0176d3;
+        }
+        .engagement-dot.warning {
+            background: #fe9339;
+        }
+
+        /* Context items */
+        .context-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f3f3;
+        }
+        .context-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .context-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .context-icon.email {
+            background: #eef4ff;
+        }
+        .context-icon.call {
+            background: #f0fdf4;
+        }
+        .context-icon.alert {
+            background: #fef7e8;
+        }
+        .context-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+        .context-content {
+            flex: 1;
+        }
+        .context-date {
+            font-size: 0.6875rem;
+            color: #706e6b;
+            margin-bottom: 0.125rem;
+        }
+        .context-text {
+            font-size: 0.875rem;
+            color: #181818;
+            line-height: 1.4;
+        }
+
+        /* Talking points */
+        .talking-point {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.625rem 0;
+        }
+        .point-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #0176d3;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .point-text {
+            font-size: 0.9375rem;
+            color: #181818;
+            line-height: 1.4;
+        }
+
+        /* Attachments */
+        .attachment-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .attachment-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: #f3f3f3;
+            padding: 0.375rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8125rem;
+            color: #181818;
+            text-decoration: none;
+            transition: background 0.15s ease;
+        }
+        .attachment-pill:hover {
+            background: #e5e5e5;
+        }
+        .attachment-pill svg {
+            width: 14px;
+            height: 14px;
+            fill: #706e6b;
+        }
+
+        /* AI badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #eef4ff;
+            color: #0176d3;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
+        .ai-badge svg {
+            width: 12px;
+            height: 12px;
+            fill: #0176d3;
+        }
+
+        /* Caption */
+        .caption {
+            text-align: center;
+            margin-top: 2.5rem;
+            color: #706e6b;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+        }
+        .caption strong {
+            color: #181818;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="prep-card">
+            <!-- Header -->
+            <div class="prep-header">
+                <div class="prep-time">Today at 2:00 PM</div>
+                <div class="prep-title">Acme Health Systems</div>
+                <div class="prep-subtitle">Discovery Call &bull; 45 min</div>
+            </div>
+
+            <!-- Attendees -->
+            <div class="prep-section">
+                <div class="section-title">Attendees</div>
+                <div class="attendee-grid">
+                    <div class="attendee-card">
+                        <div class="attendee-avatar">SC</div>
+                        <div class="attendee-name">Sarah Chen</div>
+                        <div class="attendee-title">CMO</div>
+                        <div class="engagement-dots">
+                            <span class="engagement-dot filled"></span>
+                            <span class="engagement-dot filled"></span>
+                            <span class="engagement-dot filled"></span>
+                            <span class="engagement-dot warning"></span>
+                            <span class="engagement-dot"></span>
+                        </div>
+                    </div>
+                    <div class="attendee-card">
+                        <div class="attendee-avatar">MJ</div>
+                        <div class="attendee-name">Mike Johnson</div>
+                        <div class="attendee-title">CIO</div>
+                        <div class="engagement-dots">
+                            <span class="engagement-dot filled"></span>
+                            <span class="engagement-dot filled"></span>
+                            <span class="engagement-dot"></span>
+                            <span class="engagement-dot"></span>
+                            <span class="engagement-dot"></span>
+                        </div>
+                    </div>
+                    <div class="attendee-card">
+                        <div class="attendee-avatar you">You</div>
+                        <div class="attendee-name">You</div>
+                        <div class="attendee-title">&nbsp;</div>
+                        <div class="engagement-dots" style="visibility: hidden;">
+                            <span class="engagement-dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Context -->
+            <div class="prep-section">
+                <div class="section-title">
+                    Recent Context
+                    <span class="ai-badge">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                        AI Summary
+                    </span>
+                </div>
+
+                <div class="context-item">
+                    <div class="context-icon email">
+                        <svg viewBox="0 0 24 24" fill="#0176d3"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </div>
+                    <div class="context-content">
+                        <div class="context-date">Jan 24 &bull; Email from Sarah</div>
+                        <div class="context-text">Asked about integration timeline with Epic. You promised to follow up with specifics.</div>
+                    </div>
+                </div>
+
+                <div class="context-item">
+                    <div class="context-icon call">
+                        <svg viewBox="0 0 24 24" fill="#04844b"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+                    </div>
+                    <div class="context-content">
+                        <div class="context-date">Jan 18 &bull; Call with Mike</div>
+                        <div class="context-text">Raised concerns about IT bandwidth for implementation. No resolution yet — he wants a phased approach.</div>
+                    </div>
+                </div>
+
+                <div class="context-item">
+                    <div class="context-icon alert">
+                        <svg viewBox="0 0 24 24" fill="#ca8501"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                    </div>
+                    <div class="context-content">
+                        <div class="context-date">Signal</div>
+                        <div class="context-text">Champion (Sarah) engagement down 40% vs last month. She hasn't initiated contact in 2 weeks.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggested Talking Points -->
+            <div class="prep-section">
+                <div class="section-title">
+                    Suggested Talking Points
+                    <span class="ai-badge">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                        AI Generated
+                    </span>
+                </div>
+
+                <div class="talking-point">
+                    <div class="point-number">1</div>
+                    <div class="point-text">Address Epic integration timeline — Sarah asked on Jan 24 and is waiting</div>
+                </div>
+                <div class="talking-point">
+                    <div class="point-number">2</div>
+                    <div class="point-text">Revisit phased implementation approach with Mike — he raised IT bandwidth concerns</div>
+                </div>
+                <div class="talking-point">
+                    <div class="point-number">3</div>
+                    <div class="point-text">Re-engage Sarah directly — engagement has dropped, check if priorities have shifted</div>
+                </div>
+            </div>
+
+            <!-- Attachments -->
+            <div class="prep-section">
+                <div class="section-title">Relevant Resources</div>
+                <div class="attachment-row">
+                    <a href="#" class="attachment-pill">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        Epic Integration Guide
+                    </a>
+                    <a href="#" class="attachment-pill">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        Case Study: Similar Health System
+                    </a>
+                    <a href="#" class="attachment-pill">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        Phased Implementation Template
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caption -->
+        <p class="caption">
+            <strong>Meeting Prep Brief</strong> — Exploring<br>
+            Automatic briefing before every call
+        </p>
+    </div>
+</body>
+</html>
