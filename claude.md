@@ -7,11 +7,16 @@
 - **User**: Chris Humphries (ID: `1210002869511639`)
 - **Main Project**: RevOps & Systems/Analytics Request & Backlog Board (ID: `1209756254866607`)
 
-### Zapier (Notion + Google Calendar)
+### Zapier (Notion + Google Calendar) — FUTURE SETUP
 - **Notion Database**: AI Meeting Notes (ID: `2a9c967bdf0980dd9fe2ff3e33203734`)
   - Properties: Name (title with date), Action Items (rich_text)
   - Note: Transcription blocks inside pages are not accessible via API
 - **Google Calendar**: chris.humphries@abridge.com
+- *Currently not configured — user will set up later*
+
+### GitHub (Backup)
+- **Repo**: `chrishumphries-abridge/obsidian` (private)
+- Push regularly to keep work backed up
 
 ---
 
@@ -25,7 +30,7 @@ When user says "plan my day" or similar:
 - **Notion**: Get recent meeting notes (last 1-2 days) with action items
 
 ### 2. Write Daily Plan
-- Save to `/Users/chris/obsidian/Daily Plans/YYYY-MM-DD-daily-plan.md`
+- Save to `/Users/chris/work/Daily Plans/YYYY-MM-DD-daily-plan.md`
 - Include:
   - Today's schedule with meeting prep notes
   - Asana tasks (next 2-3 days)
@@ -43,7 +48,7 @@ When user says "plan my day" or similar:
   4. Quick wins that unblock others
 
 ### Important: Keep Daily Plan File Updated
-- The daily plan file (`/Users/chris/obsidian/Daily Plans/YYYY-MM-DD-daily-plan.md`) is the source of truth
+- The daily plan file (`/Users/chris/work/Daily Plans/YYYY-MM-DD-daily-plan.md`) is the source of truth
 - **Always update the file** when:
   - Analog card changes (new priorities, completed items, replanning)
   - Tasks are added/completed
@@ -91,7 +96,12 @@ Add to the daily plan file:
 - **Tomorrow's Head Start**: 1-2 priority items for first thing
 - **Notes**: Any context for tomorrow-me
 
-### 5. Closure
+### 5. Git Backup
+- Commit any new/changed files
+- Push to GitHub (private repo: `chrishumphries-abridge/obsidian`)
+- Ensures all work is safely backed up
+
+### 6. Closure
 - Daily plan file is now "closed" for the day
 - Incomplete Analog items mentally move to Next card
 - Clean break from work
@@ -138,11 +148,11 @@ Add to Friday's daily plan:
 - **Blocked tasks** — table: task, blocker, owner
 
 ### 3. Create Weekly Report
-- Save to `/Users/chris/obsidian/Weekly Reports/YYYY-WXX-weekly-report.md`
+- Save to `/Users/chris/work/Weekly Reports/YYYY-WXX-weekly-report.md`
 - Include: summary, shipped items, completed count, deferred table, blocked table, next week focus
 
 ### 4. Create Next Week Plan
-- Save to `/Users/chris/obsidian/Daily Plans/YYYY-WXX-weekly-plan.md`
+- Save to `/Users/chris/work/Daily Plans/YYYY-WXX-weekly-plan.md`
 - **Priority order: unfinished → deferred → new**
 - Day-by-day breakdown (Mon-Fri only — user doesn't work weekends)
 - Sunday due dates = Monday in practice
@@ -160,17 +170,20 @@ Add to Friday's daily plan:
 ## File Structure
 
 ```
-obsidian/
+work/
+├── CLAUDE.md              # This file - main context
 ├── Daily Plans/           # Daily plans + weekly plans
-│   └── YYYY-WXX-weekly-plan.md
 ├── Weekly Reports/        # Friday close-out reports
-│   └── YYYY-WXX-weekly-report.md
-├── projects/              # Project-specific docs
-│   ├── va-intel/          # VA Intel monitoring pipeline
+├── meeting_notes/         # Meeting transcript processing (has own CLAUDE.md)
+├── projects/              # Active projects (each has own CLAUDE.md)
+│   ├── va-intel/
 │   ├── commercial_segment_updates/
-│   └── ...
+│   ├── ai_charter_roadmap/
+│   └── buying-group-scoring/
+├── resource_requests/     # Slack block templates
+├── reference/             # One-off docs, guides, templates
 ├── Reviews/               # Performance reviews
-└── reference/             # Templates, workflows
+└── .claude/skills/        # Custom skills (plan-my-day)
 ```
 
 ---
@@ -232,10 +245,27 @@ This prevents the user from having to re-explain context. Come prepared.
 
 ## Active Projects Context
 
+Check each project's CLAUDE.md for current status and context.
+
 ### VA Intel Slack Digest
-- **Status**: In progress — finishing Slack/Canvas integration (as of Jan 12)
 - **Docs**: `projects/va-intel/VA-Intel-Slack-Digest-Options.md` ← **check Build Status section**
 - **Sources**: Orange Slices, Reddit (3 subs), veterans.house.gov, LinkedIn (Shulkin, Paul)
 - **Architecture**: Layer 1 (capture) → Layer 2 (LLM vetting) → Layer 3 (daily digest via Slack Canvas)
-- **Current blockers**: Canvas create JSON formatting, Google News workflow fine-tuning
 - **Dependency**: OpenAI API key for LLM vetting
+
+### Commercial Segment Approval Workflows
+- **Docs**: `projects/commercial_segment_updates/CLAUDE.md` ← **full project context**
+- **Summary**: SFDC approval workflows for small deals (<10 physicians) and Standard PS Model
+- **Components**: SFDC flows + Tray.io webhooks + Slack Block Kit
+
+### AI Charter Roadmap
+- **Docs**: `projects/ai_charter_roadmap/`
+- **Summary**: AI capability roadmap presentation for leadership
+
+### Buying Group Scoring
+- **Docs**: `projects/buying-group-scoring/`
+- **Summary**: Scoring model for buying group engagement
+
+### Meeting Notes Processing
+- **Docs**: `meeting_notes/CLAUDE.md`
+- **Summary**: Workflow for processing meeting transcripts into action items

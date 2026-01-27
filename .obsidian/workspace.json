@@ -197,8 +197,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "2a613c1a13a4b9b9",
+  "active": "1b803a4c0895709e",
   "lastOpenFiles": [
+    "projects/va-intel/CLAUDE.md",
+    "reference/weekly_task_review.md",
+    "reference/offboarding.md",
+    "reference/Manager-Territory-Team-Field-Flow-Instructions.md",
+    "reference/salesforce-forecasting-team-changes-best-practices.md",
+    "reference/MCP Server Setup.md",
+    "CLAUDE.md",
     "meeting_notes/summaries/2026-01-27-revops-q4-retro-buying-group.md",
     "projects/ai_charter_roadmap/presentation_outline.md",
     "meeting_notes/processed/2026-01-27-revops-q4-retro-buying-group.md",
@@ -227,13 +234,6 @@
     "projects/commercial_segment_updates/remaining_tasks.md",
     "projects/commercial_segment_updates/tray_interaction_handler_filtering.md",
     "Daily Plans/2026-W04-weekly-plan.md",
-    "Weekly Reports/2026-W03-weekly-report.md",
-    "Daily Plans/2026-01-16-daily-plan.md",
-    "Daily Plans/2026-01-15-daily-plan.md",
-    "Daily Plans/2026-01-14-daily-plan.md",
-    "projects/va-intel/VA-Intel-Slack-Digest-Options.md",
-    "projects/va-intel/LinkedIn-Monitoring-Options.md",
-    "Daily Plans/2026-01-09-daily-plan.md",
-    "Daily Plans/2026-01-12-daily-plan.md"
+    "Weekly Reports/2026-W03-weekly-report.md"
   ]
 }

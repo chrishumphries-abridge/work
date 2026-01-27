@@ -32,7 +32,7 @@ A daily planning workflow that aggregates work across Asana, Google Calendar, an
 Pull from all three sources in parallel.
 
 ### 2. Write Daily Plan File
-Save to `/Users/chris/obsidian/Daily Plans/YYYY-MM-DD-daily-plan.md`
+Save to `/Users/chris/work/Daily Plans/YYYY-MM-DD-daily-plan.md`
 
 Include:
 - **Today's Schedule**: Calendar events with Zoom links and meeting prep notes
