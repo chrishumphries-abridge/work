@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTM Systems AI — Product Reveal</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        :root {
+            --brand-red: #EA2C00;
+            --brand-blue: #76A8F4;
+            --brand-white: #FFFFFF;
+            --brand-black: #000000;
+            --brand-cream: #EEE6DD;
+            --brand-teal: #00b4d8;
+            --success: #2e844a;
+            --warning: #fe9339;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--brand-black);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Intro Screen */
+        .intro-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--brand-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+        .intro-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .logo-container {
+            opacity: 0;
+            transform: scale(0.8);
+            animation: logo-appear 1s ease 0.5s forwards;
+        }
+
+        @keyframes logo-appear {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .logo-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--brand-red);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 20px 60px rgba(234, 44, 0, 0.4);
+        }
+        .logo-icon svg {
+            width: 60px;
+            height: 60px;
+            fill: var(--brand-white);
+        }
+
+        .intro-title {
+            color: var(--brand-white);
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: text-appear 0.8s ease 1s forwards;
+        }
+
+        .intro-subtitle {
+            color: var(--brand-cream);
+            font-size: 1.25rem;
+            text-align: center;
+            opacity: 0;
+            animation: text-appear 0.8s ease 1.3s forwards;
+        }
+
+        @keyframes text-appear {
+            to { opacity: 1; }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 0.8; }
+        }
+        .sparkle-animate {
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        /* Feature Slides */
+        .feature-slide {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            pointer-events: none;
+            padding: 2rem;
+            background: var(--brand-black);
+        }
+        .feature-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .feature-content {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(234, 44, 0, 0.15);
+            border: 1px solid rgba(234, 44, 0, 0.3);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .feature-badge svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--brand-red);
+        }
+        .feature-badge span {
+            color: var(--brand-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .feature-title {
+            color: var(--brand-white);
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .feature-title .highlight {
+            color: var(--brand-red);
+        }
+
+        .feature-description {
+            color: var(--brand-cream);
+            font-size: 1.125rem;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        /* Mockup Container */
+        .mockup-container {
+            background: var(--brand-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: perspective(1000px) rotateX(5deg) translateY(20px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .feature-slide.active .mockup-container {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0);
+            transition-delay: 0.3s;
+        }
+
+        .mockup-header {
+            background: var(--brand-cream);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .mockup-dot.red { background: var(--brand-red); }
+        .mockup-dot.yellow { background: #febc2e; }
+        .mockup-dot.green { background: #28c840; }
+
+        .mockup-content {
+            padding: 1.5rem;
+            background: #f8f8f6;
+        }
+
+        /* Animate-in elements */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .feature-slide.active .animate-in {
+            animation: element-in 0.6s ease forwards;
+        }
+        .feature-slide.active .animate-in:nth-child(1) { animation-delay: 0.1s; }
+        .feature-slide.active .animate-in:nth-child(2) { animation-delay: 0.2s; }
+        .feature-slide.active .animate-in:nth-child(3) { animation-delay: 0.3s; }
+        .feature-slide.active .animate-in:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes element-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mini Card Styles */
+        .mini-card {
+            background: var(--brand-white);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mini-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .mini-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        .mini-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--brand-black);
+        }
+        .mini-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.625rem;
+            font-weight: 700;
+        }
+
+        /* Priority Items */
+        .priority-item {
+            display: flex;
+            align-items: center;
+            padding: 0.625rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .priority-item:last-child {
+            border-bottom: none;
+        }
+        .priority-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .priority-content {
+            flex: 1;
+        }
+        .priority-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--brand-black);
+        }
+        .priority-desc {
+            font-size: 0.75rem;
+            color: #706e6b;
+        }
+        .priority-amount {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .stat-item {
+            flex: 1;
+            background: var(--brand-white);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--brand-black);
+        }
+        .stat-label {
+            font-size: 0.625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+
+        /* Buying Group Stakeholders */
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        .stakeholder-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stakeholder-card.missing {
+            background: transparent;
+            border: 2px dashed #d0d0d0;
+        }
+        .stakeholder-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+        }
+        .stakeholder-role {
+            font-size: 0.5625rem;
+            font-weight: 700;
+            color: white;
+            padding: 0.125rem 0.375rem;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 0.25rem;
+        }
+        .stakeholder-name {
+            font-size: 0.75rem;
+            color: var(--brand-black);
+        }
+        .engagement-bar {
+            height: 4px;
+            background: #e5e5e5;
+            border-radius: 2px;
+            margin-top: 0.5rem;
+        }
+        .engagement-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        /* Next Steps Items */
+        .next-step-item {
+            border-left: 4px solid;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: white;
+            border-radius: 0 8px 8px 0;
+        }
+        .next-step-item:last-child {
+            margin-bottom: 0;
+        }
+        .next-step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.25rem;
+        }
+        .next-step-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--brand-black);
+        }
+        .next-step-meta {
+            font-size: 0.75rem;
+            color: #706e6b;
+        }
+        .ai-suggestion {
+            background: linear-gradient(135deg, rgba(118, 168, 244, 0.15), rgba(118, 168, 244, 0.05));
+            border-left: 3px solid var(--brand-blue);
+            padding: 0.625rem 0.75rem;
+            border-radius: 0 6px 6px 0;
+            margin-top: 0.75rem;
+        }
+        .ai-suggestion-label {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .ai-suggestion-label svg {
+            width: 12px;
+            height: 12px;
+            fill: var(--brand-blue);
+        }
+        .ai-suggestion-label span {
+            font-size: 0.5625rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+        }
+        .ai-suggestion-text {
+            font-size: 0.8125rem;
+            color: var(--brand-black);
+        }
+
+        /* ============================================ */
+        /* FINAL ASSEMBLY SLIDE */
+        /* ============================================ */
+        .assembly-slide {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            padding: 2rem;
+            background: var(--brand-black);
+        }
+        .assembly-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .assembly-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.6s ease;
+        }
+        .assembly-slide.active .assembly-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .assembly-title h2 {
+            color: var(--brand-white);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .assembly-title h2 .highlight {
+            color: var(--brand-red);
+        }
+
+        .dashboard-frame {
+            background: var(--brand-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+            width: 100%;
+            max-width: 1200px;
+            max-height: calc(100vh - 180px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .frame-header {
+            background: var(--brand-cream);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .frame-header .mockup-dot {
+            width: 10px;
+            height: 10px;
+        }
+        .frame-title {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: #706e6b;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        /* Animate Components */
+        .anim-component {
+            opacity: 0;
+            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .from-top { transform: translateY(-60px); }
+        .from-bottom { transform: translateY(60px); }
+        .from-left { transform: translateX(-60px); }
+        .from-right { transform: translateX(60px); }
+        .from-scale { transform: scale(0.85); }
+
+        .anim-component.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+        .delay-1 { transition-delay: 0.05s; }
+        .delay-2 { transition-delay: 0.1s; }
+        .delay-3 { transition-delay: 0.15s; }
+        .delay-4 { transition-delay: 0.2s; }
+        .delay-5 { transition-delay: 0.25s; }
+        .delay-6 { transition-delay: 0.3s; }
+        .delay-7 { transition-delay: 0.35s; }
+        .delay-8 { transition-delay: 0.4s; }
+        .delay-9 { transition-delay: 0.45s; }
+        .delay-10 { transition-delay: 0.5s; }
+        .delay-11 { transition-delay: 0.55s; }
+        .delay-12 { transition-delay: 0.6s; }
+
+        /* Global Header in Assembly */
+        .global-header {
+            background: #0b1d34;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            flex-shrink: 0;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 0.75rem;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .app-launcher {
+            display: grid;
+            grid-template-columns: repeat(3, 4px);
+            gap: 2px;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        .app-launcher:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .app-launcher-dot {
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 1px;
+        }
+        .abridge-logo-img {
+            height: 20px;
+            margin-left: 0.5rem;
+        }
+        .app-name {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 1rem;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .app-name span {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .context-bar {
+            display: flex;
+            height: 100%;
+            flex: 1;
+        }
+        .nav-tab {
+            height: 100%;
+            padding: 0 0.75rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.75rem;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            transition: background 0.15s ease;
+        }
+        .nav-tab:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        .nav-tab.active {
+            color: white;
+            font-weight: 600;
+            border-bottom-color: white;
+            background: rgba(255,255,255,0.1);
+        }
+        .header-utilities {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-left: auto;
+            padding-right: 0.5rem;
+        }
+        .utility-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        .utility-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .utility-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: rgba(255,255,255,0.85);
+        }
+        .header-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7f8de1, #5a67d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.5625rem;
+            font-weight: 600;
+            margin-left: 0.25rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section in Assembly - SLDS Style */
+        .hero-section {
+            background: #f3f3f3;
+            padding: 0.75rem 1.25rem;
+            flex-shrink: 0;
+            border-bottom: 1px solid #dddbda;
+        }
+        .hero-greeting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .greeting-text {
+            color: #080707;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+        .greeting-date {
+            color: #706e6b;
+            font-size: 0.75rem;
+        }
+
+        /* AI Insight Card - SLDS Style */
+        .ai-insight-box {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.25rem;
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+        }
+        .ai-insight-inner {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .ai-icon-small {
+            width: 32px;
+            height: 32px;
+            background: #0176d3;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ai-icon-small svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
+        .ai-insight-text {
+            color: #080707;
+            font-size: 0.8125rem;
+            line-height: 1.4;
+        }
+        .ai-insight-text strong { color: #080707; font-weight: 700; }
+        .ai-insight-text .warning { color: #c23934; }
+        .ai-buttons {
+            display: flex;
+            gap: 0.375rem;
+            margin-top: 0.5rem;
+        }
+        .ai-btn {
+            padding: 0.375rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            font-weight: 400;
+            cursor: pointer;
+            border: 1px solid #0176d3;
+        }
+        .ai-btn.primary {
+            background: #0176d3;
+            color: white;
+        }
+        .ai-btn.secondary {
+            background: white;
+            border: 1px solid #dddbda;
+            color: #0176d3;
+        }
+
+        /* Main Content Area */
+        .main-area {
+            flex: 1;
+            background: #f3f3f3;
+            padding: 0.75rem 1.25rem;
+            overflow: hidden;
+        }
+
+        /* Quick Actions - SLDS Style */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .quick-card {
+            background: white;
+            border-radius: 0.25rem;
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #dddbda;
+        }
+        .quick-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.375rem;
+        }
+        .quick-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: white;
+        }
+        .quick-value {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #080707;
+        }
+        .quick-label {
+            font-size: 0.5625rem;
+            color: #706e6b;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .left-col, .right-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* Card - SLDS Style */
+        .card {
+            background: white;
+            border-radius: 0.25rem;
+            border: 1px solid #dddbda;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #dddbda;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fafaf9;
+        }
+        .card-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #080707;
+        }
+        .card-meta {
+            font-size: 0.625rem;
+            color: #706e6b;
+        }
+        .card-badge-sm {
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.75rem;
+            font-size: 0.5625rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .card-badge-sm svg {
+            width: 8px;
+            height: 8px;
+        }
+        .card-body {
+            padding: 0.5rem 0.75rem;
+        }
+
+        /* Compact Priority Items */
+        .priority-item-sm {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .priority-item-sm:last-child {
+            border-bottom: none;
+        }
+        .priority-num-sm {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5625rem;
+            font-weight: 700;
+            color: white;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        .priority-content-sm {
+            flex: 1;
+            min-width: 0;
+        }
+        .priority-title-sm {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--brand-black);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .priority-desc-sm {
+            font-size: 0.625rem;
+            color: #706e6b;
+        }
+        .priority-badge-sm {
+            padding: 0.0625rem 0.25rem;
+            border-radius: 2px;
+            font-size: 0.5rem;
+            font-weight: 700;
+            margin-left: 0.375rem;
+            flex-shrink: 0;
+        }
+        .priority-amount-sm {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-left: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Compact Stakeholder Grid */
+        .stakeholder-grid-sm {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+        .stakeholder-card-sm {
+            background: #f8f8f8;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .stakeholder-card-sm.missing {
+            background: transparent;
+            border: 1.5px dashed #d0d0d0;
+        }
+        .stakeholder-avatar-sm {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.25rem;
+            font-size: 0.5625rem;
+            font-weight: 600;
+            color: white;
+        }
+        .stakeholder-role-sm {
+            font-size: 0.4375rem;
+            font-weight: 700;
+            color: white;
+            padding: 0.0625rem 0.1875rem;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: 0.125rem;
+        }
+        .stakeholder-name-sm {
+            font-size: 0.5625rem;
+            color: var(--brand-black);
+        }
+        .engagement-bar-sm {
+            height: 2px;
+            background: #e5e5e5;
+            border-radius: 1px;
+            margin-top: 0.25rem;
+        }
+
+        /* Compact Next Steps */
+        .next-step-sm {
+            border-left: 3px solid;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: #f8f8f8;
+            border-radius: 0 0.375rem 0.375rem 0;
+        }
+        .next-step-sm:last-child {
+            margin-bottom: 0;
+        }
+        .next-step-header-sm {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .next-step-title-sm {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--brand-black);
+        }
+        .next-step-meta-sm {
+            font-size: 0.5625rem;
+            color: #706e6b;
+        }
+        .ai-suggestion-sm {
+            background: linear-gradient(135deg, rgba(118, 168, 244, 0.12), rgba(118, 168, 244, 0.04));
+            border-left: 2px solid var(--brand-blue);
+            padding: 0.375rem 0.5rem;
+            border-radius: 0 4px 4px 0;
+            margin-top: 0.375rem;
+        }
+        .ai-suggestion-label-sm {
+            display: flex;
+            align-items: center;
+            gap: 0.1875rem;
+            margin-bottom: 0.125rem;
+        }
+        .ai-suggestion-label-sm svg {
+            width: 8px;
+            height: 8px;
+            fill: var(--brand-blue);
+        }
+        .ai-suggestion-label-sm span {
+            font-size: 0.4375rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+        }
+        .ai-suggestion-text-sm {
+            font-size: 0.5625rem;
+            color: var(--brand-black);
+        }
+
+        /* Pipeline Bar */
+        .pipeline-bar-sm {
+            height: 6px;
+            background: var(--brand-cream);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.375rem;
+        }
+        .pipeline-segments {
+            display: flex;
+            height: 100%;
+        }
+        .pipeline-labels-sm {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.5625rem;
+            color: #706e6b;
+        }
+
+        /* Schedule */
+        .schedule-item-sm {
+            position: relative;
+            padding-left: 0.75rem;
+            border-left: 2px solid var(--brand-cream);
+            margin-bottom: 0.625rem;
+        }
+        .schedule-item-sm:last-child {
+            margin-bottom: 0;
+        }
+        .schedule-dot-sm {
+            position: absolute;
+            left: -4px;
+            top: 1px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            border: 1.5px solid white;
+        }
+        .schedule-time-sm {
+            font-size: 0.5625rem;
+            font-weight: 700;
+        }
+        .schedule-title-sm {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--brand-black);
+        }
+        .schedule-attendees-sm {
+            font-size: 0.5625rem;
+            color: #706e6b;
+        }
+        .schedule-link-sm {
+            display: flex;
+            align-items: center;
+            gap: 0.1875rem;
+            font-size: 0.5625rem;
+            color: var(--brand-blue);
+            text-decoration: none;
+            margin-top: 0.125rem;
+        }
+        .schedule-link-sm svg {
+            width: 8px;
+            height: 8px;
+            fill: var(--brand-blue);
+        }
+
+        /* Health Ring */
+        .health-container-sm {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .health-ring-sm {
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+        .health-ring-sm svg {
+            transform: rotate(-90deg);
+        }
+        .health-text-sm {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .health-value-sm {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+        .health-label-sm {
+            font-size: 0.4375rem;
+            color: #706e6b;
+        }
+        .health-legend-sm {
+            font-size: 0.6875rem;
+        }
+        .health-legend-item-sm {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            margin-bottom: 0.25rem;
+        }
+        .health-dot-sm {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        /* Account Health Card */
+        .account-item-sm {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .account-item-sm:last-child {
+            border-bottom: none;
+        }
+        .account-health-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: 700;
+            color: white;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        .account-health-sm.critical {
+            background: #c23934;
+        }
+        .account-health-sm.warning {
+            background: #fe9339;
+        }
+        .account-health-sm.healthy {
+            background: #2e844a;
+        }
+        .account-info-sm {
+            flex: 1;
+            min-width: 0;
+        }
+        .account-name-sm {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #080707;
+        }
+        .account-meta-sm {
+            font-size: 0.5625rem;
+            color: #706e6b;
+        }
+        .account-arr-sm {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: #0176d3;
+            flex-shrink: 0;
+        }
+
+        /* Forecast Card */
+        .forecast-header-sm {
+            display: flex;
+            align-items: baseline;
+            gap: 0.375rem;
+            margin-bottom: 0.375rem;
+        }
+        .forecast-amount-sm {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--brand-blue);
+        }
+        .forecast-quota-sm {
+            font-size: 0.625rem;
+            color: #706e6b;
+        }
+        .forecast-bar-sm {
+            height: 6px;
+            background: var(--brand-cream);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.25rem;
+        }
+        .forecast-fill-sm {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--brand-blue) 70%, var(--warning) 100%);
+            border-radius: 3px;
+        }
+        .forecast-status-sm {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.5625rem;
+            color: #706e6b;
+            margin-bottom: 0.5rem;
+        }
+        .forecast-categories-sm {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .forecast-cat-sm {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.625rem;
+            color: var(--brand-black);
+        }
+        .forecast-dot-sm {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Progress Dots */
+        .progress-container {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 200;
+        }
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .progress-dot.active {
+            background: var(--brand-red);
+            transform: scale(1.2);
+        }
+
+        /* Buttons */
+        .skip-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 2rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .skip-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .replay-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 2rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .replay-btn.visible {
+            opacity: 1;
+        }
+        .replay-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Feature Grid Slide */
+        .feature-grid-intro {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .feature-grid-intro .feature-badge {
+            justify-content: center;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .feature-grid-item {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .feature-grid-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+        }
+        .feature-grid-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        .feature-grid-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        .feature-grid-item h3 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .feature-grid-item p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8125rem;
+            line-height: 1.4;
+        }
+
+        /* Account Health in Spotlight */
+        .account-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .account-row {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .account-row:last-child {
+            border-bottom: none;
+        }
+        .account-health {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .account-health.critical { background: #c23934; }
+        .account-health.warning { background: #fe9339; }
+        .account-health.healthy { background: #2e844a; }
+        .account-details {
+            flex: 1;
+        }
+        .account-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #080707;
+        }
+        .account-meta {
+            font-size: 0.75rem;
+            color: #706e6b;
+        }
+        .account-pipeline {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--brand-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Screen -->
+    <div class="intro-screen" id="intro">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <svg class="sparkle-animate" viewBox="0 0 24 24">
+                    <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/>
+                </svg>
+            </div>
+            <h1 class="intro-title">GTM Systems AI</h1>
+            <p class="intro-subtitle">Every interaction becomes insight.</p>
+        </div>
+    </div>
+
+    <!-- Slide 1: Deal Intelligence -->
+    <div class="feature-slide" id="slide1">
+        <div class="feature-content">
+            <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="feature-badge animate-in">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                        <span>Deal Intelligence</span>
+                    </div>
+                    <h2 class="feature-title animate-in">Know your deals.<br><span class="highlight">Before they slip.</span></h2>
+                    <p class="feature-description animate-in">AI-powered health scores and risk signals on every opportunity. The system anticipates what you need — before you ask.</p>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <div class="mockup-dot red"></div>
+                            <div class="mockup-dot yellow"></div>
+                            <div class="mockup-dot green"></div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mini-card">
+                                <div class="mini-header">
+                                    <span class="mini-title">Your Priority Actions</span>
+                                    <span class="mini-badge" style="background: rgba(118, 168, 244, 0.15); color: var(--brand-blue);">AI Prioritized</span>
+                                </div>
+                                <div class="priority-item">
+                                    <div class="priority-num" style="background: var(--brand-red);">1</div>
+                                    <div class="priority-content">
+                                        <div class="priority-title">Re-engage Acme Health</div>
+                                        <div class="priority-desc">Sarah asked about Epic on Jan 15</div>
+                                    </div>
+                                    <span class="mini-badge" style="background: #fef1ee; color: var(--brand-red);">12d silent</span>
+                                    <div class="priority-amount">$425K</div>
+                                </div>
+                                <div class="priority-item">
+                                    <div class="priority-num" style="background: var(--warning);">2</div>
+                                    <div class="priority-content">
+                                        <div class="priority-title">New stakeholder at Metro</div>
+                                        <div class="priority-desc">David Chen added to thread</div>
+                                    </div>
+                                    <span class="mini-badge" style="background: #fef7e8; color: #b47800;">Signal</span>
+                                    <div class="priority-amount">$680K</div>
+                                </div>
+                                <div class="priority-item">
+                                    <div class="priority-num" style="background: var(--success);">3</div>
+                                    <div class="priority-content">
+                                        <div class="priority-title">Send proposal to Valley</div>
+                                        <div class="priority-desc">Strong buying group engagement</div>
+                                    </div>
+                                    <span class="mini-badge" style="background: #ebf7e6; color: var(--success);">Hot</span>
+                                    <div class="priority-amount">$320K</div>
+                                </div>
+                            </div>
+                            <div class="stats-row">
+                                <div class="stat-item">
+                                    <div class="stat-value" style="color: var(--brand-red);">3</div>
+                                    <div class="stat-label">At Risk</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">$2.8M</div>
+                                    <div class="stat-label">Pipeline</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" style="color: var(--success);">72%</div>
+                                    <div class="stat-label">Health</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Account Health -->
+    <div class="feature-slide" id="slide2">
+        <div class="feature-content">
+            <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="feature-badge animate-in">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                        <span>Account Health</span>
+                    </div>
+                    <h2 class="feature-title animate-in">Know your accounts.<br><span class="highlight">At a glance.</span></h2>
+                    <p class="feature-description animate-in">Health scores, ARR, pipeline, and activity — all in one view. The right context, at the right moment.</p>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <div class="mockup-dot red"></div>
+                            <div class="mockup-dot yellow"></div>
+                            <div class="mockup-dot green"></div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mini-card">
+                                <div class="mini-header">
+                                    <span class="mini-title">Accounts Needing Attention</span>
+                                    <span class="mini-badge" style="background: #fef1ee; color: #c23934;">2 at risk</span>
+                                </div>
+                                <div class="account-list">
+                                    <div class="account-row">
+                                        <div class="account-health critical">34</div>
+                                        <div class="account-details">
+                                            <div class="account-name">Acme Health Systems</div>
+                                            <div class="account-meta">$125K ARR · 12 days silent</div>
+                                        </div>
+                                        <div class="account-pipeline">$425K pipe</div>
+                                    </div>
+                                    <div class="account-row">
+                                        <div class="account-health warning">58</div>
+                                        <div class="account-details">
+                                            <div class="account-name">Metro Regional Medical</div>
+                                            <div class="account-meta">$80K ARR · 8 days silent</div>
+                                        </div>
+                                        <div class="account-pipeline">$680K pipe</div>
+                                    </div>
+                                    <div class="account-row">
+                                        <div class="account-health healthy">89</div>
+                                        <div class="account-details">
+                                            <div class="account-name">Valley Health Network</div>
+                                            <div class="account-meta">$200K ARR · Active today</div>
+                                        </div>
+                                        <div class="account-pipeline">$320K pipe</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stats-row">
+                                <div class="stat-item">
+                                    <div class="stat-value">12</div>
+                                    <div class="stat-label">Accounts</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" style="color: #c23934;">2</div>
+                                    <div class="stat-label">At Risk</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">$1.2M</div>
+                                    <div class="stat-label">Total ARR</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Buying Groups -->
+    <div class="feature-slide" id="slide3">
+        <div class="feature-content">
+            <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="feature-badge animate-in">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                        <span>Buying Groups</span>
+                    </div>
+                    <h2 class="feature-title animate-in">See the <span class="highlight">whole picture.</span></h2>
+                    <p class="feature-description animate-in">Track every stakeholder, their role, and engagement level. Know who's missing and who's going quiet.</p>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <div class="mockup-dot red"></div>
+                            <div class="mockup-dot yellow"></div>
+                            <div class="mockup-dot green"></div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mini-card">
+                                <div class="mini-header">
+                                    <span class="mini-title">Acme Health — Buying Group</span>
+                                    <span style="font-size: 0.75rem; color: #706e6b;">3 of 5 roles</span>
+                                </div>
+                                <div class="stakeholder-grid">
+                                    <div class="stakeholder-card">
+                                        <div class="stakeholder-avatar" style="background: var(--brand-blue);">SC</div>
+                                        <span class="stakeholder-role" style="background: var(--brand-blue);">Clinical Champion</span>
+                                        <div class="stakeholder-name">Sarah Chen</div>
+                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 60%; background: var(--warning);"></div></div>
+                                    </div>
+                                    <div class="stakeholder-card">
+                                        <div class="stakeholder-avatar" style="background: var(--brand-red);">TR</div>
+                                        <span class="stakeholder-role" style="background: var(--brand-red);">Economic Buyer</span>
+                                        <div class="stakeholder-name">Tom Richards</div>
+                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 15%; background: var(--brand-red);"></div></div>
+                                    </div>
+                                    <div class="stakeholder-card">
+                                        <div class="stakeholder-avatar" style="background: var(--success);">MJ</div>
+                                        <span class="stakeholder-role" style="background: var(--success);">Advocate</span>
+                                        <div class="stakeholder-name">Mike Johnson</div>
+                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 90%; background: var(--success);"></div></div>
+                                    </div>
+                                    <div class="stakeholder-card missing">
+                                        <div class="stakeholder-avatar" style="background: #d0d0d0; color: #706e6b;">?</div>
+                                        <span class="stakeholder-role" style="background: #d0d0d0; color: #706e6b;">IT Champion</span>
+                                        <div class="stakeholder-name" style="color: #706e6b;">Not identified</div>
+                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 0%;"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Next Steps Hygiene -->
+    <div class="feature-slide" id="slide4">
+        <div class="feature-content">
+            <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="feature-badge animate-in">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <span>Next Steps Hygiene</span>
+                    </div>
+                    <h2 class="feature-title animate-in">Never let a deal <span class="highlight">go stale.</span></h2>
+                    <p class="feature-description animate-in">AI monitors your pipeline and suggests the next best action. No more deals falling through the cracks.</p>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="mockup-container">
+                        <div class="mockup-header">
+                            <div class="mockup-dot red"></div>
+                            <div class="mockup-dot yellow"></div>
+                            <div class="mockup-dot green"></div>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="next-step-item" style="border-left-color: var(--brand-red);">
+                                <div class="next-step-header">
+                                    <div>
+                                        <div class="next-step-title">Acme Health Systems</div>
+                                        <div class="next-step-meta">Stage 3 — $425K</div>
+                                    </div>
+                                    <span class="mini-badge" style="background: #fef1ee; color: var(--brand-red);">No Next Step</span>
+                                </div>
+                                <div class="ai-suggestion">
+                                    <div class="ai-suggestion-label">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                                        <span>AI SUGGESTION</span>
+                                    </div>
+                                    <div class="ai-suggestion-text">Follow up with Sarah on Epic integration timeline.</div>
+                                </div>
+                            </div>
+                            <div class="next-step-item" style="border-left-color: var(--warning);">
+                                <div class="next-step-header">
+                                    <div>
+                                        <div class="next-step-title">Metro Regional Medical</div>
+                                        <div class="next-step-meta">Stage 4 — $680K</div>
+                                    </div>
+                                    <span class="mini-badge" style="background: #fef7e8; color: #b47800;">Stale 8 days</span>
+                                </div>
+                            </div>
+                            <div class="next-step-item" style="border-left-color: var(--success);">
+                                <div class="next-step-header">
+                                    <div>
+                                        <div class="next-step-title">Valley Health Network</div>
+                                        <div class="next-step-meta">Stage 4 — $320K</div>
+                                    </div>
+                                    <span class="mini-badge" style="background: #ebf7e6; color: var(--success);">On Track</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Feature Grid Overview -->
+    <div class="feature-slide" id="slide5">
+        <div class="feature-content">
+            <div class="feature-grid-intro">
+                <div class="feature-badge animate-in" style="justify-content: center;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                    <span>GTM Systems AI</span>
+                </div>
+                <h2 class="feature-title animate-in" style="text-align: center;">Context, not complexity.</h2>
+                <p class="feature-description animate-in" style="text-align: center; max-width: 600px; margin: 0 auto;">Right information. Right moment. We meet you where you work.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-grid-item animate-in">
+                    <div class="feature-grid-icon" style="background: #0176d3;">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                    </div>
+                    <h3>Deal Intelligence</h3>
+                    <p>"What should I do next?" — answered automatically</p>
+                </div>
+                <div class="feature-grid-item animate-in">
+                    <div class="feature-grid-icon" style="background: #c23934;">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                    </div>
+                    <h3>Account Health</h3>
+                    <p>"Which accounts need me?" — at a glance</p>
+                </div>
+                <div class="feature-grid-item animate-in">
+                    <div class="feature-grid-icon" style="background: #7f8de1;">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
+                    <h3>Buying Groups</h3>
+                    <p>Know every stakeholder, their role, their engagement</p>
+                </div>
+                <div class="feature-grid-item animate-in">
+                    <div class="feature-grid-icon" style="background: #2e844a;">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <h3>Next Steps Hygiene</h3>
+                    <p>AI-suggested actions — no deal falls through the cracks</p>
+                </div>
+                <div class="feature-grid-item animate-in">
+                    <div class="feature-grid-icon" style="background: #fe9339;">
+                        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                    </div>
+                    <h3>Meeting Prep</h3>
+                    <p>Walk in prepared — AI-generated briefs for every call</p>
+                </div>
+                <div class="feature-grid-item animate-in">
+                    <div class="feature-grid-icon" style="background: #032d60;">
+                        <svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
+                    </div>
+                    <h3>Forecast & Pipeline</h3>
+                    <p>"Where do I coach?" — real-time visibility</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Full Dashboard Assembly -->
+    <div class="assembly-slide" id="slide6">
+        <div class="assembly-title">
+            <div class="feature-badge" style="display: inline-flex; margin-bottom: 0.75rem;">
+                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                <span>Your New Home</span>
+            </div>
+            <h2>Every interaction becomes <span class="highlight">insight.</span></h2>
+        </div>
+
+        <div class="dashboard-frame">
+            <div class="frame-header">
+                <div class="mockup-dot red"></div>
+                <div class="mockup-dot yellow"></div>
+                <div class="mockup-dot green"></div>
+                <span class="frame-title">Salesforce — GTM Systems AI</span>
+            </div>
+
+            <div class="dashboard-content">
+                <!-- Global Header -->
+                <header class="global-header anim-component from-top delay-1">
+                    <div class="header-logo">
+                        <div class="app-launcher">
+                            <div class="app-launcher-dot"></div><div class="app-launcher-dot"></div><div class="app-launcher-dot"></div>
+                            <div class="app-launcher-dot"></div><div class="app-launcher-dot"></div><div class="app-launcher-dot"></div>
+                            <div class="app-launcher-dot"></div><div class="app-launcher-dot"></div><div class="app-launcher-dot"></div>
+                        </div>
+                        <!-- Abridge Logo -->
+                        <svg class="abridge-logo-img" viewBox="0 0 120 24" fill="none">
+                            <text x="0" y="18" fill="#00b4d8" font-family="Salesforce Sans, sans-serif" font-size="16" font-weight="700">ABRIDGE</text>
+                        </svg>
+                    </div>
+                    <div class="app-name">
+                        <span>Abridge</span>
+                    </div>
+                    <nav class="context-bar">
+                        <a href="#" class="nav-tab active">Home</a>
+                        <a href="#" class="nav-tab">Leads</a>
+                        <a href="#" class="nav-tab">Accounts</a>
+                        <a href="#" class="nav-tab">Contacts</a>
+                        <a href="#" class="nav-tab">Opportunities</a>
+                        <a href="#" class="nav-tab">Dashboards</a>
+                        <a href="#" class="nav-tab">Reports</a>
+                    </nav>
+                    <div class="header-utilities">
+                        <!-- Search -->
+                        <div class="utility-btn" title="Search">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        </div>
+                        <!-- Favorites -->
+                        <div class="utility-btn" title="Favorites">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </div>
+                        <!-- Global Create -->
+                        <div class="utility-btn" title="Create">
+                            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        </div>
+                        <!-- Help -->
+                        <div class="utility-btn" title="Help">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                        </div>
+                        <!-- Setup -->
+                        <div class="utility-btn" title="Setup">
+                            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                        </div>
+                        <!-- Notifications -->
+                        <div class="utility-btn" title="Notifications">
+                            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                        </div>
+                        <!-- User Avatar -->
+                        <div class="header-avatar" title="Chris Humphries">CH</div>
+                    </div>
+                </header>
+
+                <!-- Hero Section -->
+                <section class="hero-section">
+                    <div class="hero-greeting anim-component from-left delay-2">
+                        <div>
+                            <div class="greeting-text">Good morning, Chris</div>
+                            <div class="greeting-date">Monday, January 27, 2026</div>
+                        </div>
+                    </div>
+
+                    <div class="ai-insight-box anim-component from-scale delay-3">
+                        <div class="ai-insight-inner">
+                            <div class="ai-icon-small">
+                                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                            </div>
+                            <div>
+                                <p class="ai-insight-text">
+                                    <span class="warning">Acme Health</span> hasn't heard from you in 12 days. You have a call at <strong>2pm today</strong>.
+                                </p>
+                                <div class="ai-buttons">
+                                    <button class="ai-btn primary">Draft Follow-up</button>
+                                    <button class="ai-btn secondary">View Brief</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main Content -->
+                <main class="main-area">
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <div class="quick-card anim-component from-bottom delay-4">
+                            <div class="quick-icon" style="background: #c23934;"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></div>
+                            <div class="quick-value">3 At Risk</div>
+                            <div class="quick-label">Deals need attention</div>
+                        </div>
+                        <div class="quick-card anim-component from-bottom delay-5">
+                            <div class="quick-icon" style="background: #fe9339;"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+                            <div class="quick-value">3 Missing</div>
+                            <div class="quick-label">Next steps needed</div>
+                        </div>
+                        <div class="quick-card anim-component from-bottom delay-6">
+                            <div class="quick-icon" style="background: #0176d3;"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></div>
+                            <div class="quick-value">2 Meetings</div>
+                            <div class="quick-label">Scheduled today</div>
+                        </div>
+                        <div class="quick-card anim-component from-bottom delay-7">
+                            <div class="quick-icon" style="background: #2e844a;"><svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg></div>
+                            <div class="quick-value">$2.8M</div>
+                            <div class="quick-label">Active pipeline</div>
+                        </div>
+                    </div>
+
+                    <!-- Cards Grid -->
+                    <div class="cards-grid">
+                        <div class="left-col">
+                            <!-- Priority Actions -->
+                            <div class="card anim-component from-left delay-5">
+                                <div class="card-header">
+                                    <span class="card-title">Your Priority Actions</span>
+                                    <span class="card-badge-sm" style="background: rgba(118, 168, 244, 0.15); color: var(--brand-blue);">
+                                        <svg viewBox="0 0 24 24" style="fill: var(--brand-blue);"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                                        AI Prioritized
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="priority-item-sm">
+                                        <div class="priority-num-sm" style="background: var(--brand-red);">1</div>
+                                        <div class="priority-content-sm">
+                                            <div class="priority-title-sm">Re-engage Acme Health<span class="priority-badge-sm" style="background: #fef1ee; color: var(--brand-red);">12d</span></div>
+                                            <div class="priority-desc-sm">Sarah asked about Epic</div>
+                                        </div>
+                                        <div class="priority-amount-sm">$425K</div>
+                                    </div>
+                                    <div class="priority-item-sm">
+                                        <div class="priority-num-sm" style="background: var(--warning);">2</div>
+                                        <div class="priority-content-sm">
+                                            <div class="priority-title-sm">New stakeholder at Metro<span class="priority-badge-sm" style="background: #fef7e8; color: #b47800;">Signal</span></div>
+                                            <div class="priority-desc-sm">David Chen added</div>
+                                        </div>
+                                        <div class="priority-amount-sm">$680K</div>
+                                    </div>
+                                    <div class="priority-item-sm">
+                                        <div class="priority-num-sm" style="background: var(--success);">3</div>
+                                        <div class="priority-content-sm">
+                                            <div class="priority-title-sm">Send proposal to Valley<span class="priority-badge-sm" style="background: #ebf7e6; color: var(--success);">Hot</span></div>
+                                            <div class="priority-desc-sm">Strong engagement</div>
+                                        </div>
+                                        <div class="priority-amount-sm">$320K</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Accounts Needing Attention -->
+                            <div class="card anim-component from-left delay-6">
+                                <div class="card-header">
+                                    <span class="card-title">Accounts Needing Attention</span>
+                                    <span class="card-badge-sm" style="background: #fef1ee; color: #c23934;">2 at risk</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="account-item-sm">
+                                        <div class="account-health-sm critical">34</div>
+                                        <div class="account-info-sm">
+                                            <div class="account-name-sm">Acme Health Systems</div>
+                                            <div class="account-meta-sm">$125K ARR · 12 days silent</div>
+                                        </div>
+                                        <div class="account-arr-sm">$425K pipe</div>
+                                    </div>
+                                    <div class="account-item-sm">
+                                        <div class="account-health-sm warning">58</div>
+                                        <div class="account-info-sm">
+                                            <div class="account-name-sm">Metro Regional Medical</div>
+                                            <div class="account-meta-sm">$80K ARR · 8 days silent</div>
+                                        </div>
+                                        <div class="account-arr-sm">$680K pipe</div>
+                                    </div>
+                                    <div class="account-item-sm">
+                                        <div class="account-health-sm healthy">89</div>
+                                        <div class="account-info-sm">
+                                            <div class="account-name-sm">Valley Health Network</div>
+                                            <div class="account-meta-sm">$200K ARR · Active today</div>
+                                        </div>
+                                        <div class="account-arr-sm">$320K pipe</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buying Groups -->
+                            <div class="card anim-component from-left delay-8">
+                                <div class="card-header">
+                                    <span class="card-title">Acme Health — Buying Group</span>
+                                    <span class="card-meta">3 of 5 roles</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="stakeholder-grid-sm">
+                                        <div class="stakeholder-card-sm">
+                                            <div class="stakeholder-avatar-sm" style="background: var(--brand-blue);">SC</div>
+                                            <span class="stakeholder-role-sm" style="background: var(--brand-blue);">Clinical Champ</span>
+                                            <div class="stakeholder-name-sm">Sarah Chen</div>
+                                            <div class="engagement-bar-sm"><div class="engagement-fill" style="width: 60%; background: var(--warning);"></div></div>
+                                        </div>
+                                        <div class="stakeholder-card-sm">
+                                            <div class="stakeholder-avatar-sm" style="background: var(--brand-red);">TR</div>
+                                            <span class="stakeholder-role-sm" style="background: var(--brand-red);">Econ Buyer</span>
+                                            <div class="stakeholder-name-sm">Tom Richards</div>
+                                            <div class="engagement-bar-sm"><div class="engagement-fill" style="width: 15%; background: var(--brand-red);"></div></div>
+                                        </div>
+                                        <div class="stakeholder-card-sm">
+                                            <div class="stakeholder-avatar-sm" style="background: var(--success);">MJ</div>
+                                            <span class="stakeholder-role-sm" style="background: var(--success);">Advocate</span>
+                                            <div class="stakeholder-name-sm">Mike Johnson</div>
+                                            <div class="engagement-bar-sm"><div class="engagement-fill" style="width: 90%; background: var(--success);"></div></div>
+                                        </div>
+                                        <div class="stakeholder-card-sm missing">
+                                            <div class="stakeholder-avatar-sm" style="background: #d0d0d0; color: #706e6b;">?</div>
+                                            <span class="stakeholder-role-sm" style="background: #d0d0d0; color: #706e6b;">IT Champion</span>
+                                            <div class="stakeholder-name-sm" style="color: #706e6b;">Not identified</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Next Steps Hygiene -->
+                            <div class="card anim-component from-left delay-9">
+                                <div class="card-header">
+                                    <span class="card-title">Next Steps Hygiene</span>
+                                    <span class="card-badge-sm" style="background: #fef1ee; color: var(--brand-red);">3 need attention</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="next-step-sm" style="border-left-color: var(--brand-red);">
+                                        <div class="next-step-header-sm">
+                                            <div>
+                                                <div class="next-step-title-sm">Acme Health</div>
+                                                <div class="next-step-meta-sm">Stage 3 — $425K</div>
+                                            </div>
+                                            <span class="priority-badge-sm" style="background: #fef1ee; color: var(--brand-red);">No Next Step</span>
+                                        </div>
+                                        <div class="ai-suggestion-sm">
+                                            <div class="ai-suggestion-label-sm">
+                                                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                                                <span>AI SUGGESTION</span>
+                                            </div>
+                                            <div class="ai-suggestion-text-sm">Follow up on Epic integration</div>
+                                        </div>
+                                    </div>
+                                    <div class="next-step-sm" style="border-left-color: var(--warning);">
+                                        <div class="next-step-header-sm">
+                                            <div>
+                                                <div class="next-step-title-sm">Metro Regional</div>
+                                                <div class="next-step-meta-sm">Stage 4 — $680K</div>
+                                            </div>
+                                            <span class="priority-badge-sm" style="background: #fef7e8; color: #b47800;">Stale 8d</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="right-col">
+                            <!-- Schedule -->
+                            <div class="card anim-component from-right delay-5">
+                                <div class="card-header">
+                                    <span class="card-title">Today's Schedule</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="schedule-item-sm">
+                                        <div class="schedule-dot-sm" style="background: var(--success); box-shadow: 0 0 0 2px var(--success);"></div>
+                                        <div class="schedule-time-sm" style="color: var(--success);">2:00 PM <span class="priority-badge-sm" style="background: var(--success); color: white;">NEXT</span></div>
+                                        <div class="schedule-title-sm">Acme Health Systems</div>
+                                        <div class="schedule-attendees-sm">Sarah Chen, Mike Johnson</div>
+                                        <a href="#" class="schedule-link-sm">
+                                            <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                                            View AI Prep Brief
+                                        </a>
+                                    </div>
+                                    <div class="schedule-item-sm">
+                                        <div class="schedule-dot-sm" style="background: var(--brand-blue); box-shadow: 0 0 0 2px var(--brand-blue);"></div>
+                                        <div class="schedule-time-sm" style="color: #706e6b;">4:00 PM</div>
+                                        <div class="schedule-title-sm">Summit Care Partners</div>
+                                        <div class="schedule-attendees-sm">Lisa Torres (CNO)</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pipeline Health -->
+                            <div class="card anim-component from-right delay-6">
+                                <div class="card-header">
+                                    <span class="card-title">Pipeline Health</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="health-container-sm">
+                                        <div class="health-ring-sm">
+                                            <svg width="60" height="60">
+                                                <circle cx="30" cy="30" r="24" fill="none" stroke="var(--brand-cream)" stroke-width="5"/>
+                                                <circle cx="30" cy="30" r="24" fill="none" stroke="var(--success)" stroke-width="5" stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="42"/>
+                                            </svg>
+                                            <div class="health-text-sm">
+                                                <div class="health-value-sm">72%</div>
+                                                <div class="health-label-sm">AVG</div>
+                                            </div>
+                                        </div>
+                                        <div class="health-legend-sm">
+                                            <div class="health-legend-item-sm"><div class="health-dot-sm" style="background: var(--success);"></div><span>5 Healthy</span></div>
+                                            <div class="health-legend-item-sm"><div class="health-dot-sm" style="background: var(--warning);"></div><span>2 At Risk</span></div>
+                                            <div class="health-legend-item-sm"><div class="health-dot-sm" style="background: var(--brand-red);"></div><span>1 Critical</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Forecast -->
+                            <div class="card anim-component from-right delay-7">
+                                <div class="card-header">
+                                    <span class="card-title">Q1 Forecast</span>
+                                    <span class="card-meta">68 days left</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="forecast-header-sm">
+                                        <span class="forecast-amount-sm">$1.8M</span>
+                                        <span class="forecast-quota-sm">of $2.4M</span>
+                                    </div>
+                                    <div class="forecast-bar-sm">
+                                        <div class="forecast-fill-sm" style="width: 75%;"></div>
+                                    </div>
+                                    <div class="forecast-status-sm">
+                                        <span style="color: var(--success);">75% to quota</span>
+                                        <span>$600K gap</span>
+                                    </div>
+                                    <div class="forecast-categories-sm">
+                                        <div class="forecast-cat-sm"><span class="forecast-dot-sm" style="background: var(--success);"></span>Won $420K</div>
+                                        <div class="forecast-cat-sm"><span class="forecast-dot-sm" style="background: var(--brand-blue);"></span>Commit $680K</div>
+                                        <div class="forecast-cat-sm"><span class="forecast-dot-sm" style="background: var(--warning);"></span>Best Case $700K</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pipeline Overview -->
+                            <div class="card anim-component from-right delay-8">
+                                <div class="card-header">
+                                    <span class="card-title">Pipeline Overview</span>
+                                    <span class="card-meta">8 Deals — $2.8M</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="pipeline-bar-sm">
+                                        <div class="pipeline-segments">
+                                            <div style="width: 15%; background: #c23934;"></div>
+                                            <div style="width: 25%; background: #fe9339;"></div>
+                                            <div style="width: 35%; background: #0176d3;"></div>
+                                            <div style="width: 25%; background: #2e844a;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="pipeline-labels-sm">
+                                        <span>Discovery</span>
+                                        <span>Qualification</span>
+                                        <span>Proposal</span>
+                                        <span>Negotiation</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="progress-container" id="progress">
+        <div class="progress-dot active" data-step="0"></div>
+        <div class="progress-dot" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+        <div class="progress-dot" data-step="5"></div>
+        <div class="progress-dot" data-step="6"></div>
+    </div>
+
+    <!-- Buttons -->
+    <button class="skip-btn" id="skipBtn">Skip →</button>
+    <button class="replay-btn" id="replayBtn">↻ Replay</button>
+
+    <script>
+        const intro = document.getElementById('intro');
+        const slides = [
+            document.getElementById('slide1'),
+            document.getElementById('slide2'),
+            document.getElementById('slide3'),
+            document.getElementById('slide4'),
+            document.getElementById('slide5'),
+            document.getElementById('slide6')
+        ];
+        const progressDots = document.querySelectorAll('.progress-dot');
+        const skipBtn = document.getElementById('skipBtn');
+        const replayBtn = document.getElementById('replayBtn');
+        const assemblyComponents = document.querySelectorAll('#slide6 .anim-component');
+
+        let currentSlide = -1; // -1 = intro
+        let autoAdvance = true;
+
+        function showSlide(index) {
+            currentSlide = index;
+
+            if (index >= 0) {
+                intro.classList.add('fade-out');
+            }
+
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                    // If this is the assembly slide (last slide), trigger component animations
+                    if (i === slides.length - 1) {
+                        setTimeout(() => {
+                            assemblyComponents.forEach(comp => comp.classList.add('visible'));
+                        }, 400);
+                    }
+                } else {
+                    slide.classList.remove('active');
+                    if (i === slides.length - 1) {
+                        assemblyComponents.forEach(comp => comp.classList.remove('visible'));
+                    }
+                }
+            });
+
+            progressDots.forEach((dot, i) => {
+                if (i === index + 1) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            if (index === slides.length - 1) {
+                skipBtn.style.display = 'none';
+                replayBtn.classList.add('visible');
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function resetAnimation() {
+            autoAdvance = true;
+            currentSlide = -1;
+
+            intro.classList.remove('fade-out');
+            slides.forEach(slide => slide.classList.remove('active'));
+            assemblyComponents.forEach(comp => comp.classList.remove('visible'));
+
+            progressDots.forEach((dot, i) => {
+                if (i === 0) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+
+            skipBtn.style.display = 'block';
+            replayBtn.classList.remove('visible');
+
+            startAutoAdvance();
+        }
+
+        function startAutoAdvance() {
+            setTimeout(() => { if (autoAdvance && currentSlide === -1) showSlide(0); }, 3000);
+            setTimeout(() => { if (autoAdvance && currentSlide === 0) showSlide(1); }, 7000);
+            setTimeout(() => { if (autoAdvance && currentSlide === 1) showSlide(2); }, 11000);
+            setTimeout(() => { if (autoAdvance && currentSlide === 2) showSlide(3); }, 15000);
+            setTimeout(() => { if (autoAdvance && currentSlide === 3) showSlide(4); }, 19000);
+            setTimeout(() => { if (autoAdvance && currentSlide === 4) showSlide(5); }, 23000);
+        }
+
+        progressDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                autoAdvance = false;
+                if (i === 0) {
+                    resetAnimation();
+                } else {
+                    showSlide(i - 1);
+                }
+            });
+        });
+
+        skipBtn.addEventListener('click', () => {
+            autoAdvance = false;
+            showSlide(slides.length - 1);
+        });
+
+        replayBtn.addEventListener('click', resetAnimation);
+
+        document.addEventListener('keydown', (e) => {
+            autoAdvance = false;
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'r' || e.key === 'R') {
+                resetAnimation();
+            }
+        });
+
+        progressDots[0].classList.add('active');
+        startAutoAdvance();
+    </script>
+</body>
+</html>

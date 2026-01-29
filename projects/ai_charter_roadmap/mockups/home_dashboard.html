@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTM Systems AI — Home</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        :root {
+            --ai-blue: #0176d3;
+            --ai-blue-dark: #014486;
+            --success: #2e844a;
+            --warning: #fe9339;
+            --error: #c23934;
+            --brand-teal: #00b4d8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f3f3f3;
+            min-height: 100vh;
+        }
+
+        /* Global Header Styles */
+        .slds-global-header {
+            background: #0b1d34;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0;
+        }
+
+        .slds-global-header__logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 0.75rem;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .app-launcher-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        .app-launcher-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .app-launcher-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 6px);
+            gap: 3px;
+        }
+        .app-launcher-dot {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 1px;
+        }
+
+        .abridge-logo {
+            color: var(--brand-teal);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-left: 0.5rem;
+        }
+
+        /* App Name */
+        .app-name {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 1rem;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .app-name span {
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Navigation Tabs */
+        .global-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            flex: 1;
+            overflow-x: auto;
+        }
+        .global-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            height: 100%;
+            padding: 0 0.875rem;
+            display: flex;
+            align-items: center;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.8125rem;
+            font-weight: 400;
+            text-decoration: none;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.15s ease;
+        }
+        .nav-tab:hover {
+            color: white;
+            background: rgba(255,255,255,0.08);
+        }
+        .nav-tab.active {
+            color: white;
+            font-weight: 600;
+            border-bottom-color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Utility Bar */
+        .utility-bar {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 0.5rem;
+        }
+        .utility-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        .utility-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .utility-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: rgba(255,255,255,0.85);
+        }
+        .utility-btn:hover svg {
+            fill: white;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            margin-left: 0.25rem;
+            cursor: pointer;
+        }
+
+        /* Hero AI Section */
+        .ai-hero {
+            background: linear-gradient(135deg, #0b1d34 0%, #1a365d 50%, #0b1d34 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .ai-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(1, 118, 211, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(127, 141, 225, 0.1) 0%, transparent 50%);
+        }
+        .ai-hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sparkle animation */
+        @keyframes sparkle-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        .ai-sparkle-animated {
+            animation: sparkle-pulse 2s ease-in-out infinite;
+        }
+
+        /* AI Insight Card */
+        .ai-insight-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border-radius: 0.75rem;
+        }
+
+        /* Priority number badge */
+        .priority-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+        .priority-badge.urgent {
+            background: var(--error);
+            color: white;
+        }
+        .priority-badge.signal {
+            background: var(--warning);
+            color: white;
+        }
+        .priority-badge.momentum {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Meeting timeline */
+        .meeting-time-block {
+            position: relative;
+            padding-left: 1rem;
+        }
+        .meeting-time-block::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: -0.5rem;
+            width: 2px;
+            background: #e5e5e5;
+        }
+        .meeting-time-block:last-child::before {
+            bottom: auto;
+            height: 0.5rem;
+        }
+        .meeting-dot {
+            position: absolute;
+            left: -4px;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--ai-blue);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--ai-blue);
+        }
+        .meeting-dot.next {
+            background: var(--success);
+            box-shadow: 0 0 0 2px var(--success);
+        }
+
+        /* Health ring */
+        .health-ring {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        .health-ring svg {
+            transform: rotate(-90deg);
+        }
+        .health-ring-bg {
+            fill: none;
+            stroke: #e5e5e5;
+            stroke-width: 8;
+        }
+        .health-ring-progress {
+            fill: none;
+            stroke: var(--success);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 70.34;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        .health-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        /* Action item hover */
+        .action-item {
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border-radius: 0.5rem;
+        }
+        .action-item:hover {
+            background: #f3f3f3;
+        }
+
+        /* Quick action buttons */
+        .quick-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .quick-action:hover {
+            background: #f3f3f3;
+        }
+        .quick-action-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Pipeline mini-chart */
+        .pipeline-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: #e5e5e5;
+            overflow: hidden;
+        }
+        .pipeline-bar-segment {
+            height: 100%;
+            float: left;
+        }
+        .pipeline-bar-segment:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        .pipeline-bar-segment:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Status dot */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-dot.healthy { background: var(--success); }
+        .status-dot.at-risk { background: var(--warning); }
+        .status-dot.critical { background: var(--error); }
+
+        /* Buying Group Stakeholder Cards */
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        .stakeholder-card {
+            background: #f8f8f8;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            text-align: center;
+            transition: all 0.15s ease;
+        }
+        .stakeholder-card:hover {
+            background: #f0f0f0;
+        }
+        .stakeholder-card.missing {
+            background: transparent;
+            border: 2px dashed #d0d0d0;
+        }
+        .stakeholder-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        .stakeholder-role {
+            font-size: 0.5625rem;
+            font-weight: 700;
+            color: white;
+            padding: 0.125rem 0.375rem;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 0.25rem;
+        }
+        .stakeholder-name {
+            font-size: 0.6875rem;
+            color: #181818;
+        }
+        .engagement-bar {
+            height: 4px;
+            background: #e5e5e5;
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        .engagement-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        /* Next Steps Hygiene Card */
+        .next-step-item {
+            border-left: 4px solid;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: white;
+            border-radius: 0 0.5rem 0.5rem 0;
+            transition: all 0.15s ease;
+        }
+        .next-step-item:hover {
+            background: #f8f8f8;
+        }
+        .next-step-item:last-child {
+            margin-bottom: 0;
+        }
+        .next-step-item.critical {
+            border-left-color: var(--error);
+        }
+        .next-step-item.stale {
+            border-left-color: var(--warning);
+        }
+        .next-step-item.healthy {
+            border-left-color: var(--success);
+        }
+        .ai-suggestion {
+            background: linear-gradient(135deg, rgba(1, 118, 211, 0.1), rgba(1, 118, 211, 0.05));
+            border-left: 3px solid var(--ai-blue);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 4px 4px 0;
+            margin-top: 0.75rem;
+        }
+
+        /* Forecast Card */
+        .forecast-progress-bar {
+            height: 8px;
+            background: #e5e5e5;
+            border-radius: 4px;
+            position: relative;
+            overflow: visible;
+        }
+        .forecast-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--ai-blue) 60%, var(--warning) 100%);
+            border-radius: 4px;
+            position: relative;
+        }
+        .forecast-quota-marker {
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 2px;
+            height: 16px;
+            background: #181818;
+        }
+        .forecast-quota-marker::after {
+            content: 'Quota';
+            position: absolute;
+            top: -16px;
+            right: -14px;
+            font-size: 0.5625rem;
+            color: #706e6b;
+        }
+        .forecast-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        .forecast-category {
+            padding: 0.25rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+
+        <!-- Global Header -->
+        <header class="slds-global-header">
+            <!-- App Launcher & Logo -->
+            <div class="slds-global-header__logo">
+                <button class="app-launcher-btn" title="App Launcher">
+                    <div class="app-launcher-grid">
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                        <div class="app-launcher-dot"></div>
+                    </div>
+                </button>
+                <span class="abridge-logo">ABRIDGE</span>
+            </div>
+
+            <!-- App Name -->
+            <div class="app-name">
+                <span>Abridge</span>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="global-nav">
+                <a href="#" class="nav-tab active">Home</a>
+                <a href="#" class="nav-tab">Leads</a>
+                <a href="#" class="nav-tab">Accounts</a>
+                <a href="#" class="nav-tab">Contacts</a>
+                <a href="#" class="nav-tab">Opportunities</a>
+                <a href="#" class="nav-tab">Implementations</a>
+                <a href="#" class="nav-tab">Solution Support</a>
+                <a href="#" class="nav-tab">Calendar</a>
+                <a href="#" class="nav-tab">Forecasts</a>
+                <a href="#" class="nav-tab">Dashboards</a>
+                <a href="#" class="nav-tab">Prospecting Plans</a>
+                <a href="#" class="nav-tab">Reports</a>
+                <a href="#" class="nav-tab">Key Moments</a>
+                <a href="#" class="nav-tab">LeanData</a>
+            </nav>
+
+            <!-- Utility Bar -->
+            <div class="utility-bar">
+                <!-- Search -->
+                <button class="utility-btn" title="Search Salesforce">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </button>
+                <!-- Favorites -->
+                <button class="utility-btn" title="Favorites">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                </button>
+                <!-- Global Create -->
+                <button class="utility-btn" title="New">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                </button>
+                <!-- Help -->
+                <button class="utility-btn" title="Help">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                    </svg>
+                </button>
+                <!-- Setup -->
+                <button class="utility-btn" title="Setup">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </svg>
+                </button>
+                <!-- Notifications -->
+                <button class="utility-btn" title="Notifications">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                    </svg>
+                </button>
+                <!-- User Avatar -->
+                <div class="user-avatar" title="Chris Humphries">CH</div>
+            </div>
+        </header>
+
+        <!-- AI Hero Section -->
+        <div class="ai-hero slds-p-around_large">
+            <div class="ai-hero-content" style="max-width: 1280px; margin: 0 auto;">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
+                    <div class="slds-col">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_small slds-m-right_x-small ai-sparkle-animated" style="fill: #7f8de1;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <span class="slds-text-body_small" style="color: #7f8de1; font-weight: 600; letter-spacing: 0.05em;">GTM SYSTEMS AI</span>
+                        </div>
+                        <h1 class="slds-text-heading_large slds-text-color_inverse slds-m-bottom_xx-small">Good morning, Chris</h1>
+                        <p class="slds-text-body_regular" style="color: rgba(255,255,255,0.7);">Monday, January 27, 2026</p>
+                    </div>
+                    <div class="slds-col slds-shrink-none">
+                        <span class="slds-avatar slds-avatar_circle slds-avatar_large" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);">
+                            <abbr class="slds-avatar__initials" style="background: transparent; color: white; font-size: 1.25rem;" title="Chris Humphries">CH</abbr>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- AI Insight Card -->
+                <div class="ai-insight-card slds-p-around_medium">
+                    <div class="slds-grid slds-grid_vertical-align-start slds-gutters">
+                        <div class="slds-col slds-shrink-none">
+                            <div style="background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%); border-radius: 0.5rem; padding: 0.625rem;">
+                                <svg class="slds-icon slds-icon_small" style="fill: white;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#einstein"></use>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="slds-col">
+                            <p class="slds-text-body_regular slds-text-color_inverse" style="line-height: 1.6;">
+                                <strong style="color: #fe9339;">Acme Health</strong> hasn't heard from you in 12 days — Sarah asked about Epic integration and is still waiting.
+                                You have a call with her at <strong style="color: white;">2pm today</strong>. I'd suggest addressing that first.
+                            </p>
+                            <div class="slds-m-top_small">
+                                <button class="slds-button slds-button_brand slds-button_small">Draft Follow-up Now</button>
+                                <button class="slds-button slds-button_neutral slds-button_small" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white;">View Prep Brief</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="slds-p-around_large" style="max-width: 1280px; margin: 0 auto;">
+
+            <!-- Quick Actions Row -->
+            <div class="slds-grid slds-gutters slds-m-bottom_large">
+                <div class="slds-col slds-size_1-of-4">
+                    <a href="#" class="quick-action">
+                        <div class="quick-action-icon" style="background: linear-gradient(135deg, #c23934 0%, #a61a14 100%);">
+                            <svg class="slds-icon slds-icon_small" style="fill: white;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                            </svg>
+                        </div>
+                        <span class="slds-text-title_bold">3 At Risk</span>
+                        <span class="slds-text-body_small slds-text-color_weak">Deals need attention</span>
+                    </a>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <a href="#" class="quick-action">
+                        <div class="quick-action-icon" style="background: linear-gradient(135deg, #fe9339 0%, #dd7a00 100%);">
+                            <svg class="slds-icon slds-icon_small" style="fill: white;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#task"></use>
+                            </svg>
+                        </div>
+                        <span class="slds-text-title_bold">3 Missing</span>
+                        <span class="slds-text-body_small slds-text-color_weak">Next steps needed</span>
+                    </a>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <a href="#" class="quick-action">
+                        <div class="quick-action-icon" style="background: linear-gradient(135deg, #0176d3 0%, #014486 100%);">
+                            <svg class="slds-icon slds-icon_small" style="fill: white;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#event"></use>
+                            </svg>
+                        </div>
+                        <span class="slds-text-title_bold">2 Meetings</span>
+                        <span class="slds-text-body_small slds-text-color_weak">Scheduled today</span>
+                    </a>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <a href="#" class="quick-action">
+                        <div class="quick-action-icon" style="background: linear-gradient(135deg, #2e844a 0%, #1d5d33 100%);">
+                            <svg class="slds-icon slds-icon_small" style="fill: white;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#trending"></use>
+                            </svg>
+                        </div>
+                        <span class="slds-text-title_bold">$2.8M</span>
+                        <span class="slds-text-body_small slds-text-color_weak">Active pipeline</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters_large slds-wrap">
+
+                <!-- Left Column -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+
+                    <!-- Priority Actions -->
+                    <article class="slds-card slds-m-bottom_medium">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Your Priority Actions</span>
+                                    </h2>
+                                </div>
+                            </header>
+                            <div class="slds-no-flex">
+                                <span class="slds-badge" style="background: #eef4ff; color: var(--ai-blue);">
+                                    <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" style="fill: var(--ai-blue);">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                                    </svg>
+                                    AI Prioritized
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-card__body">
+                            <!-- Action 1: Urgent -->
+                            <div class="action-item slds-grid slds-grid_vertical-align-center slds-p-around_medium slds-border_bottom">
+                                <div class="slds-col slds-shrink-none slds-m-right_medium">
+                                    <span class="priority-badge urgent">1</span>
+                                </div>
+                                <div class="slds-col slds-grow">
+                                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                        <span class="slds-text-title_bold slds-m-right_small">Re-engage Acme Health</span>
+                                        <span class="slds-badge slds-badge_inverse" style="background: var(--error); font-size: 0.625rem;">12 days silent</span>
+                                    </div>
+                                    <p class="slds-text-body_small slds-text-color_weak">Sarah (Champion) asked about Epic integration timeline on Jan 15. No response yet.</p>
+                                </div>
+                                <div class="slds-col slds-shrink-none">
+                                    <span class="slds-text-title_bold" style="color: var(--ai-blue);">$425K</span>
+                                </div>
+                            </div>
+
+                            <!-- Action 2: Signal -->
+                            <div class="action-item slds-grid slds-grid_vertical-align-center slds-p-around_medium slds-border_bottom">
+                                <div class="slds-col slds-shrink-none slds-m-right_medium">
+                                    <span class="priority-badge signal">2</span>
+                                </div>
+                                <div class="slds-col slds-grow">
+                                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                        <span class="slds-text-title_bold slds-m-right_small">New stakeholder at Metro Regional</span>
+                                        <span class="slds-badge slds-badge_inverse" style="background: var(--warning); font-size: 0.625rem;">New signal</span>
+                                    </div>
+                                    <p class="slds-text-body_small slds-text-color_weak">David Chen (VP Ops) was added to email thread Jan 22. Not yet in buying group.</p>
+                                </div>
+                                <div class="slds-col slds-shrink-none">
+                                    <span class="slds-text-title_bold" style="color: var(--ai-blue);">$680K</span>
+                                </div>
+                            </div>
+
+                            <!-- Action 3: Momentum -->
+                            <div class="action-item slds-grid slds-grid_vertical-align-center slds-p-around_medium slds-border_bottom">
+                                <div class="slds-col slds-shrink-none slds-m-right_medium">
+                                    <span class="priority-badge momentum">3</span>
+                                </div>
+                                <div class="slds-col slds-grow">
+                                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                        <span class="slds-text-title_bold slds-m-right_small">Send proposal to Valley Health</span>
+                                        <span class="slds-badge slds-badge_inverse" style="background: var(--success); font-size: 0.625rem;">Hot</span>
+                                    </div>
+                                    <p class="slds-text-body_small slds-text-color_weak">3 stakeholder calls this week. Strong buying group engagement. Ready to advance.</p>
+                                </div>
+                                <div class="slds-col slds-shrink-none">
+                                    <span class="slds-text-title_bold" style="color: var(--ai-blue);">$320K</span>
+                                </div>
+                            </div>
+
+                            <!-- Action 4 -->
+                            <div class="action-item slds-grid slds-grid_vertical-align-center slds-p-around_medium">
+                                <div class="slds-col slds-shrink-none slds-m-right_medium">
+                                    <span class="priority-badge" style="background: #e5e5e5; color: #444;">4</span>
+                                </div>
+                                <div class="slds-col slds-grow">
+                                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                        <span class="slds-text-title_bold">Send case study to Summit Care</span>
+                                    </div>
+                                    <p class="slds-text-body_small slds-text-color_weak">Lisa (CNO) requested examples from similar orgs during intro call Jan 20.</p>
+                                </div>
+                                <div class="slds-col slds-shrink-none">
+                                    <span class="slds-text-title_bold" style="color: var(--ai-blue);">$185K</span>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="slds-card__footer">
+                            <a class="slds-card__footer-action" href="#">View All Pipeline Signals</a>
+                        </footer>
+                    </article>
+
+                    <!-- Buying Groups -->
+                    <article class="slds-card slds-m-bottom_medium">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Acme Health — Buying Group</span>
+                                    </h2>
+                                </div>
+                            </header>
+                            <div class="slds-no-flex">
+                                <span class="slds-text-body_small slds-text-color_weak">3 of 5 roles identified</span>
+                            </div>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div class="stakeholder-grid">
+                                <div class="stakeholder-card">
+                                    <div class="stakeholder-avatar" style="background: var(--ai-blue);">SC</div>
+                                    <span class="stakeholder-role" style="background: var(--ai-blue);">Clinical Champion</span>
+                                    <div class="stakeholder-name">Sarah Chen</div>
+                                    <div class="engagement-bar">
+                                        <div class="engagement-fill" style="width: 60%; background: var(--warning);"></div>
+                                    </div>
+                                </div>
+                                <div class="stakeholder-card">
+                                    <div class="stakeholder-avatar" style="background: var(--error);">TR</div>
+                                    <span class="stakeholder-role" style="background: var(--error);">Economic Buyer</span>
+                                    <div class="stakeholder-name">Tom Richards</div>
+                                    <div class="engagement-bar">
+                                        <div class="engagement-fill" style="width: 15%; background: var(--error);"></div>
+                                    </div>
+                                </div>
+                                <div class="stakeholder-card">
+                                    <div class="stakeholder-avatar" style="background: var(--success);">MJ</div>
+                                    <span class="stakeholder-role" style="background: var(--success);">Advocate</span>
+                                    <div class="stakeholder-name">Mike Johnson</div>
+                                    <div class="engagement-bar">
+                                        <div class="engagement-fill" style="width: 90%; background: var(--success);"></div>
+                                    </div>
+                                </div>
+                                <div class="stakeholder-card missing">
+                                    <div class="stakeholder-avatar" style="background: #d0d0d0; color: #706e6b;">?</div>
+                                    <span class="stakeholder-role" style="background: #d0d0d0; color: #706e6b;">IT Champion</span>
+                                    <div class="stakeholder-name" style="color: #706e6b;">Not identified</div>
+                                    <div class="engagement-bar">
+                                        <div class="engagement-fill" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="slds-card__footer">
+                            <a class="slds-card__footer-action" href="#">View All Buying Groups</a>
+                        </footer>
+                    </article>
+
+                    <!-- Next Steps Hygiene -->
+                    <article class="slds-card slds-m-bottom_medium">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Next Steps Hygiene</span>
+                                    </h2>
+                                </div>
+                            </header>
+                            <div class="slds-no-flex">
+                                <span class="slds-badge" style="background: #fef1ee; color: var(--error);">3 need attention</span>
+                            </div>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <!-- Critical: No Next Step -->
+                            <div class="next-step-item critical">
+                                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start slds-m-bottom_x-small">
+                                    <div>
+                                        <p class="slds-text-title_bold">Acme Health Systems</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">Stage 3 — $425K</p>
+                                    </div>
+                                    <span class="slds-badge slds-badge_inverse" style="background: var(--error); font-size: 0.625rem;">No Next Step</span>
+                                </div>
+                                <div class="ai-suggestion">
+                                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                        <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" style="fill: var(--ai-blue);">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                                        </svg>
+                                        <span class="slds-text-body_small" style="font-weight: 700; color: var(--ai-blue);">AI Suggestion</span>
+                                    </div>
+                                    <p class="slds-text-body_small">Follow up with Sarah on Epic integration timeline. Last contact was 12 days ago.</p>
+                                </div>
+                            </div>
+
+                            <!-- Stale -->
+                            <div class="next-step-item stale">
+                                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+                                    <div>
+                                        <p class="slds-text-title_bold">Metro Regional Medical</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">Stage 4 — $680K</p>
+                                    </div>
+                                    <span class="slds-badge slds-badge_inverse" style="background: var(--warning); font-size: 0.625rem;">Stale 8 days</span>
+                                </div>
+                            </div>
+
+                            <!-- Healthy -->
+                            <div class="next-step-item healthy">
+                                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+                                    <div>
+                                        <p class="slds-text-title_bold">Valley Health Network</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">Stage 4 — $320K</p>
+                                    </div>
+                                    <span class="slds-badge slds-badge_inverse" style="background: var(--success); font-size: 0.625rem;">On Track</span>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">Next: Send proposal by Jan 30</p>
+                            </div>
+                        </div>
+                        <footer class="slds-card__footer">
+                            <a class="slds-card__footer-action" href="#">View All Next Steps</a>
+                        </footer>
+                    </article>
+
+                    <!-- Pipeline Overview -->
+                    <article class="slds-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Pipeline Overview</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <!-- Pipeline Bar -->
+                            <div class="slds-m-bottom_medium">
+                                <div class="slds-grid slds-grid_align-spread slds-m-bottom_x-small">
+                                    <span class="slds-text-body_small slds-text-color_weak">8 Active Deals</span>
+                                    <span class="slds-text-body_small slds-text-color_weak">$2.8M Total</span>
+                                </div>
+                                <div class="pipeline-bar">
+                                    <div class="pipeline-bar-segment" style="width: 15%; background: var(--error);" title="Discovery"></div>
+                                    <div class="pipeline-bar-segment" style="width: 25%; background: var(--warning);" title="Qualification"></div>
+                                    <div class="pipeline-bar-segment" style="width: 35%; background: var(--ai-blue);" title="Proposal"></div>
+                                    <div class="pipeline-bar-segment" style="width: 25%; background: var(--success);" title="Negotiation"></div>
+                                </div>
+                                <div class="slds-grid slds-grid_align-spread slds-m-top_xx-small">
+                                    <span class="slds-text-body_small slds-text-color_weak" style="font-size: 0.625rem;">Discovery</span>
+                                    <span class="slds-text-body_small slds-text-color_weak" style="font-size: 0.625rem;">Qualification</span>
+                                    <span class="slds-text-body_small slds-text-color_weak" style="font-size: 0.625rem;">Proposal</span>
+                                    <span class="slds-text-body_small slds-text-color_weak" style="font-size: 0.625rem;">Negotiation</span>
+                                </div>
+                            </div>
+
+                            <!-- Deal List -->
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col"><div class="slds-truncate">Deal</div></th>
+                                        <th scope="col"><div class="slds-truncate">Stage</div></th>
+                                        <th scope="col"><div class="slds-truncate">Amount</div></th>
+                                        <th scope="col"><div class="slds-truncate">Health</div></th>
+                                        <th scope="col"><div class="slds-truncate">Close</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="#" class="slds-text-link">Metro Regional Medical</a></td>
+                                        <td>Proposal</td>
+                                        <td>$680K</td>
+                                        <td><span class="status-dot at-risk"></span> 58%</td>
+                                        <td>Mar 15</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="slds-text-link">Acme Health Systems</a></td>
+                                        <td>Discovery</td>
+                                        <td>$425K</td>
+                                        <td><span class="status-dot critical"></span> 34%</td>
+                                        <td>Feb 28</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="slds-text-link">Valley Health Network</a></td>
+                                        <td>Proposal</td>
+                                        <td>$320K</td>
+                                        <td><span class="status-dot healthy"></span> 89%</td>
+                                        <td>Feb 15</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="slds-text-link">Summit Care Partners</a></td>
+                                        <td>Qualification</td>
+                                        <td>$185K</td>
+                                        <td><span class="status-dot at-risk"></span> 62%</td>
+                                        <td>Apr 30</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <footer class="slds-card__footer">
+                            <a class="slds-card__footer-action" href="#">View Full Pipeline</a>
+                        </footer>
+                    </article>
+                </div>
+
+                <!-- Right Column -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+
+                    <!-- Today's Schedule -->
+                    <article class="slds-card slds-m-bottom_medium">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Today's Schedule</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div class="slds-p-left_medium">
+                                <!-- Meeting 1 -->
+                                <div class="meeting-time-block slds-p-bottom_medium">
+                                    <div class="meeting-dot next"></div>
+                                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                                        <span class="slds-text-title_caps" style="color: var(--success); font-size: 0.625rem; font-weight: 700;">2:00 PM</span>
+                                        <span class="slds-badge slds-badge_inverse" style="background: var(--success); font-size: 0.5625rem;">NEXT UP</span>
+                                    </div>
+                                    <p class="slds-text-title_bold slds-m-bottom_xx-small">Acme Health Systems</p>
+                                    <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_x-small">Discovery Call — Sarah Chen, Mike Johnson</p>
+                                    <a href="#" class="slds-text-link slds-text-body_small">
+                                        <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" style="fill: var(--ai-blue);">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                                        </svg>
+                                        View AI Prep Brief
+                                    </a>
+                                </div>
+
+                                <!-- Meeting 2 -->
+                                <div class="meeting-time-block">
+                                    <div class="meeting-dot"></div>
+                                    <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_xx-small" style="font-size: 0.625rem;">4:00 PM</p>
+                                    <p class="slds-text-title_bold slds-m-bottom_xx-small">Summit Care Partners</p>
+                                    <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_x-small">Intro Call — Lisa Torres (CNO)</p>
+                                    <a href="#" class="slds-text-link slds-text-body_small">
+                                        <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" style="fill: var(--ai-blue);">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                                        </svg>
+                                        View AI Prep Brief
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Pipeline Health -->
+                    <article class="slds-card slds-m-bottom_medium">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Pipeline Health</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <div class="slds-col slds-shrink-none slds-m-right_medium">
+                                    <div class="health-ring">
+                                        <svg width="100" height="100">
+                                            <circle class="health-ring-bg" cx="50" cy="50" r="40"></circle>
+                                            <circle class="health-ring-progress" cx="50" cy="50" r="40"></circle>
+                                        </svg>
+                                        <div class="health-ring-text">
+                                            <span class="slds-text-heading_medium" style="color: var(--success);">72%</span>
+                                            <br>
+                                            <span class="slds-text-body_small slds-text-color_weak" style="font-size: 0.625rem;">Average</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col">
+                                    <div class="slds-m-bottom_x-small">
+                                        <div class="slds-grid slds-grid_vertical-align-center">
+                                            <span class="status-dot healthy slds-m-right_x-small"></span>
+                                            <span class="slds-text-body_small">5 Healthy</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-m-bottom_x-small">
+                                        <div class="slds-grid slds-grid_vertical-align-center">
+                                            <span class="status-dot at-risk slds-m-right_x-small"></span>
+                                            <span class="slds-text-body_small">2 At Risk</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="slds-grid slds-grid_vertical-align-center">
+                                            <span class="status-dot critical slds-m-right_x-small"></span>
+                                            <span class="slds-text-body_small">1 Critical</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Forecast -->
+                    <article class="slds-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Q1 Forecast</span>
+                                    </h2>
+                                </div>
+                            </header>
+                            <div class="slds-no-flex">
+                                <span class="slds-text-body_small slds-text-color_weak">68 days left</span>
+                            </div>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <!-- Forecast Progress -->
+                            <div class="slds-m-bottom_medium">
+                                <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                                    <span class="slds-text-heading_medium" style="color: var(--ai-blue);">$1.8M</span>
+                                    <span class="slds-text-body_small slds-text-color_weak">of $2.4M quota</span>
+                                </div>
+                                <div class="forecast-progress-bar">
+                                    <div class="forecast-progress-fill" style="width: 75%;"></div>
+                                    <div class="forecast-quota-marker"></div>
+                                </div>
+                                <div class="slds-grid slds-grid_align-spread slds-m-top_xx-small">
+                                    <span class="slds-text-body_small" style="color: var(--success); font-weight: 600;">75% to quota</span>
+                                    <span class="slds-text-body_small slds-text-color_weak">$600K gap</span>
+                                </div>
+                            </div>
+
+                            <!-- Forecast Categories -->
+                            <div class="forecast-categories">
+                                <div class="forecast-category slds-m-bottom_x-small">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="forecast-dot" style="background: var(--success);"></span>
+                                        <span class="slds-text-body_small slds-grow">Closed Won</span>
+                                        <span class="slds-text-body_small" style="font-weight: 600;">$420K</span>
+                                    </div>
+                                </div>
+                                <div class="forecast-category slds-m-bottom_x-small">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="forecast-dot" style="background: var(--ai-blue);"></span>
+                                        <span class="slds-text-body_small slds-grow">Commit</span>
+                                        <span class="slds-text-body_small" style="font-weight: 600;">$680K</span>
+                                    </div>
+                                </div>
+                                <div class="forecast-category slds-m-bottom_x-small">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="forecast-dot" style="background: var(--warning);"></span>
+                                        <span class="slds-text-body_small slds-grow">Best Case</span>
+                                        <span class="slds-text-body_small" style="font-weight: 600;">$700K</span>
+                                    </div>
+                                </div>
+                                <div class="forecast-category">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <span class="forecast-dot" style="background: #e5e5e5;"></span>
+                                        <span class="slds-text-body_small slds-text-color_weak slds-grow">Pipeline</span>
+                                        <span class="slds-text-body_small slds-text-color_weak">$1.2M</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI Forecast Insight -->
+                            <div class="ai-suggestion slds-m-top_medium" style="background: linear-gradient(135deg, rgba(1, 118, 211, 0.08), rgba(1, 118, 211, 0.03));">
+                                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                    <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" style="fill: var(--ai-blue);">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                                    </svg>
+                                    <span class="slds-text-body_small" style="font-weight: 700; color: var(--ai-blue);">AI Insight</span>
+                                </div>
+                                <p class="slds-text-body_small">Valley Health ($320K) has 89% close probability. Moving to Commit would put you at 104% of quota.</p>
+                            </div>
+                        </div>
+                        <footer class="slds-card__footer">
+                            <a class="slds-card__footer-action" href="#">View Full Forecast</a>
+                        </footer>
+                    </article>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

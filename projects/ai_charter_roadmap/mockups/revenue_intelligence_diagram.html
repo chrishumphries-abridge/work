@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Intelligence Architecture</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        :root {
+            --ai-blue: #0176d3;
+            --ai-purple: #7f8de1;
+            --success: #2e844a;
+            --warning: #fe9339;
+            --input-cyan: #00b4d8;
+            --output-green: #95d5b2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: white;
+            min-height: 100vh;
+            padding: 3rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 3rem;
+        }
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #181818;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Architecture diagram */
+        .architecture {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+        }
+
+        /* Columns */
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .column-header {
+            font-size: 0.875rem;
+            color: #706e6b;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .column-header strong {
+            color: #181818;
+        }
+
+        /* Input boxes (left side) */
+        .input-box {
+            background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%);
+            color: white;
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0, 180, 216, 0.3);
+            position: relative;
+        }
+
+        /* Database cylinder */
+        .database-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .database {
+            width: 160px;
+            height: 180px;
+            position: relative;
+        }
+        .database-body {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #e5e5e5 0%, #d0d0d0 100%);
+            border-radius: 0 0 80px 80px / 0 0 30px 30px;
+            border: 2px solid #b0adab;
+            border-top: none;
+        }
+        .database-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(180deg, #f3f3f3 0%, #e5e5e5 100%);
+            border-radius: 80px / 20px;
+            border: 2px solid #b0adab;
+            z-index: 2;
+        }
+        .database-middle {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .database-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #444;
+            text-align: center;
+            z-index: 3;
+        }
+
+        /* AI Transformation Layer */
+        .ai-layer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .ai-layer {
+            background: linear-gradient(135deg, #ffe5d0 0%, #ffd4b8 100%);
+            border: 2px solid #ffb088;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            min-width: 200px;
+            position: relative;
+        }
+        .ai-layer-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #181818;
+            margin-bottom: 0.25rem;
+        }
+        .ai-layer-subtitle {
+            font-size: 0.875rem;
+            color: #706e6b;
+        }
+        .ai-layer-subtitle a {
+            color: var(--ai-blue);
+        }
+        .ai-sparkle {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--ai-purple) 0%, #5a67d8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(127, 141, 225, 0.4);
+        }
+        .ai-sparkle svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        /* Output boxes (right side) */
+        .output-box {
+            background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
+            color: #1b4332;
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 240px;
+            box-shadow: 0 4px 12px rgba(149, 213, 178, 0.3);
+            border: 1px solid #95d5b2;
+        }
+
+        /* Connection lines */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .connections svg {
+            width: 100%;
+            height: 100%;
+        }
+        .connection-line {
+            fill: none;
+            stroke: #b0adab;
+            stroke-width: 2;
+        }
+        .connection-arrow {
+            fill: #b0adab;
+        }
+
+        /* Footer */
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e5e5;
+        }
+        .footer-brand {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--input-cyan);
+        }
+        .footer-confidential {
+            font-size: 0.75rem;
+            color: #706e6b;
+        }
+
+        /* Animated sparkle */
+        @keyframes sparkle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .ai-sparkle {
+            animation: sparkle-pulse 2s ease-in-out infinite;
+        }
+
+        /* Flow arrows between sections */
+        .flow-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .flow-arrow {
+            width: 80px;
+            height: 2px;
+            background: #b0adab;
+            position: relative;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -5px;
+            border: 6px solid transparent;
+            border-left: 8px solid #b0adab;
+        }
+
+        /* Input column lines */
+        .input-connector {
+            position: relative;
+        }
+        .input-connector::after {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            width: 40px;
+            height: 2px;
+            background: #b0adab;
+        }
+
+        /* Vertical connector bar */
+        .vertical-connector {
+            width: 2px;
+            height: 100%;
+            background: #b0adab;
+            position: absolute;
+            right: -60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <!-- Header -->
+            <header class="page-header">
+                <h1 class="page-title">Revenue Intelligence</h1>
+            </header>
+
+            <!-- Architecture Diagram -->
+            <div class="architecture">
+
+                <!-- Left: Conversation Data (Inputs) -->
+                <div class="column" style="align-items: flex-start;">
+                    <div class="column-header">
+                        <strong>Conversation Data</strong><br>
+                        (Completed in Q4 2025)
+                    </div>
+                    <div class="input-box">Attention Calls</div>
+                    <div class="input-box">Emails</div>
+                    <div class="input-box">Partner Slack<br>Channels</div>
+                    <div class="input-box">Product Data and<br>Customer Feedback</div>
+                </div>
+
+                <!-- Flow Arrow 1 -->
+                <div class="flow-section">
+                    <svg width="60" height="300" viewBox="0 0 60 300">
+                        <!-- Lines from inputs to center -->
+                        <path d="M 0 40 Q 30 40, 30 150" class="connection-line"/>
+                        <path d="M 0 100 Q 30 100, 30 150" class="connection-line"/>
+                        <path d="M 0 180 Q 30 180, 30 150" class="connection-line"/>
+                        <path d="M 0 260 Q 30 260, 30 150" class="connection-line"/>
+                        <!-- Arrow to database -->
+                        <path d="M 30 150 L 55 150" class="connection-line"/>
+                        <polygon points="55,145 65,150 55,155" class="connection-arrow"/>
+                    </svg>
+                </div>
+
+                <!-- Center: SFDC Objects -->
+                <div class="database-container">
+                    <div class="database">
+                        <div class="database-top"></div>
+                        <div class="database-middle"></div>
+                        <div class="database-body"></div>
+                        <div class="database-label">SFDC<br>Objects</div>
+                    </div>
+                </div>
+
+                <!-- Flow Arrow 2 -->
+                <div class="flow-section">
+                    <svg width="60" height="300" viewBox="0 0 60 300">
+                        <path d="M 0 150 L 60 150" class="connection-line"/>
+                        <polygon points="55,145 65,150 55,155" class="connection-arrow"/>
+                    </svg>
+                </div>
+
+                <!-- Center: AI Transformation Layer -->
+                <div class="ai-layer-container">
+                    <div class="column-header">
+                        <strong>Revenue Intelligence</strong><br>
+                        (To be built in H1 2026)
+                    </div>
+                    <div class="ai-layer">
+                        <div class="ai-sparkle">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                        </div>
+                        <div class="ai-layer-title">AI</div>
+                        <div class="ai-layer-title">Transformation</div>
+                        <div class="ai-layer-title">Layer</div>
+                        <div class="ai-layer-subtitle" style="margin-top: 0.5rem;">(<a href="#">Tray.ai</a> + LLMs)</div>
+                    </div>
+                </div>
+
+                <!-- Flow Arrow 3 -->
+                <div class="flow-section">
+                    <svg width="60" height="400" viewBox="0 0 60 400">
+                        <!-- Lines from AI to outputs -->
+                        <path d="M 0 200 L 30 200" class="connection-line"/>
+                        <path d="M 30 200 Q 30 60, 60 60" class="connection-line"/>
+                        <path d="M 30 200 Q 30 130, 60 130" class="connection-line"/>
+                        <path d="M 30 200 Q 30 200, 60 200" class="connection-line"/>
+                        <path d="M 30 200 Q 30 270, 60 270" class="connection-line"/>
+                        <path d="M 30 200 Q 30 340, 60 340" class="connection-line"/>
+                        <!-- Arrows -->
+                        <polygon points="55,55 65,60 55,65" class="connection-arrow"/>
+                        <polygon points="55,125 65,130 55,135" class="connection-arrow"/>
+                        <polygon points="55,195 65,200 55,205" class="connection-arrow"/>
+                        <polygon points="55,265 65,270 55,275" class="connection-arrow"/>
+                        <polygon points="55,335 65,340 55,345" class="connection-arrow"/>
+                    </svg>
+                </div>
+
+                <!-- Right: Outputs -->
+                <div class="column" style="align-items: flex-end;">
+                    <div class="output-box">SFDC<br>Updates/Analysis</div>
+                    <div class="output-box">Domain-Specific<br>Chatbots</div>
+                    <div class="output-box">Proactive<br>Monitoring</div>
+                    <div class="output-box">Event Prep</div>
+                    <div class="output-box">Account<br>Planning/Buying Groups</div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="page-footer">
+                <div class="footer-brand">ABRIDGE</div>
+                <div class="footer-confidential">CONFIDENTIAL & PROPRIETARY &nbsp;&nbsp; 7</div>
+            </footer>
+
+        </div>
+    </div>
+</body>
+</html>
