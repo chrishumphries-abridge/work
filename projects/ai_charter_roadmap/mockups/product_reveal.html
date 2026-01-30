@@ -13,15 +13,16 @@
             --brand-black: #000000;
             --brand-cream: #EEE6DD;
             --brand-teal: #00b4d8;
+            --brand-primary: #0176d3;
             --success: #2e844a;
             --warning: #fe9339;
+            --error: #c23934;
+            --gray-1: #f3f3f3;
+            --gray-2: #e5e5e5;
+            --gray-3: #706e6b;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -30,7 +31,9 @@
             overflow: hidden;
         }
 
-        /* Intro Screen */
+        /* ============================================ */
+        /* INTRO SCREEN */
+        /* ============================================ */
         .intro-screen {
             position: fixed;
             inset: 0;
@@ -105,7 +108,9 @@
             animation: sparkle 3s ease-in-out infinite;
         }
 
-        /* Feature Slides */
+        /* ============================================ */
+        /* FEATURE SLIDES */
+        /* ============================================ */
         .feature-slide {
             position: fixed;
             inset: 0;
@@ -172,7 +177,143 @@
             margin-bottom: 2rem;
         }
 
-        /* Mockup Container */
+        /* Animate-in elements */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .feature-slide.active .animate-in {
+            animation: element-in 0.6s ease forwards;
+        }
+        .feature-slide.active .animate-in:nth-child(1) { animation-delay: 0.1s; }
+        .feature-slide.active .animate-in:nth-child(2) { animation-delay: 0.2s; }
+        .feature-slide.active .animate-in:nth-child(3) { animation-delay: 0.3s; }
+        .feature-slide.active .animate-in:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes element-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================ */
+        /* CENTERED SLIDES (Problem, Principles, Vision) */
+        /* ============================================ */
+        .centered-slide {
+            text-align: center;
+        }
+        .centered-slide .feature-content {
+            max-width: 900px;
+        }
+        .centered-slide .feature-badge {
+            justify-content: center;
+        }
+        .centered-slide .feature-description {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Problem/Pain Points */
+        .pain-points {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .pain-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .feature-slide.active .pain-card {
+            animation: element-in 0.6s ease forwards;
+        }
+        .feature-slide.active .pain-card:nth-child(1) { animation-delay: 0.3s; }
+        .feature-slide.active .pain-card:nth-child(2) { animation-delay: 0.4s; }
+        .feature-slide.active .pain-card:nth-child(3) { animation-delay: 0.5s; }
+
+        .pain-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(234, 44, 0, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .pain-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--brand-red);
+        }
+        .pain-title {
+            color: var(--brand-white);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .pain-desc {
+            color: var(--brand-cream);
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Principles Grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+        .principle-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .feature-slide.active .principle-card {
+            animation: element-in 0.6s ease forwards;
+        }
+        .feature-slide.active .principle-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-slide.active .principle-card:nth-child(2) { animation-delay: 0.3s; }
+        .feature-slide.active .principle-card:nth-child(3) { animation-delay: 0.4s; }
+        .feature-slide.active .principle-card:nth-child(4) { animation-delay: 0.5s; }
+
+        .principle-num {
+            width: 28px;
+            height: 28px;
+            background: var(--brand-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .principle-title {
+            color: var(--brand-white);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.375rem;
+        }
+        .principle-desc {
+            color: var(--brand-cream);
+            font-size: 0.8125rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* ============================================ */
+        /* MOCKUP CONTAINER */
+        /* ============================================ */
         .mockup-container {
             background: var(--brand-white);
             border-radius: 12px;
@@ -210,23 +351,6 @@
             background: #f8f8f6;
         }
 
-        /* Animate-in elements */
-        .animate-in {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        .feature-slide.active .animate-in {
-            animation: element-in 0.6s ease forwards;
-        }
-        .feature-slide.active .animate-in:nth-child(1) { animation-delay: 0.1s; }
-        .feature-slide.active .animate-in:nth-child(2) { animation-delay: 0.2s; }
-        .feature-slide.active .animate-in:nth-child(3) { animation-delay: 0.3s; }
-        .feature-slide.active .animate-in:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes element-in {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* Mini Card Styles */
         .mini-card {
             background: var(--brand-white);
@@ -235,9 +359,7 @@
             margin-bottom: 0.75rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .mini-card:last-child {
-            margin-bottom: 0;
-        }
+        .mini-card:last-child { margin-bottom: 0; }
 
         .mini-header {
             display: flex;
@@ -257,72 +379,7 @@
             font-weight: 700;
         }
 
-        /* Priority Items */
-        .priority-item {
-            display: flex;
-            align-items: center;
-            padding: 0.625rem 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .priority-item:last-child {
-            border-bottom: none;
-        }
-        .priority-num {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: white;
-            margin-right: 0.75rem;
-            flex-shrink: 0;
-        }
-        .priority-content {
-            flex: 1;
-        }
-        .priority-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--brand-black);
-        }
-        .priority-desc {
-            font-size: 0.75rem;
-            color: #706e6b;
-        }
-        .priority-amount {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--brand-blue);
-        }
-
-        /* Stats Row */
-        .stats-row {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .stat-item {
-            flex: 1;
-            background: var(--brand-white);
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-        }
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--brand-black);
-        }
-        .stat-label {
-            font-size: 0.625rem;
-            color: #706e6b;
-            text-transform: uppercase;
-        }
-
-        /* Buying Group Stakeholders */
+        /* Stakeholder Grid */
         .stakeholder-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -382,9 +439,7 @@
             background: white;
             border-radius: 0 8px 8px 0;
         }
-        .next-step-item:last-child {
-            margin-bottom: 0;
-        }
+        .next-step-item:last-child { margin-bottom: 0; }
         .next-step-header {
             display: flex;
             justify-content: space-between;
@@ -429,9 +484,9 @@
         }
 
         /* ============================================ */
-        /* FINAL ASSEMBLY SLIDE */
+        /* ACCOUNT PAGE VISION SLIDE */
         /* ============================================ */
-        .assembly-slide {
+        .account-page-slide {
             position: fixed;
             inset: 0;
             display: flex;
@@ -441,45 +496,57 @@
             opacity: 0;
             transition: opacity 0.8s ease;
             pointer-events: none;
-            padding: 2rem;
+            padding: 1.5rem;
             background: var(--brand-black);
         }
-        .assembly-slide.active {
+        .account-page-slide.active {
             opacity: 1;
             pointer-events: auto;
         }
 
-        .assembly-title {
+        .vision-title {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             opacity: 0;
             transform: translateY(-20px);
             transition: all 0.6s ease;
         }
-        .assembly-slide.active .assembly-title {
+        .account-page-slide.active .vision-title {
             opacity: 1;
             transform: translateY(0);
         }
-        .assembly-title h2 {
+        .vision-title h2 {
             color: var(--brand-white);
-            font-size: 2rem;
+            font-size: 2.25rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
         }
-        .assembly-title h2 .highlight {
+        .vision-title h2 .highlight {
             color: var(--brand-red);
         }
+        .vision-title p {
+            color: var(--brand-cream);
+            font-size: 1rem;
+        }
 
-        .dashboard-frame {
+        .account-frame {
             background: var(--brand-white);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 40px 100px rgba(0,0,0,0.6);
             width: 100%;
-            max-width: 1200px;
-            max-height: calc(100vh - 180px);
+            max-width: 1300px;
+            max-height: calc(100vh - 160px);
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .account-page-slide.active .account-frame {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
         }
 
         .frame-header {
@@ -491,1056 +558,591 @@
             border-bottom: 1px solid rgba(0,0,0,0.1);
             flex-shrink: 0;
         }
-        .frame-header .mockup-dot {
-            width: 10px;
-            height: 10px;
-        }
+        .frame-header .mockup-dot { width: 10px; height: 10px; }
         .frame-title {
             margin-left: auto;
             font-size: 0.75rem;
             color: #706e6b;
         }
 
-        /* Dashboard Content */
-        .dashboard-content {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+        /* Account Page Content (embedded) */
+        .account-page-content {
+            background: var(--gray-1);
+            padding: 1rem;
+            overflow: auto;
             flex: 1;
         }
 
-        /* Animate Components */
-        .anim-component {
-            opacity: 0;
-            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .from-top { transform: translateY(-60px); }
-        .from-bottom { transform: translateY(60px); }
-        .from-left { transform: translateX(-60px); }
-        .from-right { transform: translateX(60px); }
-        .from-scale { transform: scale(0.85); }
-
-        .anim-component.visible {
-            opacity: 1;
-            transform: translateY(0) translateX(0) scale(1);
-        }
-
-        .delay-1 { transition-delay: 0.05s; }
-        .delay-2 { transition-delay: 0.1s; }
-        .delay-3 { transition-delay: 0.15s; }
-        .delay-4 { transition-delay: 0.2s; }
-        .delay-5 { transition-delay: 0.25s; }
-        .delay-6 { transition-delay: 0.3s; }
-        .delay-7 { transition-delay: 0.35s; }
-        .delay-8 { transition-delay: 0.4s; }
-        .delay-9 { transition-delay: 0.45s; }
-        .delay-10 { transition-delay: 0.5s; }
-        .delay-11 { transition-delay: 0.55s; }
-        .delay-12 { transition-delay: 0.6s; }
-
-        /* Global Header in Assembly */
-        .global-header {
-            background: #0b1d34;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            padding: 0;
-            flex-shrink: 0;
-        }
-        .header-logo {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            padding: 0 0.75rem;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-        .app-launcher {
-            display: grid;
-            grid-template-columns: repeat(3, 4px);
-            gap: 2px;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 4px;
-        }
-        .app-launcher:hover {
-            background: rgba(255,255,255,0.1);
-        }
-        .app-launcher-dot {
-            width: 4px;
-            height: 4px;
+        /* Account Header */
+        .acct-header {
             background: white;
-            border-radius: 1px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
         }
-        .abridge-logo-img {
-            height: 20px;
-            margin-left: 0.5rem;
-        }
-        .app-name {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            padding: 0 1rem;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-        .app-name span {
-            color: white;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-        .context-bar {
-            display: flex;
-            height: 100%;
-            flex: 1;
-        }
-        .nav-tab {
-            height: 100%;
-            padding: 0 0.75rem;
-            display: flex;
-            align-items: center;
-            color: rgba(255,255,255,0.85);
-            font-size: 0.75rem;
-            text-decoration: none;
-            border-bottom: 3px solid transparent;
-            transition: background 0.15s ease;
-        }
-        .nav-tab:hover {
-            background: rgba(255,255,255,0.08);
-        }
-        .nav-tab.active {
-            color: white;
-            font-weight: 600;
-            border-bottom-color: white;
-            background: rgba(255,255,255,0.1);
-        }
-        .header-utilities {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            margin-left: auto;
-            padding-right: 0.5rem;
-        }
-        .utility-btn {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.15s ease;
-        }
-        .utility-btn:hover {
-            background: rgba(255,255,255,0.1);
-        }
-        .utility-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: rgba(255,255,255,0.85);
-        }
-        .header-avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #7f8de1, #5a67d8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.5625rem;
-            font-weight: 600;
-            margin-left: 0.25rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section in Assembly - SLDS Style */
-        .hero-section {
-            background: #f3f3f3;
-            padding: 0.75rem 1.25rem;
-            flex-shrink: 0;
-            border-bottom: 1px solid #dddbda;
-        }
-        .hero-greeting {
+        .acct-header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .greeting-text {
-            color: #080707;
-            font-size: 1.125rem;
-            font-weight: 700;
-        }
-        .greeting-date {
-            color: #706e6b;
-            font-size: 0.75rem;
-        }
-
-        /* AI Insight Card - SLDS Style */
-        .ai-insight-box {
-            background: white;
-            border: 1px solid #dddbda;
-            border-radius: 0.25rem;
-            padding: 0.75rem;
-            margin-top: 0.75rem;
-            box-shadow: 0 2px 2px rgba(0,0,0,0.05);
-        }
-        .ai-insight-inner {
+        .acct-identity {
             display: flex;
-            gap: 0.75rem;
+            align-items: center;
+            gap: 0.875rem;
         }
-        .ai-icon-small {
-            width: 32px;
-            height: 32px;
-            background: #0176d3;
-            border-radius: 0.25rem;
+        .acct-logo {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-primary) 100%);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
         }
-        .ai-icon-small svg {
-            width: 16px;
-            height: 16px;
-            fill: white;
+        .acct-name {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: #181818;
         }
-        .ai-insight-text {
-            color: #080707;
-            font-size: 0.8125rem;
-            line-height: 1.4;
+        .acct-meta {
+            font-size: 0.75rem;
+            color: var(--gray-3);
         }
-        .ai-insight-text strong { color: #080707; font-weight: 700; }
-        .ai-insight-text .warning { color: #c23934; }
-        .ai-buttons {
+        .acct-health {
             display: flex;
-            gap: 0.375rem;
-            margin-top: 0.5rem;
+            align-items: center;
+            gap: 0.75rem;
         }
-        .ai-btn {
-            padding: 0.375rem 0.75rem;
-            border-radius: 4px;
+        .health-context {
+            text-align: right;
+        }
+        .health-trend {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .health-trend.down { color: var(--error); }
+        .health-note {
             font-size: 0.6875rem;
-            font-weight: 400;
-            cursor: pointer;
-            border: 1px solid #0176d3;
+            color: var(--gray-3);
         }
-        .ai-btn.primary {
-            background: #0176d3;
-            color: white;
-        }
-        .ai-btn.secondary {
-            background: white;
-            border: 1px solid #dddbda;
-            color: #0176d3;
-        }
-
-        /* Main Content Area */
-        .main-area {
-            flex: 1;
-            background: #f3f3f3;
-            padding: 0.75rem 1.25rem;
-            overflow: hidden;
-        }
-
-        /* Quick Actions - SLDS Style */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-        .quick-card {
-            background: white;
-            border-radius: 0.25rem;
-            padding: 0.75rem;
-            text-align: center;
-            border: 1px solid #dddbda;
-        }
-        .quick-icon {
-            width: 32px;
-            height: 32px;
+        .health-score-lg {
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.375rem;
-        }
-        .quick-icon svg {
-            width: 14px;
-            height: 14px;
-            fill: white;
-        }
-        .quick-value {
-            font-size: 0.875rem;
-            font-weight: 700;
-            color: #080707;
-        }
-        .quick-label {
-            font-size: 0.5625rem;
-            color: #706e6b;
-        }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-        }
-        .left-col, .right-col {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        /* Card - SLDS Style */
-        .card {
-            background: white;
-            border-radius: 0.25rem;
-            border: 1px solid #dddbda;
-            overflow: hidden;
-        }
-        .card-header {
-            padding: 0.5rem 0.75rem;
-            border-bottom: 1px solid #dddbda;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fafaf9;
-        }
-        .card-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #080707;
-        }
-        .card-meta {
-            font-size: 0.625rem;
-            color: #706e6b;
-        }
-        .card-badge-sm {
-            padding: 0.125rem 0.5rem;
-            border-radius: 0.75rem;
-            font-size: 0.5625rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-        .card-badge-sm svg {
-            width: 8px;
-            height: 8px;
-        }
-        .card-body {
-            padding: 0.5rem 0.75rem;
-        }
-
-        /* Compact Priority Items */
-        .priority-item-sm {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .priority-item-sm:last-child {
-            border-bottom: none;
-        }
-        .priority-num-sm {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.5625rem;
-            font-weight: 700;
             color: white;
-            margin-right: 0.5rem;
-            flex-shrink: 0;
-        }
-        .priority-content-sm {
-            flex: 1;
-            min-width: 0;
-        }
-        .priority-title-sm {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--brand-black);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .priority-desc-sm {
-            font-size: 0.625rem;
-            color: #706e6b;
-        }
-        .priority-badge-sm {
-            padding: 0.0625rem 0.25rem;
-            border-radius: 2px;
-            font-size: 0.5rem;
             font-weight: 700;
-            margin-left: 0.375rem;
-            flex-shrink: 0;
+            background: linear-gradient(135deg, #fe9339 0%, #dd7a00 100%);
         }
-        .priority-amount-sm {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--brand-blue);
-            margin-left: 0.5rem;
-            flex-shrink: 0;
-        }
+        .health-score-lg .score { font-size: 1.375rem; line-height: 1; }
+        .health-score-lg .label { font-size: 0.5rem; text-transform: uppercase; opacity: 0.9; }
 
-        /* Compact Stakeholder Grid */
-        .stakeholder-grid-sm {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.5rem;
-        }
-        .stakeholder-card-sm {
-            background: #f8f8f8;
-            border-radius: 0.375rem;
-            padding: 0.5rem;
-            text-align: center;
-        }
-        .stakeholder-card-sm.missing {
-            background: transparent;
-            border: 1.5px dashed #d0d0d0;
-        }
-        .stakeholder-avatar-sm {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
+        .acct-stats {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.25rem;
-            font-size: 0.5625rem;
-            font-weight: 600;
-            color: white;
+            gap: 1.5rem;
+            padding-top: 0.875rem;
+            margin-top: 0.875rem;
+            border-top: 1px solid var(--gray-2);
         }
-        .stakeholder-role-sm {
-            font-size: 0.4375rem;
-            font-weight: 700;
-            color: white;
-            padding: 0.0625rem 0.1875rem;
-            border-radius: 2px;
-            display: inline-block;
-            margin-bottom: 0.125rem;
-        }
-        .stakeholder-name-sm {
-            font-size: 0.5625rem;
-            color: var(--brand-black);
-        }
-        .engagement-bar-sm {
-            height: 2px;
-            background: #e5e5e5;
-            border-radius: 1px;
-            margin-top: 0.25rem;
-        }
-
-        /* Compact Next Steps */
-        .next-step-sm {
-            border-left: 3px solid;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            background: #f8f8f8;
-            border-radius: 0 0.375rem 0.375rem 0;
-        }
-        .next-step-sm:last-child {
-            margin-bottom: 0;
-        }
-        .next-step-header-sm {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .next-step-title-sm {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--brand-black);
-        }
-        .next-step-meta-sm {
-            font-size: 0.5625rem;
-            color: #706e6b;
-        }
-        .ai-suggestion-sm {
-            background: linear-gradient(135deg, rgba(118, 168, 244, 0.12), rgba(118, 168, 244, 0.04));
-            border-left: 2px solid var(--brand-blue);
-            padding: 0.375rem 0.5rem;
-            border-radius: 0 4px 4px 0;
-            margin-top: 0.375rem;
-        }
-        .ai-suggestion-label-sm {
-            display: flex;
-            align-items: center;
-            gap: 0.1875rem;
-            margin-bottom: 0.125rem;
-        }
-        .ai-suggestion-label-sm svg {
-            width: 8px;
-            height: 8px;
-            fill: var(--brand-blue);
-        }
-        .ai-suggestion-label-sm span {
-            font-size: 0.4375rem;
-            font-weight: 700;
-            color: var(--brand-blue);
-        }
-        .ai-suggestion-text-sm {
-            font-size: 0.5625rem;
-            color: var(--brand-black);
-        }
-
-        /* Pipeline Bar */
-        .pipeline-bar-sm {
-            height: 6px;
-            background: var(--brand-cream);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 0.375rem;
-        }
-        .pipeline-segments {
-            display: flex;
-            height: 100%;
-        }
-        .pipeline-labels-sm {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.5625rem;
-            color: #706e6b;
-        }
-
-        /* Schedule */
-        .schedule-item-sm {
-            position: relative;
-            padding-left: 0.75rem;
-            border-left: 2px solid var(--brand-cream);
-            margin-bottom: 0.625rem;
-        }
-        .schedule-item-sm:last-child {
-            margin-bottom: 0;
-        }
-        .schedule-dot-sm {
-            position: absolute;
-            left: -4px;
-            top: 1px;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            border: 1.5px solid white;
-        }
-        .schedule-time-sm {
-            font-size: 0.5625rem;
-            font-weight: 700;
-        }
-        .schedule-title-sm {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--brand-black);
-        }
-        .schedule-attendees-sm {
-            font-size: 0.5625rem;
-            color: #706e6b;
-        }
-        .schedule-link-sm {
-            display: flex;
-            align-items: center;
-            gap: 0.1875rem;
-            font-size: 0.5625rem;
-            color: var(--brand-blue);
-            text-decoration: none;
-            margin-top: 0.125rem;
-        }
-        .schedule-link-sm svg {
-            width: 8px;
-            height: 8px;
-            fill: var(--brand-blue);
-        }
-
-        /* Health Ring */
-        .health-container-sm {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .health-ring-sm {
-            position: relative;
-            width: 60px;
-            height: 60px;
-        }
-        .health-ring-sm svg {
-            transform: rotate(-90deg);
-        }
-        .health-text-sm {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-        .health-value-sm {
+        .acct-stat-value {
             font-size: 1rem;
             font-weight: 700;
-            color: var(--success);
+            color: #181818;
         }
-        .health-label-sm {
-            font-size: 0.4375rem;
-            color: #706e6b;
-        }
-        .health-legend-sm {
-            font-size: 0.6875rem;
-        }
-        .health-legend-item-sm {
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-            margin-bottom: 0.25rem;
-        }
-        .health-dot-sm {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-
-        /* Account Health Card */
-        .account-item-sm {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .account-item-sm:last-child {
-            border-bottom: none;
-        }
-        .account-health-sm {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .acct-stat-label {
             font-size: 0.625rem;
-            font-weight: 700;
-            color: white;
-            margin-right: 0.5rem;
-            flex-shrink: 0;
-        }
-        .account-health-sm.critical {
-            background: #c23934;
-        }
-        .account-health-sm.warning {
-            background: #fe9339;
-        }
-        .account-health-sm.healthy {
-            background: #2e844a;
-        }
-        .account-info-sm {
-            flex: 1;
-            min-width: 0;
-        }
-        .account-name-sm {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #080707;
-        }
-        .account-meta-sm {
-            font-size: 0.5625rem;
-            color: #706e6b;
-        }
-        .account-arr-sm {
-            font-size: 0.6875rem;
-            font-weight: 600;
-            color: #0176d3;
-            flex-shrink: 0;
+            color: var(--gray-3);
         }
 
-        /* Forecast Card */
-        .forecast-header-sm {
+        /* AI Summary */
+        .acct-ai-summary {
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.08) 0%, rgba(1, 118, 211, 0.05) 100%);
+            border-left: 3px solid var(--brand-teal);
+            border-radius: 0 10px 10px 0;
+            padding: 0.875rem 1rem;
+            margin-bottom: 1rem;
+        }
+        .ai-summary-header {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             gap: 0.375rem;
             margin-bottom: 0.375rem;
         }
-        .forecast-amount-sm {
-            font-size: 1.125rem;
+        .ai-summary-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-primary) 100%);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-summary-icon svg { width: 12px; height: 12px; fill: white; }
+        .ai-summary-label {
+            font-size: 0.5625rem;
             font-weight: 700;
-            color: var(--brand-blue);
+            color: var(--brand-teal);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .forecast-quota-sm {
-            font-size: 0.625rem;
-            color: #706e6b;
+        .ai-summary-text {
+            font-size: 0.8125rem;
+            color: #181818;
+            line-height: 1.45;
         }
-        .forecast-bar-sm {
-            height: 6px;
-            background: var(--brand-cream);
-            border-radius: 3px;
+        .ai-summary-text strong { color: var(--brand-primary); }
+
+        /* Account Grid */
+        .acct-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 320px;
+            gap: 1rem;
+        }
+
+        /* Account Cards */
+        .acct-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             overflow: hidden;
-            margin-bottom: 0.25rem;
         }
-        .forecast-fill-sm {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success) 0%, var(--brand-blue) 70%, var(--warning) 100%);
-            border-radius: 3px;
-        }
-        .forecast-status-sm {
+        .acct-card-header {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--gray-2);
             display: flex;
             justify-content: space-between;
-            font-size: 0.5625rem;
-            color: #706e6b;
-            margin-bottom: 0.5rem;
+            align-items: center;
         }
-        .forecast-categories-sm {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-        .forecast-cat-sm {
+        .acct-card-title {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #181818;
             display: flex;
             align-items: center;
             gap: 0.375rem;
-            font-size: 0.625rem;
-            color: var(--brand-black);
         }
-        .forecast-dot-sm {
-            width: 6px;
-            height: 6px;
+        .card-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-icon svg { width: 14px; height: 14px; fill: white; }
+        .acct-card-badge {
+            font-size: 0.625rem;
+            padding: 0.1875rem 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        .acct-card-body { padding: 0.75rem 1rem; }
+
+        /* Contact Cards */
+        .contact-row {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.625rem;
+            background: var(--gray-1);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid transparent;
+        }
+        .contact-row:last-child { margin-bottom: 0; }
+        .contact-row.champion { border-left-color: var(--success); }
+        .contact-row.technical { border-left-color: var(--brand-primary); }
+        .contact-row.economic { border-left-color: var(--warning); }
+        .contact-row.missing { border-left-color: var(--error); background: #fef1ee; }
+        .contact-avatar {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
+            background: linear-gradient(135deg, var(--brand-primary) 0%, #0353a4 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6875rem;
+            font-weight: 600;
             flex-shrink: 0;
         }
-
-        /* Progress Dots */
-        .progress-container {
-            position: fixed;
-            bottom: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 200;
-        }
-        .progress-dot {
+        .contact-avatar.missing { background: var(--gray-2); color: var(--gray-3); }
+        .contact-info { margin-left: 0.5rem; flex: 1; }
+        .contact-name { font-weight: 600; font-size: 0.75rem; color: #181818; }
+        .contact-role { font-size: 0.625rem; color: var(--gray-3); }
+        .engagement-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
+            flex-shrink: 0;
         }
-        .progress-dot.active {
-            background: var(--brand-red);
-            transform: scale(1.2);
-        }
+        .engagement-high { background: var(--success); }
+        .engagement-medium { background: var(--warning); }
+        .engagement-low { background: var(--error); }
 
-        /* Buttons */
-        .skip-btn {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 2rem;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            z-index: 200;
+        /* Step Indicators */
+        .step-row {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-2);
         }
-        .skip-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .replay-btn {
-            position: fixed;
-            bottom: 1.5rem;
-            left: 2rem;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            z-index: 200;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .replay-btn.visible {
-            opacity: 1;
-        }
-        .replay-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        /* Feature Grid Slide */
-        .feature-grid-intro {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-        .feature-grid-intro .feature-badge {
+        .step-row:last-child { border-bottom: none; }
+        .step-indicator {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            font-size: 0.5625rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: white;
         }
-        .feature-grid {
+        .step-overdue { background: var(--error); }
+        .step-due-soon { background: var(--warning); }
+        .step-on-track { background: var(--gray-2); color: var(--gray-3); }
+        .step-info { margin-left: 0.5rem; flex: 1; }
+        .step-title { font-weight: 600; font-size: 0.75rem; color: #181818; }
+        .step-meta { font-size: 0.625rem; color: var(--gray-3); }
+
+        /* Opportunity Rows */
+        .opp-row {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+        .opp-row:last-child { border-bottom: none; }
+        .opp-health {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .opp-health.healthy { background: linear-gradient(135deg, #2e844a 0%, #1c6330 100%); }
+        .opp-health.warning { background: linear-gradient(135deg, #fe9339 0%, #dd7a00 100%); }
+        .opp-health.critical { background: linear-gradient(135deg, #c23934 0%, #a61d17 100%); }
+        .opp-info { margin-left: 0.5rem; flex: 1; }
+        .opp-name { font-weight: 600; font-size: 0.75rem; color: #181818; }
+        .opp-meta { font-size: 0.625rem; color: var(--gray-3); }
+        .opp-value { font-weight: 600; font-size: 0.8125rem; color: #181818; }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 4px;
+            bottom: 4px;
+            width: 2px;
+            background: var(--gray-2);
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-dot {
+            position: absolute;
+            left: -1.25rem;
+            top: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--brand-primary);
+        }
+        .timeline-dot.alert { border-color: var(--warning); background: var(--warning); }
+        .timeline-dot.success { border-color: var(--success); }
+        .timeline-date { font-size: 0.5625rem; color: var(--gray-3); }
+        .timeline-title { font-weight: 600; font-size: 0.6875rem; color: #181818; }
+        .timeline-desc { font-size: 0.5625rem; color: var(--gray-3); line-height: 1.3; }
+
+        /* Orchestration Panel */
+        .action-section { margin-bottom: 0.75rem; }
+        .action-section:last-child { margin-bottom: 0; }
+        .section-label {
+            font-size: 0.5625rem;
+            font-weight: 700;
+            color: var(--gray-3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.375rem;
+        }
+        .action-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 0.625rem;
+            margin-bottom: 0.375rem;
+            border: 1px solid var(--gray-2);
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+        .action-btn:hover {
+            border-color: var(--brand-primary);
+            background: rgba(1, 118, 211, 0.04);
+        }
+        .action-btn:last-child { margin-bottom: 0; }
+        .action-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        .action-icon svg { width: 14px; height: 14px; fill: white; }
+        .action-icon.email { background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%); }
+        .action-icon.meeting { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .action-icon.roi { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .action-icon.doc { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .action-icon.handoff { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .action-content { flex: 1; }
+        .action-title { font-weight: 600; font-size: 0.6875rem; color: #181818; }
+        .action-desc { font-size: 0.5625rem; color: var(--gray-3); }
+        .action-arrow { color: var(--gray-3); font-size: 0.75rem; }
+
+        /* ============================================ */
+        /* FOR EVERY ROLE SLIDE */
+        /* ============================================ */
+        .roles-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
-            max-width: 900px;
-            margin: 0 auto;
+            margin-top: 2rem;
         }
-        .feature-grid-item {
-            background: rgba(255,255,255,0.06);
+        .role-card {
+            background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 0.75rem;
+            border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
-            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        .feature-grid-item:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-4px);
+        .feature-slide.active .role-card {
+            animation: element-in 0.6s ease forwards;
         }
-        .feature-grid-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+        .feature-slide.active .role-card:nth-child(1) { animation-delay: 0.2s; }
+        .feature-slide.active .role-card:nth-child(2) { animation-delay: 0.3s; }
+        .feature-slide.active .role-card:nth-child(3) { animation-delay: 0.4s; }
+        .feature-slide.active .role-card:nth-child(4) { animation-delay: 0.5s; }
+
+        .role-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
         }
-        .feature-grid-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-        }
-        .feature-grid-item h3 {
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
+        .role-icon svg { width: 28px; height: 28px; fill: white; }
+        .role-title {
+            color: var(--brand-white);
+            font-size: 1.125rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
-        .feature-grid-item p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.8125rem;
+        .role-desc {
+            color: var(--brand-cream);
+            font-size: 0.875rem;
+            opacity: 0.8;
             line-height: 1.4;
         }
 
-        /* Account Health in Spotlight */
-        .account-list {
+        /* ============================================ */
+        /* PROGRESS & CONTROLS */
+        /* ============================================ */
+        .progress-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 200;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
         }
-        .account-row {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .account-row:last-child {
-            border-bottom: none;
-        }
-        .account-health {
-            width: 36px;
-            height: 36px;
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .progress-dot:hover {
+            background: rgba(255,255,255,0.5);
+        }
+        .progress-dot.active {
+            background: var(--brand-red);
+            transform: scale(1.25);
+        }
+
+        .skip-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
             font-size: 0.75rem;
-            font-weight: 700;
+            cursor: pointer;
+            z-index: 200;
+            transition: all 0.2s ease;
+        }
+        .skip-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
             color: white;
-            margin-right: 0.75rem;
-            flex-shrink: 0;
         }
-        .account-health.critical { background: #c23934; }
-        .account-health.warning { background: #fe9339; }
-        .account-health.healthy { background: #2e844a; }
-        .account-details {
-            flex: 1;
-        }
-        .account-name {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #080707;
-        }
-        .account-meta {
+
+        .replay-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--brand-red);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
             font-size: 0.75rem;
-            color: #706e6b;
+            cursor: pointer;
+            z-index: 200;
+            display: none;
+            transition: all 0.2s ease;
         }
-        .account-pipeline {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--brand-blue);
+        .replay-btn:hover {
+            background: #c72500;
         }
     </style>
 </head>
 <body>
-    <!-- Intro Screen -->
+    <!-- INTRO SCREEN -->
     <div class="intro-screen" id="intro">
         <div class="logo-container">
             <div class="logo-icon">
-                <svg class="sparkle-animate" viewBox="0 0 24 24">
-                    <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/>
-                </svg>
+                <svg class="sparkle-animate" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
             </div>
             <h1 class="intro-title">GTM Systems AI</h1>
-            <p class="intro-subtitle">Every interaction becomes insight.</p>
+            <p class="intro-subtitle">Intelligence for every role. Every moment.</p>
         </div>
     </div>
 
-    <!-- Slide 1: Deal Intelligence -->
-    <div class="feature-slide" id="slide1">
+    <!-- SLIDE 1: The Challenge -->
+    <div class="feature-slide centered-slide" id="slide1">
         <div class="feature-content">
-            <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
-                <div class="slds-col slds-size_1-of-2">
-                    <div class="feature-badge animate-in">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                        <span>Deal Intelligence</span>
-                    </div>
-                    <h2 class="feature-title animate-in">Know your deals.<br><span class="highlight">Before they slip.</span></h2>
-                    <p class="feature-description animate-in">AI-powered health scores and risk signals on every opportunity. The system anticipates what you need — before you ask.</p>
-                </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <div class="mockup-container">
-                        <div class="mockup-header">
-                            <div class="mockup-dot red"></div>
-                            <div class="mockup-dot yellow"></div>
-                            <div class="mockup-dot green"></div>
-                        </div>
-                        <div class="mockup-content">
-                            <div class="mini-card">
-                                <div class="mini-header">
-                                    <span class="mini-title">Your Priority Actions</span>
-                                    <span class="mini-badge" style="background: rgba(118, 168, 244, 0.15); color: var(--brand-blue);">AI Prioritized</span>
-                                </div>
-                                <div class="priority-item">
-                                    <div class="priority-num" style="background: var(--brand-red);">1</div>
-                                    <div class="priority-content">
-                                        <div class="priority-title">Re-engage Acme Health</div>
-                                        <div class="priority-desc">Sarah asked about Epic on Jan 15</div>
-                                    </div>
-                                    <span class="mini-badge" style="background: #fef1ee; color: var(--brand-red);">12d silent</span>
-                                    <div class="priority-amount">$425K</div>
-                                </div>
-                                <div class="priority-item">
-                                    <div class="priority-num" style="background: var(--warning);">2</div>
-                                    <div class="priority-content">
-                                        <div class="priority-title">New stakeholder at Metro</div>
-                                        <div class="priority-desc">David Chen added to thread</div>
-                                    </div>
-                                    <span class="mini-badge" style="background: #fef7e8; color: #b47800;">Signal</span>
-                                    <div class="priority-amount">$680K</div>
-                                </div>
-                                <div class="priority-item">
-                                    <div class="priority-num" style="background: var(--success);">3</div>
-                                    <div class="priority-content">
-                                        <div class="priority-title">Send proposal to Valley</div>
-                                        <div class="priority-desc">Strong buying group engagement</div>
-                                    </div>
-                                    <span class="mini-badge" style="background: #ebf7e6; color: var(--success);">Hot</span>
-                                    <div class="priority-amount">$320K</div>
-                                </div>
-                            </div>
-                            <div class="stats-row">
-                                <div class="stat-item">
-                                    <div class="stat-value" style="color: var(--brand-red);">3</div>
-                                    <div class="stat-label">At Risk</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">$2.8M</div>
-                                    <div class="stat-label">Pipeline</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value" style="color: var(--success);">72%</div>
-                                    <div class="stat-label">Health</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="feature-badge animate-in">
+                <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                <span>The Challenge</span>
             </div>
-        </div>
-    </div>
+            <h2 class="feature-title animate-in">Too much data.<br><span class="highlight">Not enough insight.</span></h2>
+            <p class="feature-description animate-in">Your team spends hours digging through Salesforce, Gong, and emails. The information exists — it's just scattered everywhere.</p>
 
-    <!-- Slide 2: Account Health -->
-    <div class="feature-slide" id="slide2">
-        <div class="feature-content">
-            <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
-                <div class="slds-col slds-size_1-of-2">
-                    <div class="feature-badge animate-in">
+            <div class="pain-points">
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    </div>
+                    <div class="pain-title">Hours lost daily</div>
+                    <div class="pain-desc">Reps spending time researching instead of selling. Managers hunting for coaching moments.</div>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    </div>
+                    <div class="pain-title">Deals slip through</div>
+                    <div class="pain-desc">No next step. Missing stakeholders. Stale opportunities that nobody noticed.</div>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">
                         <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
-                        <span>Account Health</span>
                     </div>
-                    <h2 class="feature-title animate-in">Know your accounts.<br><span class="highlight">At a glance.</span></h2>
-                    <p class="feature-description animate-in">Health scores, ARR, pipeline, and activity — all in one view. The right context, at the right moment.</p>
-                </div>
-                <div class="slds-col slds-size_1-of-2">
-                    <div class="mockup-container">
-                        <div class="mockup-header">
-                            <div class="mockup-dot red"></div>
-                            <div class="mockup-dot yellow"></div>
-                            <div class="mockup-dot green"></div>
-                        </div>
-                        <div class="mockup-content">
-                            <div class="mini-card">
-                                <div class="mini-header">
-                                    <span class="mini-title">Accounts Needing Attention</span>
-                                    <span class="mini-badge" style="background: #fef1ee; color: #c23934;">2 at risk</span>
-                                </div>
-                                <div class="account-list">
-                                    <div class="account-row">
-                                        <div class="account-health critical">34</div>
-                                        <div class="account-details">
-                                            <div class="account-name">Acme Health Systems</div>
-                                            <div class="account-meta">$125K ARR · 12 days silent</div>
-                                        </div>
-                                        <div class="account-pipeline">$425K pipe</div>
-                                    </div>
-                                    <div class="account-row">
-                                        <div class="account-health warning">58</div>
-                                        <div class="account-details">
-                                            <div class="account-name">Metro Regional Medical</div>
-                                            <div class="account-meta">$80K ARR · 8 days silent</div>
-                                        </div>
-                                        <div class="account-pipeline">$680K pipe</div>
-                                    </div>
-                                    <div class="account-row">
-                                        <div class="account-health healthy">89</div>
-                                        <div class="account-details">
-                                            <div class="account-name">Valley Health Network</div>
-                                            <div class="account-meta">$200K ARR · Active today</div>
-                                        </div>
-                                        <div class="account-pipeline">$320K pipe</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats-row">
-                                <div class="stat-item">
-                                    <div class="stat-value">12</div>
-                                    <div class="stat-label">Accounts</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value" style="color: #c23934;">2</div>
-                                    <div class="stat-label">At Risk</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">$1.2M</div>
-                                    <div class="stat-label">Total ARR</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="pain-title">Renewals at risk</div>
+                    <div class="pain-desc">Usage drops. Power users go quiet. We find out too late.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Slide 3: Buying Groups -->
+    <!-- SLIDE 2: Our Approach -->
+    <div class="feature-slide centered-slide" id="slide2">
+        <div class="feature-content">
+            <div class="feature-badge animate-in">
+                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                <span>Our Approach</span>
+            </div>
+            <h2 class="feature-title animate-in">Built on <span class="highlight">principles.</span></h2>
+            <p class="feature-description animate-in">Not features for features' sake. Every tool we ship must earn its place.</p>
+
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-num">1</div>
+                    <div class="principle-title">Earn the right</div>
+                    <div class="principle-desc">Build foundational blocks before tackling complex views. Crawl, walk, run.</div>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-num">2</div>
+                    <div class="principle-title">Useful > Pretty</div>
+                    <div class="principle-desc">"No hand turkeys" — everything must be genuinely helpful, not just impressive.</div>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-num">3</div>
+                    <div class="principle-title">Easier than default</div>
+                    <div class="principle-desc">Has to be easier than the existing option, or it won't get used.</div>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-num">4</div>
+                    <div class="principle-title">Role-aware</div>
+                    <div class="principle-desc">Build for the context of who you are and what you're trying to do.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: What We've Built - Buying Groups -->
     <div class="feature-slide" id="slide3">
         <div class="feature-content">
             <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
                 <div class="slds-col slds-size_1-of-2">
                     <div class="feature-badge animate-in">
-                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                        <span>Buying Groups</span>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <span>In Production</span>
                     </div>
                     <h2 class="feature-title animate-in">See the <span class="highlight">whole picture.</span></h2>
-                    <p class="feature-description animate-in">Track every stakeholder, their role, and engagement level. Know who's missing and who's going quiet.</p>
+                    <p class="feature-description animate-in">Buying Groups track every stakeholder, their role, and engagement level. Know who's missing and who's going quiet — automatically.</p>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
                     <div class="mockup-container">
@@ -1552,31 +1154,31 @@
                         <div class="mockup-content">
                             <div class="mini-card">
                                 <div class="mini-header">
-                                    <span class="mini-title">Acme Health — Buying Group</span>
-                                    <span style="font-size: 0.75rem; color: #706e6b;">3 of 5 roles</span>
+                                    <span class="mini-title">Northshore Health — Buying Group</span>
+                                    <span style="font-size: 0.75rem; color: #706e6b;">3 of 4 roles</span>
                                 </div>
                                 <div class="stakeholder-grid">
                                     <div class="stakeholder-card">
-                                        <div class="stakeholder-avatar" style="background: var(--brand-blue);">SC</div>
-                                        <span class="stakeholder-role" style="background: var(--brand-blue);">Clinical Champion</span>
-                                        <div class="stakeholder-name">Sarah Chen</div>
-                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 60%; background: var(--warning);"></div></div>
-                                    </div>
-                                    <div class="stakeholder-card">
-                                        <div class="stakeholder-avatar" style="background: var(--brand-red);">TR</div>
-                                        <span class="stakeholder-role" style="background: var(--brand-red);">Economic Buyer</span>
-                                        <div class="stakeholder-name">Tom Richards</div>
-                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 15%; background: var(--brand-red);"></div></div>
-                                    </div>
-                                    <div class="stakeholder-card">
-                                        <div class="stakeholder-avatar" style="background: var(--success);">MJ</div>
-                                        <span class="stakeholder-role" style="background: var(--success);">Advocate</span>
-                                        <div class="stakeholder-name">Mike Johnson</div>
+                                        <div class="stakeholder-avatar" style="background: var(--success);">JM</div>
+                                        <span class="stakeholder-role" style="background: var(--success);">Champion</span>
+                                        <div class="stakeholder-name">Dr. James Miller</div>
                                         <div class="engagement-bar"><div class="engagement-fill" style="width: 90%; background: var(--success);"></div></div>
+                                    </div>
+                                    <div class="stakeholder-card">
+                                        <div class="stakeholder-avatar" style="background: var(--brand-primary);">RK</div>
+                                        <span class="stakeholder-role" style="background: var(--brand-primary);">Technical</span>
+                                        <div class="stakeholder-name">Rachel Kim</div>
+                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 85%; background: var(--success);"></div></div>
+                                    </div>
+                                    <div class="stakeholder-card">
+                                        <div class="stakeholder-avatar" style="background: var(--warning);">MT</div>
+                                        <span class="stakeholder-role" style="background: var(--warning);">Economic</span>
+                                        <div class="stakeholder-name">Michael Torres</div>
+                                        <div class="engagement-bar"><div class="engagement-fill" style="width: 25%; background: var(--error);"></div></div>
                                     </div>
                                     <div class="stakeholder-card missing">
                                         <div class="stakeholder-avatar" style="background: #d0d0d0; color: #706e6b;">?</div>
-                                        <span class="stakeholder-role" style="background: #d0d0d0; color: #706e6b;">IT Champion</span>
+                                        <span class="stakeholder-role" style="background: #d0d0d0; color: #706e6b;">User Buyer</span>
                                         <div class="stakeholder-name" style="color: #706e6b;">Not identified</div>
                                         <div class="engagement-bar"><div class="engagement-fill" style="width: 0%;"></div></div>
                                     </div>
@@ -1589,17 +1191,17 @@
         </div>
     </div>
 
-    <!-- Slide 4: Next Steps Hygiene -->
+    <!-- SLIDE 4: What We've Built - Next Steps -->
     <div class="feature-slide" id="slide4">
         <div class="feature-content">
             <div class="slds-grid slds-gutters_large slds-grid_vertical-align-center">
                 <div class="slds-col slds-size_1-of-2">
                     <div class="feature-badge animate-in">
                         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                        <span>Next Steps Hygiene</span>
+                        <span>In Production</span>
                     </div>
                     <h2 class="feature-title animate-in">Never let a deal <span class="highlight">go stale.</span></h2>
-                    <p class="feature-description animate-in">AI monitors your pipeline and suggests the next best action. No more deals falling through the cracks.</p>
+                    <p class="feature-description animate-in">Next Steps Hygiene monitors your pipeline and flags missing or overdue actions. AI suggests what to do next — no more deals falling through the cracks.</p>
                 </div>
                 <div class="slds-col slds-size_1-of-2">
                     <div class="mockup-container">
@@ -1609,27 +1211,27 @@
                             <div class="mockup-dot green"></div>
                         </div>
                         <div class="mockup-content">
-                            <div class="next-step-item" style="border-left-color: var(--brand-red);">
+                            <div class="next-step-item" style="border-left-color: var(--error);">
                                 <div class="next-step-header">
                                     <div>
-                                        <div class="next-step-title">Acme Health Systems</div>
-                                        <div class="next-step-meta">Stage 3 — $425K</div>
+                                        <div class="next-step-title">Northshore Health System</div>
+                                        <div class="next-step-meta">Negotiation — $425K</div>
                                     </div>
-                                    <span class="mini-badge" style="background: #fef1ee; color: var(--brand-red);">No Next Step</span>
+                                    <span class="mini-badge" style="background: #fef1ee; color: var(--error);">No Next Step</span>
                                 </div>
                                 <div class="ai-suggestion">
                                     <div class="ai-suggestion-label">
                                         <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
                                         <span>AI SUGGESTION</span>
                                     </div>
-                                    <div class="ai-suggestion-text">Follow up with Sarah on Epic integration timeline.</div>
+                                    <div class="ai-suggestion-text">Re-engage Dr. Miller on usage concerns before renewal.</div>
                                 </div>
                             </div>
                             <div class="next-step-item" style="border-left-color: var(--warning);">
                                 <div class="next-step-header">
                                     <div>
                                         <div class="next-step-title">Metro Regional Medical</div>
-                                        <div class="next-step-meta">Stage 4 — $680K</div>
+                                        <div class="next-step-meta">Proposal — $680K</div>
                                     </div>
                                     <span class="mini-badge" style="background: #fef7e8; color: #b47800;">Stale 8 days</span>
                                 </div>
@@ -1638,7 +1240,7 @@
                                 <div class="next-step-header">
                                     <div>
                                         <div class="next-step-title">Valley Health Network</div>
-                                        <div class="next-step-meta">Stage 4 — $320K</div>
+                                        <div class="next-step-meta">Discovery — $320K</div>
                                     </div>
                                     <span class="mini-badge" style="background: #ebf7e6; color: var(--success);">On Track</span>
                                 </div>
@@ -1650,441 +1252,354 @@
         </div>
     </div>
 
-    <!-- Slide 5: Feature Grid Overview -->
-    <div class="feature-slide" id="slide5">
+    <!-- SLIDE 5: The Vision -->
+    <div class="feature-slide centered-slide" id="slide5">
         <div class="feature-content">
-            <div class="feature-grid-intro">
-                <div class="feature-badge animate-in" style="justify-content: center;">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                    <span>GTM Systems AI</span>
-                </div>
-                <h2 class="feature-title animate-in" style="text-align: center;">Context, not complexity.</h2>
-                <p class="feature-description animate-in" style="text-align: center; max-width: 600px; margin: 0 auto;">Right information. Right moment. We meet you where you work.</p>
+            <div class="feature-badge animate-in">
+                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                <span>The Vision</span>
             </div>
-            <div class="feature-grid">
-                <div class="feature-grid-item animate-in">
-                    <div class="feature-grid-icon" style="background: #0176d3;">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+            <h2 class="feature-title animate-in">One page.<br><span class="highlight">Everything you need.</span></h2>
+            <p class="feature-description animate-in">The new Account Page brings it all together — context, contacts, actions, and AI agents. A launchpad for everything account-related.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Account Page (Full Mockup) -->
+    <div class="account-page-slide" id="slide6">
+        <div class="vision-title">
+            <div class="feature-badge" style="display: inline-flex; margin-bottom: 0.5rem;">
+                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                <span>Account Page</span>
+            </div>
+            <h2>Your new <span class="highlight">command center.</span></h2>
+        </div>
+
+        <div class="account-frame">
+            <div class="frame-header">
+                <div class="mockup-dot red"></div>
+                <div class="mockup-dot yellow"></div>
+                <div class="mockup-dot green"></div>
+                <span class="frame-title">Salesforce — Account Page</span>
+            </div>
+
+            <div class="account-page-content">
+                <!-- Account Header -->
+                <div class="acct-header">
+                    <div class="acct-header-top">
+                        <div class="acct-identity">
+                            <div class="acct-logo">NH</div>
+                            <div>
+                                <div class="acct-name">Northshore Health System</div>
+                                <div class="acct-meta">Healthcare • 340 Physicians • Chicago, IL</div>
+                            </div>
+                        </div>
+                        <div class="acct-health">
+                            <div class="health-context">
+                                <div class="health-trend down">↓ 8 pts this month</div>
+                                <div class="health-note">Usage declined after key user left</div>
+                            </div>
+                            <div class="health-score-lg">
+                                <span class="score">64</span>
+                                <span class="label">Health</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Deal Intelligence</h3>
-                    <p>"What should I do next?" — answered automatically</p>
+                    <div class="acct-stats">
+                        <div><div class="acct-stat-value">$425K</div><div class="acct-stat-label">ARR</div></div>
+                        <div><div class="acct-stat-value">$180K</div><div class="acct-stat-label">Pipeline</div></div>
+                        <div><div class="acct-stat-value">142</div><div class="acct-stat-label">Days to Renewal</div></div>
+                        <div><div class="acct-stat-value">3</div><div class="acct-stat-label">Open Opps</div></div>
+                        <div><div class="acct-stat-value">12</div><div class="acct-stat-label">Contacts</div></div>
+                    </div>
                 </div>
-                <div class="feature-grid-item animate-in">
-                    <div class="feature-grid-icon" style="background: #c23934;">
-                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+
+                <!-- AI Summary -->
+                <div class="acct-ai-summary">
+                    <div class="ai-summary-header">
+                        <div class="ai-summary-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
+                        </div>
+                        <span class="ai-summary-label">AI Account Summary</span>
                     </div>
-                    <h3>Account Health</h3>
-                    <p>"Which accounts need me?" — at a glance</p>
+                    <div class="ai-summary-text">
+                        <strong>Renewal at risk.</strong> Usage dropped 23% after Dr. Sarah Chen went on leave Jan 15. CFO mentioned budget review in last QBR. <strong>Expansion opportunity exists</strong> — they're opening 3 new locations in Q2.
+                    </div>
                 </div>
-                <div class="feature-grid-item animate-in">
-                    <div class="feature-grid-icon" style="background: #7f8de1;">
-                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+
+                <!-- Grid -->
+                <div class="acct-grid">
+                    <!-- Column 1 -->
+                    <div>
+                        <!-- Buying Group -->
+                        <div class="acct-card" style="margin-bottom: 1rem;">
+                            <div class="acct-card-header">
+                                <span class="acct-card-title">
+                                    <span class="card-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                                    </span>
+                                    Buying Group
+                                </span>
+                                <span class="acct-card-badge" style="background: #fef7e8; color: #b47800;">1 gap</span>
+                            </div>
+                            <div class="acct-card-body">
+                                <div class="contact-row champion">
+                                    <div class="contact-avatar">JM</div>
+                                    <div class="contact-info">
+                                        <div class="contact-name">Dr. James Miller</div>
+                                        <div class="contact-role">Champion • CMO</div>
+                                    </div>
+                                    <div class="engagement-dot engagement-high"></div>
+                                </div>
+                                <div class="contact-row technical">
+                                    <div class="contact-avatar">RK</div>
+                                    <div class="contact-info">
+                                        <div class="contact-name">Rachel Kim</div>
+                                        <div class="contact-role">Technical • CTO</div>
+                                    </div>
+                                    <div class="engagement-dot engagement-high"></div>
+                                </div>
+                                <div class="contact-row economic">
+                                    <div class="contact-avatar">MT</div>
+                                    <div class="contact-info">
+                                        <div class="contact-name">Michael Torres</div>
+                                        <div class="contact-role">Economic • CFO</div>
+                                    </div>
+                                    <div class="engagement-dot engagement-low"></div>
+                                </div>
+                                <div class="contact-row missing">
+                                    <div class="contact-avatar missing">?</div>
+                                    <div class="contact-info">
+                                        <div class="contact-name">Need to identify</div>
+                                        <div class="contact-role">User Buyer • IT Director</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Next Steps -->
+                        <div class="acct-card">
+                            <div class="acct-card-header">
+                                <span class="acct-card-title">
+                                    <span class="card-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                        <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                    </span>
+                                    Next Steps
+                                </span>
+                                <span class="acct-card-badge" style="background: #fef1ee; color: #c23934;">1 overdue</span>
+                            </div>
+                            <div class="acct-card-body">
+                                <div class="step-row">
+                                    <div class="step-indicator step-overdue">!</div>
+                                    <div class="step-info">
+                                        <div class="step-title">Re-engage Dr. Miller on usage</div>
+                                        <div class="step-meta">Due 2 days ago</div>
+                                    </div>
+                                </div>
+                                <div class="step-row">
+                                    <div class="step-indicator step-due-soon">→</div>
+                                    <div class="step-info">
+                                        <div class="step-title">Send expansion pricing proposal</div>
+                                        <div class="step-meta">Due tomorrow</div>
+                                    </div>
+                                </div>
+                                <div class="step-row">
+                                    <div class="step-indicator step-on-track">○</div>
+                                    <div class="step-info">
+                                        <div class="step-title">Schedule QBR with CFO</div>
+                                        <div class="step-meta">Due Feb 15</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Buying Groups</h3>
-                    <p>Know every stakeholder, their role, their engagement</p>
-                </div>
-                <div class="feature-grid-item animate-in">
-                    <div class="feature-grid-icon" style="background: #2e844a;">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+
+                    <!-- Column 2 -->
+                    <div>
+                        <!-- Opportunities -->
+                        <div class="acct-card" style="margin-bottom: 1rem;">
+                            <div class="acct-card-header">
+                                <span class="acct-card-title">
+                                    <span class="card-icon" style="background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);">
+                                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                                    </span>
+                                    Open Opportunities
+                                </span>
+                                <span class="acct-card-badge" style="background: #ebf7e6; color: #2e844a;">$180K</span>
+                            </div>
+                            <div class="acct-card-body">
+                                <div class="opp-row">
+                                    <div class="opp-health healthy">78</div>
+                                    <div class="opp-info">
+                                        <div class="opp-name">Expansion — New Locations</div>
+                                        <div class="opp-meta">Negotiation • Close: Mar 15</div>
+                                    </div>
+                                    <div class="opp-value">$120K</div>
+                                </div>
+                                <div class="opp-row">
+                                    <div class="opp-health warning">54</div>
+                                    <div class="opp-info">
+                                        <div class="opp-name">Mobile App Add-on</div>
+                                        <div class="opp-meta">Discovery • Close: Apr 30</div>
+                                    </div>
+                                    <div class="opp-value">$45K</div>
+                                </div>
+                                <div class="opp-row">
+                                    <div class="opp-health critical">32</div>
+                                    <div class="opp-info">
+                                        <div class="opp-name">Training Services</div>
+                                        <div class="opp-meta">Stalled • Close: Feb 28</div>
+                                    </div>
+                                    <div class="opp-value">$15K</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Key Moments -->
+                        <div class="acct-card">
+                            <div class="acct-card-header">
+                                <span class="acct-card-title">
+                                    <span class="card-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                                    </span>
+                                    Key Moments
+                                </span>
+                            </div>
+                            <div class="acct-card-body">
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">Jan 27, 2026</div>
+                                        <div class="timeline-title">Expansion discussion</div>
+                                        <div class="timeline-desc">Asked about multi-site pricing</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot alert"></div>
+                                        <div class="timeline-date">Jan 15, 2026</div>
+                                        <div class="timeline-title">Power user went inactive</div>
+                                        <div class="timeline-desc">Dr. Chen on medical leave</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-date">Jan 10, 2026</div>
+                                        <div class="timeline-title">QBR completed</div>
+                                        <div class="timeline-desc">CFO mentioned budget review</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot success"></div>
+                                        <div class="timeline-date">Dec 5, 2025</div>
+                                        <div class="timeline-title">Roadmap presented</div>
+                                        <div class="timeline-desc">Exec team positive reception</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Next Steps Hygiene</h3>
-                    <p>AI-suggested actions — no deal falls through the cracks</p>
-                </div>
-                <div class="feature-grid-item animate-in">
-                    <div class="feature-grid-icon" style="background: #fe9339;">
-                        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+
+                    <!-- Column 3: Orchestration -->
+                    <div>
+                        <div class="acct-card" style="height: 100%;">
+                            <div class="acct-card-header">
+                                <span class="acct-card-title">
+                                    <span class="card-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                                        <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    </span>
+                                    What do you want to do?
+                                </span>
+                            </div>
+                            <div class="acct-card-body">
+                                <div class="action-section">
+                                    <div class="section-label">Communication</div>
+                                    <button class="action-btn">
+                                        <div class="action-icon email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+                                        <div class="action-content">
+                                            <div class="action-title">Draft Email</div>
+                                            <div class="action-desc">AI-generated outreach</div>
+                                        </div>
+                                        <span class="action-arrow">→</span>
+                                    </button>
+                                    <button class="action-btn">
+                                        <div class="action-icon meeting"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg></div>
+                                        <div class="action-content">
+                                            <div class="action-title">Meeting Prep</div>
+                                            <div class="action-desc">Brief for upcoming calls</div>
+                                        </div>
+                                        <span class="action-arrow">→</span>
+                                    </button>
+                                </div>
+                                <div class="action-section">
+                                    <div class="section-label">Documents</div>
+                                    <button class="action-btn">
+                                        <div class="action-icon roi"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+                                        <div class="action-content">
+                                            <div class="action-title">ROI Analysis</div>
+                                            <div class="action-desc">Generate custom model</div>
+                                        </div>
+                                        <span class="action-arrow">→</span>
+                                    </button>
+                                    <button class="action-btn">
+                                        <div class="action-icon doc"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div>
+                                        <div class="action-content">
+                                            <div class="action-title">Exec Summary</div>
+                                            <div class="action-desc">One-pager for leadership</div>
+                                        </div>
+                                        <span class="action-arrow">→</span>
+                                    </button>
+                                    <button class="action-btn">
+                                        <div class="action-icon handoff"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></div>
+                                        <div class="action-content">
+                                            <div class="action-title">Sales Handoff</div>
+                                            <div class="action-desc">Transition doc for new owner</div>
+                                        </div>
+                                        <span class="action-arrow">→</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Meeting Prep</h3>
-                    <p>Walk in prepared — AI-generated briefs for every call</p>
-                </div>
-                <div class="feature-grid-item animate-in">
-                    <div class="feature-grid-icon" style="background: #032d60;">
-                        <svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
-                    </div>
-                    <h3>Forecast & Pipeline</h3>
-                    <p>"Where do I coach?" — real-time visibility</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Slide 6: Full Dashboard Assembly -->
-    <div class="assembly-slide" id="slide6">
-        <div class="assembly-title">
-            <div class="feature-badge" style="display: inline-flex; margin-bottom: 0.75rem;">
+    <!-- SLIDE 7: For Every Role -->
+    <div class="feature-slide centered-slide" id="slide7">
+        <div class="feature-content">
+            <div class="feature-badge animate-in">
                 <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                <span>Your New Home</span>
+                <span>Built for Every Role</span>
             </div>
-            <h2>Every interaction becomes <span class="highlight">insight.</span></h2>
-        </div>
+            <h2 class="feature-title animate-in">AI for the <span class="highlight">whole GTM team.</span></h2>
+            <p class="feature-description animate-in">From prospecting to renewal, every role gets the intelligence they need.</p>
 
-        <div class="dashboard-frame">
-            <div class="frame-header">
-                <div class="mockup-dot red"></div>
-                <div class="mockup-dot yellow"></div>
-                <div class="mockup-dot green"></div>
-                <span class="frame-title">Salesforce — GTM Systems AI</span>
-            </div>
-
-            <div class="dashboard-content">
-                <!-- Global Header -->
-                <header class="global-header anim-component from-top delay-1">
-                    <div class="header-logo">
-                        <div class="app-launcher">
-                            <div class="app-launcher-dot"></div><div class="app-launcher-dot"></div><div class="app-launcher-dot"></div>
-                            <div class="app-launcher-dot"></div><div class="app-launcher-dot"></div><div class="app-launcher-dot"></div>
-                            <div class="app-launcher-dot"></div><div class="app-launcher-dot"></div><div class="app-launcher-dot"></div>
-                        </div>
-                        <!-- Abridge Logo -->
-                        <svg class="abridge-logo-img" viewBox="0 0 120 24" fill="none">
-                            <text x="0" y="18" fill="#00b4d8" font-family="Salesforce Sans, sans-serif" font-size="16" font-weight="700">ABRIDGE</text>
-                        </svg>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <div class="role-icon" style="background: linear-gradient(135deg, #0176d3 0%, #0353a4 100%);">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
                     </div>
-                    <div class="app-name">
-                        <span>Abridge</span>
+                    <div class="role-title">Sales Reps</div>
+                    <div class="role-desc">Deal intelligence, buying groups, next best actions</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon" style="background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     </div>
-                    <nav class="context-bar">
-                        <a href="#" class="nav-tab active">Home</a>
-                        <a href="#" class="nav-tab">Leads</a>
-                        <a href="#" class="nav-tab">Accounts</a>
-                        <a href="#" class="nav-tab">Contacts</a>
-                        <a href="#" class="nav-tab">Opportunities</a>
-                        <a href="#" class="nav-tab">Dashboards</a>
-                        <a href="#" class="nav-tab">Reports</a>
-                    </nav>
-                    <div class="header-utilities">
-                        <!-- Search -->
-                        <div class="utility-btn" title="Search">
-                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                        </div>
-                        <!-- Favorites -->
-                        <div class="utility-btn" title="Favorites">
-                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </div>
-                        <!-- Global Create -->
-                        <div class="utility-btn" title="Create">
-                            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        </div>
-                        <!-- Help -->
-                        <div class="utility-btn" title="Help">
-                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
-                        </div>
-                        <!-- Setup -->
-                        <div class="utility-btn" title="Setup">
-                            <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-                        </div>
-                        <!-- Notifications -->
-                        <div class="utility-btn" title="Notifications">
-                            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-                        </div>
-                        <!-- User Avatar -->
-                        <div class="header-avatar" title="Chris Humphries">CH</div>
+                    <div class="role-title">Sales Managers</div>
+                    <div class="role-desc">Team dashboard, coaching insights, pipeline oversight</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon" style="background: linear-gradient(135deg, #00b4d8 0%, #0891b2 100%);">
+                        <svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
                     </div>
-                </header>
-
-                <!-- Hero Section -->
-                <section class="hero-section">
-                    <div class="hero-greeting anim-component from-left delay-2">
-                        <div>
-                            <div class="greeting-text">Good morning, Chris</div>
-                            <div class="greeting-date">Monday, January 27, 2026</div>
-                        </div>
+                    <div class="role-title">SDRs</div>
+                    <div class="role-desc">Prospect intelligence, outreach priorities, timing signals</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                     </div>
-
-                    <div class="ai-insight-box anim-component from-scale delay-3">
-                        <div class="ai-insight-inner">
-                            <div class="ai-icon-small">
-                                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                            </div>
-                            <div>
-                                <p class="ai-insight-text">
-                                    <span class="warning">Acme Health</span> hasn't heard from you in 12 days. You have a call at <strong>2pm today</strong>.
-                                </p>
-                                <div class="ai-buttons">
-                                    <button class="ai-btn primary">Draft Follow-up</button>
-                                    <button class="ai-btn secondary">View Brief</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Main Content -->
-                <main class="main-area">
-                    <!-- Quick Actions -->
-                    <div class="quick-actions">
-                        <div class="quick-card anim-component from-bottom delay-4">
-                            <div class="quick-icon" style="background: #c23934;"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></div>
-                            <div class="quick-value">3 At Risk</div>
-                            <div class="quick-label">Deals need attention</div>
-                        </div>
-                        <div class="quick-card anim-component from-bottom delay-5">
-                            <div class="quick-icon" style="background: #fe9339;"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
-                            <div class="quick-value">3 Missing</div>
-                            <div class="quick-label">Next steps needed</div>
-                        </div>
-                        <div class="quick-card anim-component from-bottom delay-6">
-                            <div class="quick-icon" style="background: #0176d3;"><svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg></div>
-                            <div class="quick-value">2 Meetings</div>
-                            <div class="quick-label">Scheduled today</div>
-                        </div>
-                        <div class="quick-card anim-component from-bottom delay-7">
-                            <div class="quick-icon" style="background: #2e844a;"><svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg></div>
-                            <div class="quick-value">$2.8M</div>
-                            <div class="quick-label">Active pipeline</div>
-                        </div>
-                    </div>
-
-                    <!-- Cards Grid -->
-                    <div class="cards-grid">
-                        <div class="left-col">
-                            <!-- Priority Actions -->
-                            <div class="card anim-component from-left delay-5">
-                                <div class="card-header">
-                                    <span class="card-title">Your Priority Actions</span>
-                                    <span class="card-badge-sm" style="background: rgba(118, 168, 244, 0.15); color: var(--brand-blue);">
-                                        <svg viewBox="0 0 24 24" style="fill: var(--brand-blue);"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                                        AI Prioritized
-                                    </span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="priority-item-sm">
-                                        <div class="priority-num-sm" style="background: var(--brand-red);">1</div>
-                                        <div class="priority-content-sm">
-                                            <div class="priority-title-sm">Re-engage Acme Health<span class="priority-badge-sm" style="background: #fef1ee; color: var(--brand-red);">12d</span></div>
-                                            <div class="priority-desc-sm">Sarah asked about Epic</div>
-                                        </div>
-                                        <div class="priority-amount-sm">$425K</div>
-                                    </div>
-                                    <div class="priority-item-sm">
-                                        <div class="priority-num-sm" style="background: var(--warning);">2</div>
-                                        <div class="priority-content-sm">
-                                            <div class="priority-title-sm">New stakeholder at Metro<span class="priority-badge-sm" style="background: #fef7e8; color: #b47800;">Signal</span></div>
-                                            <div class="priority-desc-sm">David Chen added</div>
-                                        </div>
-                                        <div class="priority-amount-sm">$680K</div>
-                                    </div>
-                                    <div class="priority-item-sm">
-                                        <div class="priority-num-sm" style="background: var(--success);">3</div>
-                                        <div class="priority-content-sm">
-                                            <div class="priority-title-sm">Send proposal to Valley<span class="priority-badge-sm" style="background: #ebf7e6; color: var(--success);">Hot</span></div>
-                                            <div class="priority-desc-sm">Strong engagement</div>
-                                        </div>
-                                        <div class="priority-amount-sm">$320K</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Accounts Needing Attention -->
-                            <div class="card anim-component from-left delay-6">
-                                <div class="card-header">
-                                    <span class="card-title">Accounts Needing Attention</span>
-                                    <span class="card-badge-sm" style="background: #fef1ee; color: #c23934;">2 at risk</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="account-item-sm">
-                                        <div class="account-health-sm critical">34</div>
-                                        <div class="account-info-sm">
-                                            <div class="account-name-sm">Acme Health Systems</div>
-                                            <div class="account-meta-sm">$125K ARR · 12 days silent</div>
-                                        </div>
-                                        <div class="account-arr-sm">$425K pipe</div>
-                                    </div>
-                                    <div class="account-item-sm">
-                                        <div class="account-health-sm warning">58</div>
-                                        <div class="account-info-sm">
-                                            <div class="account-name-sm">Metro Regional Medical</div>
-                                            <div class="account-meta-sm">$80K ARR · 8 days silent</div>
-                                        </div>
-                                        <div class="account-arr-sm">$680K pipe</div>
-                                    </div>
-                                    <div class="account-item-sm">
-                                        <div class="account-health-sm healthy">89</div>
-                                        <div class="account-info-sm">
-                                            <div class="account-name-sm">Valley Health Network</div>
-                                            <div class="account-meta-sm">$200K ARR · Active today</div>
-                                        </div>
-                                        <div class="account-arr-sm">$320K pipe</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Buying Groups -->
-                            <div class="card anim-component from-left delay-8">
-                                <div class="card-header">
-                                    <span class="card-title">Acme Health — Buying Group</span>
-                                    <span class="card-meta">3 of 5 roles</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="stakeholder-grid-sm">
-                                        <div class="stakeholder-card-sm">
-                                            <div class="stakeholder-avatar-sm" style="background: var(--brand-blue);">SC</div>
-                                            <span class="stakeholder-role-sm" style="background: var(--brand-blue);">Clinical Champ</span>
-                                            <div class="stakeholder-name-sm">Sarah Chen</div>
-                                            <div class="engagement-bar-sm"><div class="engagement-fill" style="width: 60%; background: var(--warning);"></div></div>
-                                        </div>
-                                        <div class="stakeholder-card-sm">
-                                            <div class="stakeholder-avatar-sm" style="background: var(--brand-red);">TR</div>
-                                            <span class="stakeholder-role-sm" style="background: var(--brand-red);">Econ Buyer</span>
-                                            <div class="stakeholder-name-sm">Tom Richards</div>
-                                            <div class="engagement-bar-sm"><div class="engagement-fill" style="width: 15%; background: var(--brand-red);"></div></div>
-                                        </div>
-                                        <div class="stakeholder-card-sm">
-                                            <div class="stakeholder-avatar-sm" style="background: var(--success);">MJ</div>
-                                            <span class="stakeholder-role-sm" style="background: var(--success);">Advocate</span>
-                                            <div class="stakeholder-name-sm">Mike Johnson</div>
-                                            <div class="engagement-bar-sm"><div class="engagement-fill" style="width: 90%; background: var(--success);"></div></div>
-                                        </div>
-                                        <div class="stakeholder-card-sm missing">
-                                            <div class="stakeholder-avatar-sm" style="background: #d0d0d0; color: #706e6b;">?</div>
-                                            <span class="stakeholder-role-sm" style="background: #d0d0d0; color: #706e6b;">IT Champion</span>
-                                            <div class="stakeholder-name-sm" style="color: #706e6b;">Not identified</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Next Steps Hygiene -->
-                            <div class="card anim-component from-left delay-9">
-                                <div class="card-header">
-                                    <span class="card-title">Next Steps Hygiene</span>
-                                    <span class="card-badge-sm" style="background: #fef1ee; color: var(--brand-red);">3 need attention</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="next-step-sm" style="border-left-color: var(--brand-red);">
-                                        <div class="next-step-header-sm">
-                                            <div>
-                                                <div class="next-step-title-sm">Acme Health</div>
-                                                <div class="next-step-meta-sm">Stage 3 — $425K</div>
-                                            </div>
-                                            <span class="priority-badge-sm" style="background: #fef1ee; color: var(--brand-red);">No Next Step</span>
-                                        </div>
-                                        <div class="ai-suggestion-sm">
-                                            <div class="ai-suggestion-label-sm">
-                                                <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                                                <span>AI SUGGESTION</span>
-                                            </div>
-                                            <div class="ai-suggestion-text-sm">Follow up on Epic integration</div>
-                                        </div>
-                                    </div>
-                                    <div class="next-step-sm" style="border-left-color: var(--warning);">
-                                        <div class="next-step-header-sm">
-                                            <div>
-                                                <div class="next-step-title-sm">Metro Regional</div>
-                                                <div class="next-step-meta-sm">Stage 4 — $680K</div>
-                                            </div>
-                                            <span class="priority-badge-sm" style="background: #fef7e8; color: #b47800;">Stale 8d</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="right-col">
-                            <!-- Schedule -->
-                            <div class="card anim-component from-right delay-5">
-                                <div class="card-header">
-                                    <span class="card-title">Today's Schedule</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="schedule-item-sm">
-                                        <div class="schedule-dot-sm" style="background: var(--success); box-shadow: 0 0 0 2px var(--success);"></div>
-                                        <div class="schedule-time-sm" style="color: var(--success);">2:00 PM <span class="priority-badge-sm" style="background: var(--success); color: white;">NEXT</span></div>
-                                        <div class="schedule-title-sm">Acme Health Systems</div>
-                                        <div class="schedule-attendees-sm">Sarah Chen, Mike Johnson</div>
-                                        <a href="#" class="schedule-link-sm">
-                                            <svg viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                                            View AI Prep Brief
-                                        </a>
-                                    </div>
-                                    <div class="schedule-item-sm">
-                                        <div class="schedule-dot-sm" style="background: var(--brand-blue); box-shadow: 0 0 0 2px var(--brand-blue);"></div>
-                                        <div class="schedule-time-sm" style="color: #706e6b;">4:00 PM</div>
-                                        <div class="schedule-title-sm">Summit Care Partners</div>
-                                        <div class="schedule-attendees-sm">Lisa Torres (CNO)</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Pipeline Health -->
-                            <div class="card anim-component from-right delay-6">
-                                <div class="card-header">
-                                    <span class="card-title">Pipeline Health</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="health-container-sm">
-                                        <div class="health-ring-sm">
-                                            <svg width="60" height="60">
-                                                <circle cx="30" cy="30" r="24" fill="none" stroke="var(--brand-cream)" stroke-width="5"/>
-                                                <circle cx="30" cy="30" r="24" fill="none" stroke="var(--success)" stroke-width="5" stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="42"/>
-                                            </svg>
-                                            <div class="health-text-sm">
-                                                <div class="health-value-sm">72%</div>
-                                                <div class="health-label-sm">AVG</div>
-                                            </div>
-                                        </div>
-                                        <div class="health-legend-sm">
-                                            <div class="health-legend-item-sm"><div class="health-dot-sm" style="background: var(--success);"></div><span>5 Healthy</span></div>
-                                            <div class="health-legend-item-sm"><div class="health-dot-sm" style="background: var(--warning);"></div><span>2 At Risk</span></div>
-                                            <div class="health-legend-item-sm"><div class="health-dot-sm" style="background: var(--brand-red);"></div><span>1 Critical</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Forecast -->
-                            <div class="card anim-component from-right delay-7">
-                                <div class="card-header">
-                                    <span class="card-title">Q1 Forecast</span>
-                                    <span class="card-meta">68 days left</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="forecast-header-sm">
-                                        <span class="forecast-amount-sm">$1.8M</span>
-                                        <span class="forecast-quota-sm">of $2.4M</span>
-                                    </div>
-                                    <div class="forecast-bar-sm">
-                                        <div class="forecast-fill-sm" style="width: 75%;"></div>
-                                    </div>
-                                    <div class="forecast-status-sm">
-                                        <span style="color: var(--success);">75% to quota</span>
-                                        <span>$600K gap</span>
-                                    </div>
-                                    <div class="forecast-categories-sm">
-                                        <div class="forecast-cat-sm"><span class="forecast-dot-sm" style="background: var(--success);"></span>Won $420K</div>
-                                        <div class="forecast-cat-sm"><span class="forecast-dot-sm" style="background: var(--brand-blue);"></span>Commit $680K</div>
-                                        <div class="forecast-cat-sm"><span class="forecast-dot-sm" style="background: var(--warning);"></span>Best Case $700K</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Pipeline Overview -->
-                            <div class="card anim-component from-right delay-8">
-                                <div class="card-header">
-                                    <span class="card-title">Pipeline Overview</span>
-                                    <span class="card-meta">8 Deals — $2.8M</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="pipeline-bar-sm">
-                                        <div class="pipeline-segments">
-                                            <div style="width: 15%; background: #c23934;"></div>
-                                            <div style="width: 25%; background: #fe9339;"></div>
-                                            <div style="width: 35%; background: #0176d3;"></div>
-                                            <div style="width: 25%; background: #2e844a;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="pipeline-labels-sm">
-                                        <span>Discovery</span>
-                                        <span>Qualification</span>
-                                        <span>Proposal</span>
-                                        <span>Negotiation</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+                    <div class="role-title">Partner Success</div>
+                    <div class="role-desc">Account health, renewal risk, implementation tracking</div>
+                </div>
             </div>
         </div>
     </div>
@@ -2098,6 +1613,7 @@
         <div class="progress-dot" data-step="4"></div>
         <div class="progress-dot" data-step="5"></div>
         <div class="progress-dot" data-step="6"></div>
+        <div class="progress-dot" data-step="7"></div>
     </div>
 
     <!-- Buttons -->
@@ -2112,119 +1628,129 @@
             document.getElementById('slide3'),
             document.getElementById('slide4'),
             document.getElementById('slide5'),
-            document.getElementById('slide6')
+            document.getElementById('slide6'),
+            document.getElementById('slide7')
         ];
         const progressDots = document.querySelectorAll('.progress-dot');
         const skipBtn = document.getElementById('skipBtn');
         const replayBtn = document.getElementById('replayBtn');
-        const assemblyComponents = document.querySelectorAll('#slide6 .anim-component');
 
-        let currentSlide = -1; // -1 = intro
-        let autoAdvance = true;
+        let currentStep = -1; // -1 = intro, 0+ = slides
+        let autoAdvanceTimer = null;
+        let isAutoPlaying = true;
+
+        // Auto-advance timings (ms)
+        const INTRO_DURATION = 3500;
+        const SLIDE_DURATIONS = [6000, 6000, 5000, 5000, 4000, 8000, 5000];
+
+        function updateProgress() {
+            progressDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentStep);
+            });
+        }
 
         function showSlide(index) {
-            currentSlide = index;
+            // Hide intro
+            intro.classList.add('fade-out');
 
-            if (index >= 0) {
-                intro.classList.add('fade-out');
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+
+            // Show target slide
+            if (index >= 0 && index < slides.length) {
+                slides[index].classList.add('active');
             }
 
-            slides.forEach((slide, i) => {
-                if (i === index) {
-                    slide.classList.add('active');
-                    // If this is the assembly slide (last slide), trigger component animations
-                    if (i === slides.length - 1) {
-                        setTimeout(() => {
-                            assemblyComponents.forEach(comp => comp.classList.add('visible'));
-                        }, 400);
-                    }
-                } else {
-                    slide.classList.remove('active');
-                    if (i === slides.length - 1) {
-                        assemblyComponents.forEach(comp => comp.classList.remove('visible'));
-                    }
-                }
-            });
+            currentStep = index;
+            updateProgress();
 
-            progressDots.forEach((dot, i) => {
-                if (i === index + 1) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-
-            if (index === slides.length - 1) {
+            // Show/hide buttons
+            if (currentStep === slides.length - 1) {
                 skipBtn.style.display = 'none';
-                replayBtn.classList.add('visible');
+                replayBtn.style.display = 'block';
+            } else {
+                skipBtn.style.display = 'block';
+                replayBtn.style.display = 'none';
             }
         }
 
         function nextSlide() {
-            if (currentSlide < slides.length - 1) {
-                showSlide(currentSlide + 1);
+            if (currentStep < slides.length - 1) {
+                showSlide(currentStep + 1);
+                scheduleNext();
             }
         }
 
-        function resetAnimation() {
-            autoAdvance = true;
-            currentSlide = -1;
+        function scheduleNext() {
+            if (!isAutoPlaying) return;
 
+            clearTimeout(autoAdvanceTimer);
+
+            if (currentStep < slides.length - 1) {
+                const duration = SLIDE_DURATIONS[currentStep] || 5000;
+                autoAdvanceTimer = setTimeout(nextSlide, duration);
+            }
+        }
+
+        function skipToEnd() {
+            isAutoPlaying = false;
+            clearTimeout(autoAdvanceTimer);
+            showSlide(slides.length - 1);
+        }
+
+        function restart() {
+            isAutoPlaying = true;
+            currentStep = -1;
             intro.classList.remove('fade-out');
             slides.forEach(slide => slide.classList.remove('active'));
-            assemblyComponents.forEach(comp => comp.classList.remove('visible'));
-
-            progressDots.forEach((dot, i) => {
-                if (i === 0) dot.classList.add('active');
-                else dot.classList.remove('active');
-            });
-
+            updateProgress();
             skipBtn.style.display = 'block';
-            replayBtn.classList.remove('visible');
+            replayBtn.style.display = 'none';
 
-            startAutoAdvance();
+            // Start auto-advance after intro
+            autoAdvanceTimer = setTimeout(() => {
+                showSlide(0);
+                scheduleNext();
+            }, INTRO_DURATION);
         }
 
-        function startAutoAdvance() {
-            setTimeout(() => { if (autoAdvance && currentSlide === -1) showSlide(0); }, 3000);
-            setTimeout(() => { if (autoAdvance && currentSlide === 0) showSlide(1); }, 7000);
-            setTimeout(() => { if (autoAdvance && currentSlide === 1) showSlide(2); }, 11000);
-            setTimeout(() => { if (autoAdvance && currentSlide === 2) showSlide(3); }, 15000);
-            setTimeout(() => { if (autoAdvance && currentSlide === 3) showSlide(4); }, 19000);
-            setTimeout(() => { if (autoAdvance && currentSlide === 4) showSlide(5); }, 23000);
-        }
+        // Event listeners
+        skipBtn.addEventListener('click', skipToEnd);
+        replayBtn.addEventListener('click', restart);
 
+        // Progress dot clicks
         progressDots.forEach((dot, i) => {
             dot.addEventListener('click', () => {
-                autoAdvance = false;
-                if (i === 0) {
-                    resetAnimation();
-                } else {
-                    showSlide(i - 1);
-                }
+                isAutoPlaying = false;
+                clearTimeout(autoAdvanceTimer);
+                showSlide(i);
             });
         });
 
-        skipBtn.addEventListener('click', () => {
-            autoAdvance = false;
-            showSlide(slides.length - 1);
-        });
-
-        replayBtn.addEventListener('click', resetAnimation);
-
+        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            autoAdvance = false;
             if (e.key === 'ArrowRight' || e.key === ' ') {
-                nextSlide();
-            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
-                showSlide(currentSlide - 1);
-            } else if (e.key === 'r' || e.key === 'R') {
-                resetAnimation();
+                isAutoPlaying = false;
+                clearTimeout(autoAdvanceTimer);
+                if (currentStep < slides.length - 1) {
+                    showSlide(currentStep + 1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                isAutoPlaying = false;
+                clearTimeout(autoAdvanceTimer);
+                if (currentStep > 0) {
+                    showSlide(currentStep - 1);
+                }
+            } else if (e.key === 'Escape') {
+                skipToEnd();
             }
         });
 
-        progressDots[0].classList.add('active');
-        startAutoAdvance();
+        // Start the show
+        autoAdvanceTimer = setTimeout(() => {
+            showSlide(0);
+            scheduleNext();
+        }, INTRO_DURATION);
     </script>
 </body>
 </html>

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Page — GTM Systems AI</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        :root {
+            --brand-primary: #0176d3;
+            --brand-teal: #00b4d8;
+            --success: #2e844a;
+            --warning: #fe9339;
+            --error: #c23934;
+            --gray-1: #f3f3f3;
+            --gray-2: #e5e5e5;
+            --gray-3: #706e6b;
+            --text-primary: #181818;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-1);
+            min-height: 100vh;
+        }
+
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--gray-2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .card-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .badge-critical { background: #fef1ee; color: var(--error); }
+        .badge-warning { background: #fef7e8; color: var(--warning); }
+        .badge-success { background: #ebf7e6; color: var(--success); }
+        .badge-ai { background: rgba(0, 180, 216, 0.12); color: var(--brand-teal); }
+
+        /* Account Header */
+        .account-header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .account-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+        }
+
+        .account-identity {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .account-logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-primary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .account-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .account-meta {
+            font-size: 0.875rem;
+            color: var(--gray-3);
+        }
+
+        .account-meta span {
+            margin-right: 1rem;
+        }
+
+        .account-health {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .health-context {
+            text-align: right;
+        }
+
+        .health-trend {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+        }
+
+        .health-trend.down { color: var(--error); }
+        .health-trend.up { color: var(--success); }
+
+        .health-note {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .health-score-large {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .health-score-large .score { font-size: 1.75rem; line-height: 1; }
+        .health-score-large .label { font-size: 0.625rem; text-transform: uppercase; opacity: 0.9; }
+
+        .health-critical { background: linear-gradient(135deg, #c23934 0%, #a61d17 100%); }
+        .health-warning { background: linear-gradient(135deg, #fe9339 0%, #dd7a00 100%); }
+        .health-healthy { background: linear-gradient(135deg, #2e844a 0%, #1c6330 100%); }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            gap: 2rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--gray-2);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+            margin-top: 0.125rem;
+        }
+
+        /* AI Summary */
+        .ai-summary {
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.08) 0%, rgba(1, 118, 211, 0.05) 100%);
+            border-left: 4px solid var(--brand-teal);
+            border-radius: 0 12px 12px 0;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-summary-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-summary-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--brand-teal) 0%, var(--brand-primary) 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-summary-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: white;
+        }
+
+        .ai-summary-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: var(--brand-teal);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ai-summary-text {
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .ai-summary-text strong {
+            color: var(--brand-primary);
+        }
+
+        /* Grid Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 380px;
+            gap: 1.5rem;
+        }
+
+        /* Contact Cards */
+        .contact-card {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem;
+            background: var(--gray-1);
+            border-radius: 8px;
+            margin-bottom: 0.625rem;
+            border-left: 3px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        .contact-card:last-child { margin-bottom: 0; }
+        .contact-card:hover { background: #eaeaea; }
+
+        .contact-card.champion { border-left-color: var(--success); }
+        .contact-card.technical { border-left-color: var(--brand-primary); }
+        .contact-card.economic { border-left-color: var(--warning); }
+        .contact-card.missing { border-left-color: var(--error); background: #fef1ee; }
+
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--brand-primary) 0%, #0353a4 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .contact-avatar.missing {
+            background: var(--gray-2);
+            color: var(--gray-3);
+        }
+
+        .contact-info {
+            margin-left: 0.75rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .contact-role {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .engagement-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .engagement-high { background: var(--success); }
+        .engagement-medium { background: var(--warning); }
+        .engagement-low { background: var(--error); }
+
+        /* List Items */
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .list-item:last-child { border-bottom: none; }
+
+        .health-score-small {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .item-info {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .item-meta {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .item-value {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+        }
+
+        /* Step Indicators */
+        .step-indicator {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-overdue { background: var(--error); color: white; }
+        .step-due-soon { background: var(--warning); color: white; }
+        .step-on-track { background: var(--gray-2); color: var(--gray-3); }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 1.75rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background: var(--gray-2);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.25rem;
+        }
+
+        .timeline-item:last-child { padding-bottom: 0; }
+
+        .timeline-dot {
+            position: absolute;
+            left: -1.75rem;
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--brand-primary);
+        }
+
+        .timeline-dot.event { border-color: var(--brand-primary); }
+        .timeline-dot.alert { border-color: var(--warning); background: var(--warning); }
+        .timeline-dot.success { border-color: var(--success); }
+
+        .timeline-date {
+            font-size: 0.6875rem;
+            color: var(--gray-3);
+            margin-bottom: 0.125rem;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-desc {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+            line-height: 1.4;
+        }
+
+        /* Orchestration Panel */
+        .action-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .action-section:last-child { margin-bottom: 0; }
+
+        .section-label {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: var(--gray-3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.625rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.875rem 1rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--gray-2);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+
+        .action-btn:hover {
+            border-color: var(--brand-primary);
+            background: rgba(1, 118, 211, 0.04);
+            transform: translateX(2px);
+        }
+
+        .action-btn:last-child { margin-bottom: 0; }
+
+        .action-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .action-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .action-icon.email { background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%); }
+        .action-icon.meeting { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .action-icon.roi { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .action-icon.doc { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .action-icon.handoff { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .action-icon.analysis { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+
+        .action-content { flex: 1; }
+
+        .action-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .action-desc {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .action-arrow {
+            color: var(--gray-3);
+            font-size: 1rem;
+            transition: transform 0.15s ease;
+        }
+
+        .action-btn:hover .action-arrow {
+            transform: translateX(3px);
+            color: var(--brand-primary);
+        }
+
+        /* Resource Links */
+        .resource-link {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            color: var(--brand-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+
+        .resource-link:hover {
+            color: #014486;
+        }
+
+        .resource-link svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 0.5rem;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+
+        <!-- Account Header -->
+        <div class="account-header">
+            <div class="account-header-top">
+                <div class="account-identity">
+                    <div class="account-logo">NH</div>
+                    <div>
+                        <h1 class="account-name">Northshore Health System</h1>
+                        <div class="account-meta">
+                            <span>Healthcare • 340 Physicians</span>
+                            <span>Chicago, IL</span>
+                            <span>Customer since 2023</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="account-health">
+                    <div class="health-context">
+                        <div class="health-trend down">↓ 8 pts this month</div>
+                        <div class="health-note">Usage declined after key user left</div>
+                    </div>
+                    <div class="health-score-large health-warning">
+                        <span class="score">64</span>
+                        <span class="label">Health</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-value">$425K</div>
+                    <div class="stat-label">ARR</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">$180K</div>
+                    <div class="stat-label">Open Pipeline</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">142</div>
+                    <div class="stat-label">Days to Renewal</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Open Opps</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Active Contacts</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Summary -->
+        <div class="ai-summary">
+            <div class="ai-summary-header">
+                <div class="ai-summary-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <span class="ai-summary-label">AI Account Summary</span>
+            </div>
+            <div class="ai-summary-text">
+                <strong>Renewal at risk.</strong> Usage dropped 23% after Dr. Sarah Chen (power user) went on leave Jan 15. CFO mentioned budget review in last QBR.
+                <strong>Expansion opportunity exists</strong> — they're opening 3 new locations in Q2 and asked about multi-site pricing.
+                Next step: Re-engage Dr. Miller (champion) this week to address usage concerns before renewal conversation.
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+
+            <!-- Column 1: Buying Group + Next Steps -->
+            <div>
+                <!-- Buying Group -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">
+                            <span class="card-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            </span>
+                            Buying Group
+                        </span>
+                        <span class="card-badge badge-warning">1 gap</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="contact-card champion">
+                            <div class="contact-avatar">JM</div>
+                            <div class="contact-info">
+                                <div class="contact-name">Dr. James Miller</div>
+                                <div class="contact-role">Champion • CMO</div>
+                            </div>
+                            <div class="engagement-dot engagement-high"></div>
+                        </div>
+                        <div class="contact-card technical">
+                            <div class="contact-avatar">RK</div>
+                            <div class="contact-info">
+                                <div class="contact-name">Rachel Kim</div>
+                                <div class="contact-role">Technical • CTO</div>
+                            </div>
+                            <div class="engagement-dot engagement-high"></div>
+                        </div>
+                        <div class="contact-card economic">
+                            <div class="contact-avatar">MT</div>
+                            <div class="contact-info">
+                                <div class="contact-name">Michael Torres</div>
+                                <div class="contact-role">Economic • CFO</div>
+                            </div>
+                            <div class="engagement-dot engagement-low"></div>
+                        </div>
+                        <div class="contact-card missing">
+                            <div class="contact-avatar missing">?</div>
+                            <div class="contact-info">
+                                <div class="contact-name">Need to identify</div>
+                                <div class="contact-role">User Buyer • IT Director</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">
+                            <span class="card-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                <svg viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                            </span>
+                            Next Steps
+                        </span>
+                        <span class="card-badge badge-critical">1 overdue</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-item">
+                            <div class="step-indicator step-overdue">!</div>
+                            <div class="item-info">
+                                <div class="item-title">Re-engage Dr. Miller on usage concerns</div>
+                                <div class="item-meta">Due 2 days ago • Marcus Rodriguez</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="step-indicator step-due-soon">→</div>
+                            <div class="item-info">
+                                <div class="item-title">Send expansion pricing proposal</div>
+                                <div class="item-meta">Due tomorrow • Marcus Rodriguez</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="step-indicator step-on-track">○</div>
+                            <div class="item-info">
+                                <div class="item-title">Schedule QBR with CFO</div>
+                                <div class="item-meta">Due Feb 15 • Jordan Lee</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="step-indicator step-on-track">○</div>
+                            <div class="item-info">
+                                <div class="item-title">Technical deep-dive on mobile app</div>
+                                <div class="item-meta">Due Feb 20 • Marcus Rodriguez</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Opportunities + Key Moments -->
+            <div>
+                <!-- Open Opportunities -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">
+                            <span class="card-icon" style="background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);">
+                                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                            </span>
+                            Open Opportunities
+                        </span>
+                        <span class="card-badge badge-success">$180K pipeline</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-item">
+                            <div class="health-score-small health-healthy">78</div>
+                            <div class="item-info">
+                                <div class="item-title">Expansion — New Locations</div>
+                                <div class="item-meta">Negotiation • Close: Mar 15</div>
+                            </div>
+                            <div class="item-value">$120K</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="health-score-small health-warning">54</div>
+                            <div class="item-info">
+                                <div class="item-title">Mobile App Add-on</div>
+                                <div class="item-meta">Discovery • Close: Apr 30</div>
+                            </div>
+                            <div class="item-value">$45K</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="health-score-small health-critical">32</div>
+                            <div class="item-info">
+                                <div class="item-title">Training Services</div>
+                                <div class="item-meta">Stalled • Close: Feb 28</div>
+                            </div>
+                            <div class="item-value">$15K</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Moments -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">
+                            <span class="card-icon" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                            </span>
+                            Key Moments
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot event"></div>
+                                <div class="timeline-date">Jan 27, 2026</div>
+                                <div class="timeline-title">Expansion discussion</div>
+                                <div class="timeline-desc">Dr. Miller asked about multi-site pricing for 3 new locations</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot alert"></div>
+                                <div class="timeline-date">Jan 15, 2026</div>
+                                <div class="timeline-title">Power user went inactive</div>
+                                <div class="timeline-desc">Dr. Sarah Chen on medical leave — usage dropped 23%</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot event"></div>
+                                <div class="timeline-date">Jan 10, 2026</div>
+                                <div class="timeline-title">QBR completed</div>
+                                <div class="timeline-desc">CFO mentioned budget review cycle starting Feb</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot success"></div>
+                                <div class="timeline-date">Dec 5, 2025</div>
+                                <div class="timeline-title">Roadmap presented</div>
+                                <div class="timeline-desc">Showed 2026 product roadmap to exec team</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot event"></div>
+                                <div class="timeline-date">Nov 18, 2025</div>
+                                <div class="timeline-title">Support escalation resolved</div>
+                                <div class="timeline-desc">Integration issue with Epic fixed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 3: Orchestration Panel -->
+            <div>
+                <div class="card" style="margin-bottom: 0;">
+                    <div class="card-header">
+                        <span class="card-title">
+                            <span class="card-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                                <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </span>
+                            What do you want to do?
+                        </span>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="action-section">
+                            <div class="section-label">Communication</div>
+                            <button class="action-btn">
+                                <div class="action-icon email">
+                                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Draft Email</div>
+                                    <div class="action-desc">AI-generated outreach to any contact</div>
+                                </div>
+                                <span class="action-arrow">→</span>
+                            </button>
+                            <button class="action-btn">
+                                <div class="action-icon meeting">
+                                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Meeting Prep</div>
+                                    <div class="action-desc">Brief for upcoming meetings</div>
+                                </div>
+                                <span class="action-arrow">→</span>
+                            </button>
+                        </div>
+
+                        <div class="action-section">
+                            <div class="section-label">Documents</div>
+                            <button class="action-btn">
+                                <div class="action-icon roi">
+                                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">ROI Analysis</div>
+                                    <div class="action-desc">Generate custom ROI model</div>
+                                </div>
+                                <span class="action-arrow">→</span>
+                            </button>
+                            <button class="action-btn">
+                                <div class="action-icon doc">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Exec Summary</div>
+                                    <div class="action-desc">One-pager for leadership</div>
+                                </div>
+                                <span class="action-arrow">→</span>
+                            </button>
+                            <button class="action-btn">
+                                <div class="action-icon handoff">
+                                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Sales Handoff</div>
+                                    <div class="action-desc">Transition doc for new owner</div>
+                                </div>
+                                <span class="action-arrow">→</span>
+                            </button>
+                        </div>
+
+                        <div class="action-section">
+                            <div class="section-label">Analysis</div>
+                            <button class="action-btn">
+                                <div class="action-icon analysis">
+                                    <svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                                </div>
+                                <div class="action-content">
+                                    <div class="action-title">Closed Lost Analysis</div>
+                                    <div class="action-desc">Understand why deals didn't close</div>
+                                </div>
+                                <span class="action-arrow">→</span>
+                            </button>
+                        </div>
+
+                        <div class="action-section">
+                            <div class="section-label">Resources</div>
+                            <a href="#" class="resource-link">
+                                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                                Sigma Dashboard
+                            </a>
+                            <a href="#" class="resource-link">
+                                <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                                Google Drive Folder
+                            </a>
+                            <a href="#" class="resource-link">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                                Support Tickets
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
