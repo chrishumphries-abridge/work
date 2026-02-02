@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation Tracker — Partner Success View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 3px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Summary card */
+        .summary-card {
+            background: white;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #e5e5e5;
+        }
+        .summary-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .summary-label {
+            font-size: 0.625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Implementation progress bar */
+        .impl-progress {
+            background: #e5e5e5;
+            border-radius: 0.5rem;
+            height: 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+        .impl-progress-fill {
+            height: 100%;
+            border-radius: 0.5rem;
+        }
+        .impl-progress-fill.on-track {
+            background: linear-gradient(90deg, #2e844a 0%, #4cd964 100%);
+        }
+        .impl-progress-fill.at-risk {
+            background: linear-gradient(90deg, #fe9339 0%, #ffb366 100%);
+        }
+        .impl-progress-fill.blocked {
+            background: linear-gradient(90deg, #c23934 0%, #e05550 100%);
+        }
+        /* Account row */
+        .account-row {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 0.25rem;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+        .account-row:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .account-header {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .account-body {
+            padding: 1rem;
+        }
+        /* Status badge */
+        .status-badge {
+            font-size: 0.625rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-badge.on-track {
+            background: #e8f5e9;
+            color: #2e844a;
+        }
+        .status-badge.at-risk {
+            background: #fef7e8;
+            color: #b47800;
+        }
+        .status-badge.blocked {
+            background: #fdeaea;
+            color: #c23934;
+        }
+        .status-badge.complete {
+            background: #e8f5e9;
+            color: #2e844a;
+        }
+        /* Milestone dots */
+        .milestone-track {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin: 0.75rem 0;
+        }
+        .milestone-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e5e5e5;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+        .milestone-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid white;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+        .milestone-dot.complete { background: #2e844a; }
+        .milestone-dot.current { background: #0176d3; box-shadow: 0 0 0 2px #0176d3; }
+        .milestone-dot.pending { background: #e5e5e5; }
+        .milestone-dot.blocked { background: #c23934; }
+        .milestone-spacer {
+            flex: 1;
+        }
+        /* Blocker tag */
+        .blocker-tag {
+            display: inline-flex;
+            align-items: center;
+            background: #fdeaea;
+            color: #c23934;
+            font-size: 0.6875rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-right: 0.25rem;
+        }
+        /* Days indicator */
+        .days-indicator {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .days-indicator.over {
+            color: #c23934;
+        }
+        .days-indicator.warning {
+            color: #fe9339;
+        }
+        .days-indicator.on-track {
+            color: #2e844a;
+        }
+        /* Contact avatar */
+        .contact-avatar-small {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: white;
+            background: #0176d3;
+        }
+        /* ARR value */
+        .arr-value {
+            font-weight: 600;
+            color: #181818;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <!-- Header -->
+            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
+                <div class="slds-grow">
+                    <h1 class="slds-text-heading_large slds-m-bottom_xx-small">Implementation Tracker</h1>
+                    <p class="slds-text-body_regular slds-text-color_weak">Active implementations across your book of business</p>
+                </div>
+                <div class="slds-button-group">
+                    <button class="slds-button slds-button_neutral slds-is-selected">All</button>
+                    <button class="slds-button slds-button_neutral">Blocked</button>
+                    <button class="slds-button slds-button_neutral">At Risk</button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="slds-grid slds-gutters_small slds-m-bottom_medium">
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-value" style="color: #181818;">8</div>
+                        <div class="summary-label">Active Implementations</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-value" style="color: #c23934;">2</div>
+                        <div class="summary-label">Blocked</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-value" style="color: #fe9339;">3</div>
+                        <div class="summary-label">At Risk</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="summary-card">
+                        <div class="summary-value" style="color: #2e844a;">$1.2M</div>
+                        <div class="summary-label">ARR at Risk</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insight -->
+            <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_medium">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                    </svg>
+                    <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Insight</p>
+                </div>
+                <p class="slds-text-body_small">
+                    <strong>2 implementations are blocked on IT resources</strong> — Valley Health and Metro Medical are both waiting on the same IT team. Combined ARR at risk: $350K. <strong>Recommended:</strong> Escalate IT resource constraint to VP of Operations.
+                </p>
+            </div>
+
+            <!-- Implementation List -->
+            <div class="slds-m-bottom_medium">
+
+                <!-- Account 1: Blocked -->
+                <div class="account-row">
+                    <div class="account-header">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="slds-grow">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <h3 class="slds-text-heading_small slds-m-right_small">Valley Health Network</h3>
+                                    <span class="status-badge blocked">Blocked</span>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                                    <span class="arr-value">$200K ARR</span> &bull; Enterprise &bull; Started Dec 1
+                                </p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <div class="days-indicator over">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                    </svg>
+                                    Day 45 of 60 (15 days left)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-body">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="slds-grow slds-m-right_medium">
+                                <div class="impl-progress">
+                                    <div class="impl-progress-fill blocked" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small" style="font-weight: 600;">65%</span>
+                        </div>
+                        <div class="milestone-track">
+                            <div class="milestone-line"></div>
+                            <span class="milestone-dot complete" title="Kickoff"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot complete" title="Technical Setup"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot current" title="Training"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot blocked" title="Go-Live"></span>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-top_small">
+                            <div class="slds-grow">
+                                <span class="blocker-tag">
+                                    <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#ban"></use>
+                                    </svg>
+                                    IT resources unavailable
+                                </span>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">CSM:</span>
+                                <span class="contact-avatar-small" title="Sarah M.">SM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 2: At Risk -->
+                <div class="account-row">
+                    <div class="account-header">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="slds-grow">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <h3 class="slds-text-heading_small slds-m-right_small">Metro Medical Center</h3>
+                                    <span class="status-badge at-risk">At Risk</span>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                                    <span class="arr-value">$150K ARR</span> &bull; Mid-Market &bull; Started Dec 15
+                                </p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <div class="days-indicator warning">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#clock"></use>
+                                    </svg>
+                                    Day 30 of 45 (5 days buffer)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-body">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="slds-grow slds-m-right_medium">
+                                <div class="impl-progress">
+                                    <div class="impl-progress-fill at-risk" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small" style="font-weight: 600;">45%</span>
+                        </div>
+                        <div class="milestone-track">
+                            <div class="milestone-line"></div>
+                            <span class="milestone-dot complete" title="Kickoff"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot complete" title="Technical Setup"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot current" title="Training"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot pending" title="Go-Live"></span>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-top_small">
+                            <div class="slds-grow">
+                                <span class="slds-text-body_small slds-text-color_weak">Training attendance low — 2 of 5 sessions attended</span>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">CSM:</span>
+                                <span class="contact-avatar-small" style="background: #9c27b0;" title="Alex R.">AR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 3: On Track -->
+                <div class="account-row">
+                    <div class="account-header">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="slds-grow">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <h3 class="slds-text-heading_small slds-m-right_small">Coastal Physicians Group</h3>
+                                    <span class="status-badge on-track">On Track</span>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                                    <span class="arr-value">$85K ARR</span> &bull; SMB &bull; Started Jan 5
+                                </p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <div class="days-indicator on-track">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                    </svg>
+                                    Day 15 of 30 (on schedule)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-body">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="slds-grow slds-m-right_medium">
+                                <div class="impl-progress">
+                                    <div class="impl-progress-fill on-track" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small" style="font-weight: 600;">50%</span>
+                        </div>
+                        <div class="milestone-track">
+                            <div class="milestone-line"></div>
+                            <span class="milestone-dot complete" title="Kickoff"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot complete" title="Technical Setup"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot current" title="Training"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot pending" title="Go-Live"></span>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-top_small">
+                            <div class="slds-grow">
+                                <span class="slds-text-body_small" style="color: #2e844a;">All training sessions scheduled, strong engagement</span>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">CSM:</span>
+                                <span class="contact-avatar-small" style="background: #ff9800;" title="Jordan K.">JK</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 4: Blocked -->
+                <div class="account-row">
+                    <div class="account-header">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="slds-grow">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <h3 class="slds-text-heading_small slds-m-right_small">Summit Healthcare</h3>
+                                    <span class="status-badge blocked">Blocked</span>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                                    <span class="arr-value">$300K ARR</span> &bull; Enterprise &bull; Started Nov 15
+                                </p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <div class="days-indicator over">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                                    </svg>
+                                    Day 75 of 60 (15 days over)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-body">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="slds-grow slds-m-right_medium">
+                                <div class="impl-progress">
+                                    <div class="impl-progress-fill blocked" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small" style="font-weight: 600;">80%</span>
+                        </div>
+                        <div class="milestone-track">
+                            <div class="milestone-line"></div>
+                            <span class="milestone-dot complete" title="Kickoff"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot complete" title="Technical Setup"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot complete" title="Training"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot blocked" title="Go-Live"></span>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-top_small">
+                            <div class="slds-grow">
+                                <span class="blocker-tag">
+                                    <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#ban"></use>
+                                    </svg>
+                                    Security review pending
+                                </span>
+                                <span class="blocker-tag">
+                                    <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#ban"></use>
+                                    </svg>
+                                    Contract amendment
+                                </span>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">CSM:</span>
+                                <span class="contact-avatar-small" title="Sarah M.">SM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 5: At Risk -->
+                <div class="account-row">
+                    <div class="account-header">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="slds-grow">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <h3 class="slds-text-heading_small slds-m-right_small">Riverdale Medical</h3>
+                                    <span class="status-badge at-risk">At Risk</span>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                                    <span class="arr-value">$120K ARR</span> &bull; Mid-Market &bull; Started Dec 20
+                                </p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <div class="days-indicator warning">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                    </svg>
+                                    Day 25 of 45 (behind schedule)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-body">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="slds-grow slds-m-right_medium">
+                                <div class="impl-progress">
+                                    <div class="impl-progress-fill at-risk" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small" style="font-weight: 600;">30%</span>
+                        </div>
+                        <div class="milestone-track">
+                            <div class="milestone-line"></div>
+                            <span class="milestone-dot complete" title="Kickoff"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot current" title="Technical Setup"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot pending" title="Training"></span>
+                            <span class="milestone-spacer"></span>
+                            <span class="milestone-dot pending" title="Go-Live"></span>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-top_small">
+                            <div class="slds-grow">
+                                <span class="slds-text-body_small slds-text-color_weak">Technical setup delayed — waiting on customer IT</span>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">CSM:</span>
+                                <span class="contact-avatar-small" style="background: #9c27b0;" title="Alex R.">AR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="slds-grid slds-grid_align-spread slds-m-top_medium">
+                <p class="slds-text-body_small slds-text-color_weak">Showing 5 of 8 implementations</p>
+                <a href="#" class="slds-text-body_small">View All Implementations →</a>
+            </div>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Implementation Tracker</strong> — Partner Success View<br>
+                Monitor implementation progress and blockers across your book of business
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

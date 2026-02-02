@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Rep Home — GTM Systems AI</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        :root {
+            --brand-primary: #0176d3;
+            --success: #2e844a;
+            --warning: #fe9339;
+            --error: #c23934;
+            --gray-1: #f3f3f3;
+            --gray-2: #e5e5e5;
+            --gray-3: #706e6b;
+            --text-primary: #181818;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-1);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .greeting span {
+            color: var(--brand-primary);
+        }
+
+        .date-badge {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: var(--gray-3);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 400px;
+            gap: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--gray-2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .badge-critical { background: #fef1ee; color: var(--error); }
+        .badge-warning { background: #fef7e8; color: var(--warning); }
+        .badge-success { background: #ebf7e6; color: var(--success); }
+        .badge-ai { background: rgba(118, 168, 244, 0.15); color: var(--brand-primary); }
+
+        .card-body {
+            padding: 1rem 1.25rem;
+        }
+
+        /* Priority Card */
+        .priority-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .priority-item:last-child {
+            border-bottom: none;
+        }
+
+        .priority-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .priority-content {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .priority-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 0.125rem;
+        }
+
+        .priority-desc {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        /* Deal Health */
+        .health-score {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .health-critical { background: var(--error); }
+        .health-warning { background: var(--warning); }
+        .health-healthy { background: var(--success); }
+
+        .deal-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .deal-item:last-child {
+            border-bottom: none;
+        }
+
+        .deal-info {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .deal-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .deal-meta {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .deal-amount {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            text-align: right;
+        }
+
+        /* AI Insight */
+        .ai-insight {
+            background: linear-gradient(135deg, rgba(118, 168, 244, 0.1) 0%, rgba(1, 118, 211, 0.08) 100%);
+            border-left: 3px solid var(--brand-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 0.75rem;
+        }
+
+        .ai-insight-label {
+            font-size: 0.625rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .ai-insight-text {
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* Calendar */
+        .calendar-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .calendar-item:last-child {
+            border-bottom: none;
+        }
+
+        .calendar-time {
+            width: 60px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-3);
+            flex-shrink: 0;
+        }
+
+        .calendar-event {
+            flex: 1;
+        }
+
+        .calendar-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .calendar-details {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .prep-badge {
+            font-size: 0.625rem;
+            padding: 0.125rem 0.375rem;
+            border-radius: 3px;
+            background: rgba(118, 168, 244, 0.15);
+            color: var(--brand-primary);
+            margin-left: 0.5rem;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem 0;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--gray-1);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+            margin-top: 0.25rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-2);
+            border-radius: 6px;
+            background: white;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--gray-1);
+            border-color: var(--brand-primary);
+        }
+
+        /* Full Width Section */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Sidebar */
+        .sidebar-card {
+            grid-row: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="page-header">
+            <h1 class="greeting">Good morning, <span>Marcus</span></h1>
+            <div class="date-badge">Wednesday, January 29</div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Today's Priorities -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Today's Priorities</span>
+                    <span class="card-badge badge-ai">AI Recommended</span>
+                </div>
+                <div class="card-body">
+                    <div class="priority-item">
+                        <div class="priority-num" style="background: var(--error);">1</div>
+                        <div class="priority-content">
+                            <div class="priority-title">Follow up with Dr. Martinez</div>
+                            <div class="priority-desc">Memorial Health — Contract review pending 3 days</div>
+                        </div>
+                    </div>
+                    <div class="priority-item">
+                        <div class="priority-num" style="background: var(--warning);">2</div>
+                        <div class="priority-content">
+                            <div class="priority-title">Prep for Riverside demo</div>
+                            <div class="priority-desc">2:00 PM — CFO attending, bring ROI data</div>
+                        </div>
+                    </div>
+                    <div class="priority-item">
+                        <div class="priority-num" style="background: var(--brand-primary);">3</div>
+                        <div class="priority-content">
+                            <div class="priority-title">Send Lakeside proposal</div>
+                            <div class="priority-desc">They asked for pricing yesterday — strike while hot</div>
+                        </div>
+                    </div>
+
+                    <div class="ai-insight">
+                        <div class="ai-insight-label">AI Insight</div>
+                        <div class="ai-insight-text">Memorial Health's CFO was active on LinkedIn discussing budget planning. Good time to re-engage on timing.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deals Needing Attention -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Deals Needing Attention</span>
+                    <span class="card-badge badge-critical">3 at risk</span>
+                </div>
+                <div class="card-body">
+                    <div class="deal-item">
+                        <div class="health-score health-critical">38</div>
+                        <div class="deal-info">
+                            <div class="deal-name">Memorial Health System</div>
+                            <div class="deal-meta">Stalled 18 days • No next step</div>
+                        </div>
+                        <div class="deal-amount">$180K</div>
+                    </div>
+                    <div class="deal-item">
+                        <div class="health-score health-warning">52</div>
+                        <div class="deal-info">
+                            <div class="deal-name">Riverside Medical Group</div>
+                            <div class="deal-meta">CFO not engaged • Close date slip risk</div>
+                        </div>
+                        <div class="deal-amount">$220K</div>
+                    </div>
+                    <div class="deal-item">
+                        <div class="health-score health-warning">61</div>
+                        <div class="deal-info">
+                            <div class="deal-name">Valley Physicians Network</div>
+                            <div class="deal-meta">Missing technical champion</div>
+                        </div>
+                        <div class="deal-amount">$145K</div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-btn">View All Deals</button>
+                        <button class="action-btn">Risk Analysis</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Calendar -->
+            <div class="card sidebar-card">
+                <div class="card-header">
+                    <span class="card-title">Today's Schedule</span>
+                </div>
+                <div class="card-body">
+                    <div class="calendar-item">
+                        <div class="calendar-time">9:00 AM</div>
+                        <div class="calendar-event">
+                            <div class="calendar-title">Team Standup</div>
+                            <div class="calendar-details">30 min • Zoom</div>
+                        </div>
+                    </div>
+                    <div class="calendar-item">
+                        <div class="calendar-time">10:30 AM</div>
+                        <div class="calendar-event">
+                            <div class="calendar-title">
+                                Discovery — Coastal Medical
+                                <span class="prep-badge">Prep Ready</span>
+                            </div>
+                            <div class="calendar-details">45 min • Dr. Chen + IT Director</div>
+                        </div>
+                    </div>
+                    <div class="calendar-item">
+                        <div class="calendar-time">2:00 PM</div>
+                        <div class="calendar-event">
+                            <div class="calendar-title">
+                                Demo — Riverside Medical
+                                <span class="prep-badge">Prep Ready</span>
+                            </div>
+                            <div class="calendar-details">60 min • CFO attending</div>
+                        </div>
+                    </div>
+                    <div class="calendar-item">
+                        <div class="calendar-time">4:00 PM</div>
+                        <div class="calendar-event">
+                            <div class="calendar-title">1:1 with Sarah (Manager)</div>
+                            <div class="calendar-details">30 min • Deal review</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pipeline Summary -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">My Pipeline</span>
+                    <span class="card-badge badge-success">78% to quota</span>
+                </div>
+                <div class="card-body">
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value">$1.2M</div>
+                            <div class="stat-label">Total Pipeline</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--success);">$545K</div>
+                            <div class="stat-label">Commit</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Active Deals</div>
+                        </div>
+                    </div>
+
+                    <div class="ai-insight">
+                        <div class="ai-insight-label">Forecast Insight</div>
+                        <div class="ai-insight-text">Based on deal health scores, AI forecasts $480K likely to close this quarter. Add 2 deals to Commit to hit quota.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Next Steps Due -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Next Steps Due</span>
+                    <span class="card-badge badge-warning">2 overdue</span>
+                </div>
+                <div class="card-body">
+                    <div class="priority-item">
+                        <div class="priority-num" style="background: var(--error);">!</div>
+                        <div class="priority-content">
+                            <div class="priority-title">Send security questionnaire</div>
+                            <div class="priority-desc">Memorial Health — Due 2 days ago</div>
+                        </div>
+                    </div>
+                    <div class="priority-item">
+                        <div class="priority-num" style="background: var(--error);">!</div>
+                        <div class="priority-content">
+                            <div class="priority-title">Schedule technical deep-dive</div>
+                            <div class="priority-desc">Valley Physicians — Due yesterday</div>
+                        </div>
+                    </div>
+                    <div class="priority-item">
+                        <div class="priority-num" style="background: var(--brand-primary);">→</div>
+                        <div class="priority-content">
+                            <div class="priority-title">Follow up on proposal</div>
+                            <div class="priority-desc">Lakeside Health — Due tomorrow</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

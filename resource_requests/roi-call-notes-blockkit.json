@@ -1,0 +1,63 @@
+[
+  {
+    "type": "header",
+    "text": {
+      "type": "plain_text",
+      "text": "ROI Call Request"
+    }
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+    },
+    "accessory": {
+      "type": "button",
+      "text": {
+        "type": "plain_text",
+        "text": "Open in Salesforce"
+      },
+      "url": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view",
+      "style": "primary"
+    }
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*Product:* Clinical Notes\n*Clinical Setting:* {$.steps.salesforce-1.records[0].Clinical_Setting__c}\n*Assigned To:* <@{Brad_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+    }
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+    }
+  },
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Annual Encounters*\n{$.steps.salesforce-1.records[0].Estimated_Annual_Encounters__c}"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Implementation Fee*\n${$.steps.salesforce-1.records[0].Implementation_Fee__c}"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Providers*\n{$.steps.salesforce-1.records[0].Total_Physician_Count__c} @ ${$.steps.salesforce-1.records[0].Monthly_Cost_Per_Provider__c}/mo"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*RNs*\n{$.steps.salesforce-1.records[0].Total_Number_of_RNs__c}"
+      }
+    ]
+  }
+]

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Health — Partner Success View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* Header gradient */
+        .health-header {
+            background: linear-gradient(135deg, #2e844a 0%, #1a5c2e 100%);
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        .health-header.warning {
+            background: linear-gradient(135deg, #fe9339 0%, #dd7a00 100%);
+        }
+        .health-header.critical {
+            background: linear-gradient(135deg, #c23934 0%, #9c1f1a 100%);
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 3px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Health score ring */
+        .health-ring-large {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+        .health-ring-large svg {
+            transform: rotate(-90deg);
+        }
+        .health-text-large {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .health-value-large {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+        .health-label-large {
+            font-size: 0.625rem;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+        }
+        /* Metric card */
+        .metric-card {
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .metric-label {
+            font-size: 0.5625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        .metric-trend {
+            font-size: 0.625rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.125rem;
+            margin-top: 0.25rem;
+        }
+        .metric-trend.up { color: #2e844a; }
+        .metric-trend.down { color: #c23934; }
+        .metric-trend.flat { color: #706e6b; }
+        /* Implementation progress */
+        .impl-progress {
+            background: #e5e5e5;
+            border-radius: 0.5rem;
+            height: 8px;
+            overflow: hidden;
+        }
+        .impl-progress-fill {
+            height: 100%;
+            border-radius: 0.5rem;
+            background: linear-gradient(90deg, #2e844a 0%, #4cd964 100%);
+        }
+        /* Milestone */
+        .milestone {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .milestone:last-child {
+            border-bottom: none;
+        }
+        .milestone-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .milestone-dot.complete { background: #2e844a; }
+        .milestone-dot.current { background: #0176d3; border: 2px solid white; box-shadow: 0 0 0 2px #0176d3; }
+        .milestone-dot.pending { background: #e5e5e5; }
+        .milestone-dot.blocked { background: #c23934; }
+        /* Contact engagement */
+        .contact-row {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .contact-row:last-child {
+            border-bottom: none;
+        }
+        .contact-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .engagement-dots {
+            display: flex;
+            gap: 3px;
+        }
+        .engagement-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e5e5e5;
+        }
+        .engagement-dot.filled { background: #0176d3; }
+        .engagement-dot.warning { background: #fe9339; }
+        .engagement-dot.low { background: #c23934; }
+        /* Health indicator */
+        .health-indicator {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .health-indicator:last-child {
+            margin-bottom: 0;
+        }
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .indicator-dot.good { background: #2e844a; }
+        .indicator-dot.warning { background: #fe9339; }
+        .indicator-dot.critical { background: #c23934; }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <article class="slds-card" style="overflow: hidden;">
+                <!-- Header -->
+                <div class="health-header warning slds-p-around_medium">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="health-ring-large slds-m-right_medium">
+                            <svg width="100" height="100">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="79"/>
+                            </svg>
+                            <div class="health-text-large">
+                                <div class="health-value-large">70</div>
+                                <div class="health-label-large">Health</div>
+                            </div>
+                        </div>
+                        <div class="slds-grow">
+                            <h1 class="slds-text-heading_medium slds-text-color_inverse">Valley Health Network</h1>
+                            <p class="slds-text-body_regular" style="color: rgba(255,255,255,0.9);">$200K ARR &bull; Renews Apr 15, 2026</p>
+                            <p class="slds-text-body_small" style="color: rgba(255,255,255,0.7);">76 days until renewal</p>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <span class="slds-badge" style="background: rgba(255,255,255,0.2); color: white;">
+                                <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" aria-hidden="true" style="fill: white;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                </svg>
+                                At Risk
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-card__body slds-card__body_inner">
+
+                    <!-- Implementation Status -->
+                    <div class="slds-m-bottom_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-text-color_weak" style="font-size: 0.625rem;">Implementation Status</p>
+                            <span class="slds-badge slds-m-left_small" style="background: #fef7e8; color: #b47800;">In Progress</span>
+                        </div>
+
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="slds-grow slds-m-right_medium">
+                                <div class="impl-progress">
+                                    <div class="impl-progress-fill" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-heading_small">65%</span>
+                        </div>
+
+                        <div class="slds-grid slds-grid_align-spread slds-text-body_small slds-text-color_weak slds-m-bottom_small">
+                            <span>Day 45 of 60</span>
+                            <span style="color: #fe9339;">15 days remaining</span>
+                        </div>
+
+                        <!-- Milestones -->
+                        <div class="milestone">
+                            <span class="milestone-dot complete"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Kickoff & Planning</p>
+                            </div>
+                            <span class="slds-text-body_small slds-text-color_weak">Complete</span>
+                        </div>
+                        <div class="milestone">
+                            <span class="milestone-dot complete"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Technical Setup</p>
+                            </div>
+                            <span class="slds-text-body_small slds-text-color_weak">Complete</span>
+                        </div>
+                        <div class="milestone">
+                            <span class="milestone-dot current"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">User Training</p>
+                                <p class="slds-text-body_small slds-text-color_weak">3 of 5 sessions complete</p>
+                            </div>
+                            <span class="slds-text-body_small" style="color: #0176d3;">In Progress</span>
+                        </div>
+                        <div class="milestone">
+                            <span class="milestone-dot blocked"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Go-Live</p>
+                                <p class="slds-text-body_small" style="color: #c23934;">Blocked: IT resources</p>
+                            </div>
+                            <span class="slds-text-body_small slds-text-color_weak">Feb 15</span>
+                        </div>
+                    </div>
+
+                    <!-- Health Indicators -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Health Indicators</p>
+
+                        <div class="slds-grid slds-gutters_small slds-m-bottom_small">
+                            <div class="slds-col slds-size_1-of-3">
+                                <div class="metric-card">
+                                    <div class="metric-value" style="color: #c23934;">-23%</div>
+                                    <div class="metric-label">Usage (30d)</div>
+                                    <div class="metric-trend down">
+                                        <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #c23934;">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                                        </svg>
+                                        Declining
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <div class="metric-card">
+                                    <div class="metric-value" style="color: #2e844a;">2</div>
+                                    <div class="metric-label">Open Tickets</div>
+                                    <div class="metric-trend down">
+                                        <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                                        </svg>
+                                        From 5
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <div class="metric-card">
+                                    <div class="metric-value" style="color: #fe9339;">14d</div>
+                                    <div class="metric-label">Last Login</div>
+                                    <div class="metric-trend down">
+                                        <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #fe9339;">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                        </svg>
+                                        Power user
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="health-indicator">
+                            <span class="indicator-dot critical"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Usage dropped 23%</p>
+                                <p class="slds-text-body_small slds-text-color_weak">2 power users went inactive this month</p>
+                            </div>
+                        </div>
+                        <div class="health-indicator">
+                            <span class="indicator-dot warning"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Implementation delayed</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Go-live blocked waiting on IT resources</p>
+                            </div>
+                        </div>
+                        <div class="health-indicator">
+                            <span class="indicator-dot good"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Support health strong</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Tickets down, CSAT at 4.8/5</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Contacts -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Key Contacts</p>
+
+                        <div class="contact-row">
+                            <div class="contact-avatar" style="background: #0176d3;">SC</div>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Sarah Chen</p>
+                                <p class="slds-text-body_small slds-text-color_weak">CMO — Executive Sponsor</p>
+                            </div>
+                            <div class="engagement-dots">
+                                <span class="engagement-dot filled"></span>
+                                <span class="engagement-dot filled"></span>
+                                <span class="engagement-dot filled"></span>
+                                <span class="engagement-dot warning"></span>
+                                <span class="engagement-dot"></span>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-avatar" style="background: #fe9339;">MJ</div>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Mike Johnson</p>
+                                <p class="slds-text-body_small slds-text-color_weak">CIO — Technical Owner</p>
+                            </div>
+                            <div class="engagement-dots">
+                                <span class="engagement-dot filled"></span>
+                                <span class="engagement-dot filled"></span>
+                                <span class="engagement-dot"></span>
+                                <span class="engagement-dot"></span>
+                                <span class="engagement-dot"></span>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-avatar" style="background: #c23934;">LP</div>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Lisa Park</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Training Lead — <span style="color: #c23934;">Inactive 14d</span></p>
+                            </div>
+                            <div class="engagement-dots">
+                                <span class="engagement-dot low"></span>
+                                <span class="engagement-dot"></span>
+                                <span class="engagement-dot"></span>
+                                <span class="engagement-dot"></span>
+                                <span class="engagement-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Insight -->
+                    <div class="slds-box slds-box_x-small ai-insight-box">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Insight</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            <strong>Implementation on track but usage dropped 23% this month</strong> — 2 power users went inactive. Lisa Park hasn't logged in for 14 days. Risk to renewal if not addressed. <strong>Recommended:</strong> Schedule check-in with Lisa to understand blockers.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-card__footer">
+                    <div class="slds-grid slds-grid_align-spread">
+                        <a class="slds-card__footer-action" href="#">View Full Account</a>
+                        <button class="slds-button slds-button_brand">Schedule QBR</button>
+                    </div>
+                </footer>
+            </article>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Account Health</strong> — Partner Success View<br>
+                Implementation progress and health indicators at a glance
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

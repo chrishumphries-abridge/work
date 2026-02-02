@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deal Review — Sales Manager View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Rep header */
+        .rep-header {
+            background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);
+            border-radius: 0.5rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .rep-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #5a67d8;
+        }
+        /* Deal card */
+        .deal-card {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .deal-card:last-child {
+            margin-bottom: 0;
+        }
+        .deal-card.critical {
+            border-left: 4px solid #c23934;
+        }
+        .deal-card.warning {
+            border-left: 4px solid #fe9339;
+        }
+        .deal-card.healthy {
+            border-left: 4px solid #2e844a;
+        }
+        .deal-header {
+            padding: 1rem;
+            background: #fafaf9;
+            border-bottom: 1px solid #dddbda;
+        }
+        .deal-body {
+            padding: 1rem;
+        }
+        /* Health bar */
+        .health-bar {
+            height: 6px;
+            background: #e5e5e5;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .health-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+        .health-bar-fill.good { background: #2e844a; }
+        .health-bar-fill.warning { background: #fe9339; }
+        .health-bar-fill.critical { background: #c23934; }
+        /* Signal row */
+        .signal-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .signal-row:last-child {
+            border-bottom: none;
+        }
+        .signal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+        .signal-dot.negative { background: #c23934; }
+        .signal-dot.warning { background: #fe9339; }
+        .signal-dot.positive { background: #2e844a; }
+        /* Buying group mini */
+        .bg-mini {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .bg-contact {
+            text-align: center;
+            padding: 0.5rem;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+            min-width: 70px;
+        }
+        .bg-contact.missing {
+            background: transparent;
+            border: 1.5px dashed #b0adab;
+        }
+        .bg-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            margin: 0 auto 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: white;
+        }
+        .bg-role {
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        /* Coaching point */
+        .coaching-point {
+            background: #fef7e8;
+            border-left: 3px solid #fe9339;
+            padding: 0.75rem;
+            border-radius: 0 0.25rem 0.25rem 0;
+            margin-top: 0.75rem;
+        }
+        /* Stats row */
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+        }
+        .stat-box {
+            flex: 1;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 0.5625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <!-- Rep Header -->
+            <div class="rep-header">
+                <div class="slds-grid slds-grid_vertical-align-center">
+                    <div class="rep-avatar slds-m-right_medium">MR</div>
+                    <div class="slds-grow">
+                        <h1 class="slds-text-heading_medium slds-text-color_inverse">Marcus Rodriguez — Deal Review</h1>
+                        <p class="slds-text-body_small" style="color: rgba(255,255,255,0.9);">8 active deals &bull; $1.4M pipeline &bull; 58% avg health</p>
+                    </div>
+                    <div class="slds-text-align_right">
+                        <span class="slds-badge" style="background: rgba(255,255,255,0.2); color: white;">1:1 Review</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Summary -->
+            <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_medium">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                    </svg>
+                    <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Summary</p>
+                </div>
+                <p class="slds-text-body_small">
+                    <strong>Marcus has 2 deals at critical risk and a pattern of single-threading.</strong> 3 of 8 deals have no technical champion identified. Focus on Acme Health (closing soon, no activity) and coaching on multi-threading strategy.
+                </p>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="stats-row slds-m-bottom_medium">
+                <div class="stat-box">
+                    <div class="stat-value" style="color: #0176d3;">$1.4M</div>
+                    <div class="stat-label">Pipeline</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" style="color: #c23934;">2</div>
+                    <div class="stat-label">Critical</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" style="color: #fe9339;">3</div>
+                    <div class="stat-label">At Risk</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" style="color: #2e844a;">3</div>
+                    <div class="stat-label">Healthy</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">58%</div>
+                    <div class="stat-label">Avg Health</div>
+                </div>
+            </div>
+
+            <!-- Deal Cards -->
+            <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Deals Requiring Discussion</p>
+
+            <!-- Deal 1: Critical -->
+            <div class="deal-card critical">
+                <div class="deal-header">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Acme Health Systems</h3>
+                                <span class="slds-badge" style="background: #fef1ee; color: #c23934;">Critical</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 3: Discovery &bull; Closes Feb 14 (16 days)</p>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <p class="slds-text-heading_medium" style="color: #0176d3;">$425K</p>
+                            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-end">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">Health</span>
+                                <span class="slds-text-title_bold" style="color: #c23934;">34%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="deal-body">
+                    <!-- Risk Signals -->
+                    <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_x-small" style="font-size: 0.5625rem;">Risk Signals</p>
+                    <div class="signal-row">
+                        <span class="signal-dot negative"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">No activity in 14 days</p>
+                            <p class="slds-text-body_small slds-text-color_weak">Last contact: Jan 13 with Sarah Chen</p>
+                        </div>
+                    </div>
+                    <div class="signal-row">
+                        <span class="signal-dot negative"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">Budget holder disengaged</p>
+                            <p class="slds-text-body_small slds-text-color_weak">CFO hasn't responded since Dec 18</p>
+                        </div>
+                    </div>
+                    <div class="signal-row">
+                        <span class="signal-dot warning"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">No technical champion</p>
+                            <p class="slds-text-body_small slds-text-color_weak">IT stakeholder not yet identified</p>
+                        </div>
+                    </div>
+
+                    <!-- Buying Group -->
+                    <p class="slds-text-title_caps slds-text-color_weak slds-m-top_small slds-m-bottom_x-small" style="font-size: 0.5625rem;">Buying Group (3 of 5)</p>
+                    <div class="bg-mini">
+                        <div class="bg-contact">
+                            <div class="bg-avatar" style="background: #0176d3;">SC</div>
+                            <div class="bg-role" style="color: #0176d3;">Champion</div>
+                            <p class="slds-text-body_small" style="font-size: 0.625rem;">Sarah Chen</p>
+                        </div>
+                        <div class="bg-contact">
+                            <div class="bg-avatar" style="background: #c23934;">TR</div>
+                            <div class="bg-role" style="color: #c23934;">Budget</div>
+                            <p class="slds-text-body_small" style="font-size: 0.625rem;">Tom Richards</p>
+                        </div>
+                        <div class="bg-contact">
+                            <div class="bg-avatar" style="background: #2e844a;">MJ</div>
+                            <div class="bg-role" style="color: #2e844a;">Exec</div>
+                            <p class="slds-text-body_small" style="font-size: 0.625rem;">Mike Johnson</p>
+                        </div>
+                        <div class="bg-contact missing">
+                            <div class="bg-avatar" style="background: #b0adab;">?</div>
+                            <div class="bg-role" style="color: #706e6b;">Technical</div>
+                            <p class="slds-text-body_small slds-text-color_weak" style="font-size: 0.625rem; font-style: italic;">Missing</p>
+                        </div>
+                        <div class="bg-contact missing">
+                            <div class="bg-avatar" style="background: #b0adab;">?</div>
+                            <div class="bg-role" style="color: #706e6b;">User</div>
+                            <p class="slds-text-body_small slds-text-color_weak" style="font-size: 0.625rem; font-style: italic;">Missing</p>
+                        </div>
+                    </div>
+
+                    <!-- Coaching Point -->
+                    <div class="coaching-point">
+                        <p class="slds-text-title_caps slds-m-bottom_xx-small" style="font-size: 0.5625rem; color: #b47800;">Coaching Point</p>
+                        <p class="slds-text-body_small">
+                            <strong>Discuss:</strong> Strategy to re-engage the champion and identify technical stakeholder. This deal has been single-threaded on Sarah — what's the plan to expand?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deal 2: Warning -->
+            <div class="deal-card warning">
+                <div class="deal-header">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Metro Regional Medical</h3>
+                                <span class="slds-badge" style="background: #fef7e8; color: #b47800;">At Risk</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 4: Proposal &bull; Closes Mar 15 (45 days)</p>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <p class="slds-text-heading_medium" style="color: #0176d3;">$680K</p>
+                            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-end">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">Health</span>
+                                <span class="slds-text-title_bold" style="color: #fe9339;">58%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="deal-body">
+                    <!-- Risk Signals -->
+                    <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_x-small" style="font-size: 0.5625rem;">Risk Signals</p>
+                    <div class="signal-row">
+                        <span class="signal-dot warning"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">Budget holder quiet</p>
+                            <p class="slds-text-body_small slds-text-color_weak">CFO last engaged 3 weeks ago</p>
+                        </div>
+                    </div>
+                    <div class="signal-row">
+                        <span class="signal-dot warning"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">No technical validation</p>
+                            <p class="slds-text-body_small slds-text-color_weak">IT team hasn't reviewed proposal yet</p>
+                        </div>
+                    </div>
+                    <div class="signal-row">
+                        <span class="signal-dot positive"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">Champion engaged</p>
+                            <p class="slds-text-body_small slds-text-color_weak">3 calls this week with VP Ops</p>
+                        </div>
+                    </div>
+
+                    <!-- Coaching Point -->
+                    <div class="coaching-point">
+                        <p class="slds-text-title_caps slds-m-bottom_xx-small" style="font-size: 0.5625rem; color: #b47800;">Coaching Point</p>
+                        <p class="slds-text-body_small">
+                            <strong>Discuss:</strong> Good champion engagement but needs to expand. What's the plan to get IT involved and re-engage the CFO before proposal review?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deal 3: Healthy -->
+            <div class="deal-card healthy">
+                <div class="deal-header">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Valley Health Network</h3>
+                                <span class="slds-badge" style="background: #ebf7e6; color: #2e844a;">On Track</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 5: Negotiation &bull; Closes Feb 28 (30 days)</p>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <p class="slds-text-heading_medium" style="color: #0176d3;">$320K</p>
+                            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-end">
+                                <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">Health</span>
+                                <span class="slds-text-title_bold" style="color: #2e844a;">85%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="deal-body">
+                    <!-- Positive Signals -->
+                    <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_x-small" style="font-size: 0.5625rem;">Signals</p>
+                    <div class="signal-row">
+                        <span class="signal-dot positive"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">Strong buying group</p>
+                            <p class="slds-text-body_small slds-text-color_weak">5 of 5 roles engaged, all active in last week</p>
+                        </div>
+                    </div>
+                    <div class="signal-row">
+                        <span class="signal-dot positive"></span>
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small slds-text-title_bold">Contract in legal review</p>
+                            <p class="slds-text-body_small slds-text-color_weak">Expected back by Feb 5</p>
+                        </div>
+                    </div>
+
+                    <!-- Coaching Point -->
+                    <div class="coaching-point" style="background: #ebf7e6; border-left-color: #2e844a;">
+                        <p class="slds-text-title_caps slds-m-bottom_xx-small" style="font-size: 0.5625rem; color: #2e844a;">Celebrate</p>
+                        <p class="slds-text-body_small">
+                            <strong>Win pattern:</strong> Multi-threaded from the start, engaged technical team early. Use this as a template for Acme and Metro.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Deal Review</strong> — Sales Manager View<br>
+                Deep dive into rep's pipeline for coaching conversations
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

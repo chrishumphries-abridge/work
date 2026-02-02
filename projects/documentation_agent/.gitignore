@@ -1,0 +1,9 @@
+# Generated documentation (optional - remove if you want to version control output)
+# output/
+
+# OS files
+.DS_Store
+
+# Editor files
+*.swp
+*~

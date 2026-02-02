@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renewal Risk — Partner Success View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .stat-card {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 0.6875rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Account row */
+        .account-row {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: box-shadow 0.15s ease;
+        }
+        .account-row:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .account-row:last-child {
+            margin-bottom: 0;
+        }
+        .account-row.critical {
+            border-left: 4px solid #c23934;
+        }
+        .account-row.warning {
+            border-left: 4px solid #fe9339;
+        }
+        .account-row.healthy {
+            border-left: 4px solid #2e844a;
+        }
+        /* Health score circle */
+        .health-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+        .health-circle.critical { background: #c23934; }
+        .health-circle.warning { background: #fe9339; }
+        .health-circle.healthy { background: #2e844a; }
+        /* Trend arrow */
+        .trend-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.125rem;
+            font-size: 0.625rem;
+        }
+        .trend-arrow.up { color: #2e844a; }
+        .trend-arrow.down { color: #c23934; }
+        .trend-arrow.flat { color: #706e6b; }
+        /* Risk signal pill */
+        .risk-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .risk-pill.critical {
+            background: #fef1ee;
+            color: #c23934;
+        }
+        .risk-pill.warning {
+            background: #fef7e8;
+            color: #b47800;
+        }
+        .risk-pill.info {
+            background: #eef4ff;
+            color: #0176d3;
+        }
+        .risk-pill.success {
+            background: #ebf7e6;
+            color: #2e844a;
+        }
+        /* Implementation badge */
+        .impl-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+        }
+        .impl-badge.complete { background: #ebf7e6; color: #2e844a; }
+        .impl-badge.progress { background: #eef4ff; color: #0176d3; }
+        .impl-badge.blocked { background: #fef1ee; color: #c23934; }
+        /* Risk breakdown */
+        .risk-breakdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        .risk-category {
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .risk-count {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .risk-label {
+            font-size: 0.5625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* AI recommendation */
+        .ai-recommendation {
+            background: #f8f8f8;
+            border-left: 2px solid #0176d3;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 0.25rem 0.25rem 0;
+            margin-top: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <!-- Section Header -->
+            <div class="slds-media slds-media_center slds-m-bottom_medium">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container" style="background: linear-gradient(135deg, #c23934 0%, #9c1f1a 100%); border-radius: 0.5rem; padding: 0.625rem;">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true" style="fill: white;">
+                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_medium">Renewal Risk Dashboard</h1>
+                    <p class="slds-text-body_small slds-text-color_weak">Next 90 days — 8 renewals</p>
+                </div>
+                <div class="slds-no-flex">
+                    <span class="slds-badge slds-m-left_small" style="background: #eef4ff; color: #0176d3; font-size: 0.625rem;">AI</span>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid slds-m-bottom_medium">
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #0176d3;">$1.8M</div>
+                    <div class="stat-label">ARR Up for Renewal</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #c23934;">2</div>
+                    <div class="stat-label">Critical Risk</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #fe9339;">3</div>
+                    <div class="stat-label">At Risk</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #2e844a;">3</div>
+                    <div class="stat-label">On Track</div>
+                </div>
+            </div>
+
+            <!-- Risk Breakdown -->
+            <div class="slds-m-bottom_medium">
+                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Risk Breakdown by Category</p>
+                <div class="risk-breakdown">
+                    <div class="risk-category">
+                        <div class="risk-count" style="color: #c23934;">3</div>
+                        <div class="risk-label">Implementation Blocked</div>
+                    </div>
+                    <div class="risk-category">
+                        <div class="risk-count" style="color: #fe9339;">4</div>
+                        <div class="risk-label">Usage Decline</div>
+                    </div>
+                    <div class="risk-category">
+                        <div class="risk-count" style="color: #fe9339;">2</div>
+                        <div class="risk-label">Stakeholder Disengaged</div>
+                    </div>
+                    <div class="risk-category">
+                        <div class="risk-count" style="color: #706e6b;">1</div>
+                        <div class="risk-label">Support Escalation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insight -->
+            <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_medium">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                    </svg>
+                    <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Summary</p>
+                </div>
+                <p class="slds-text-body_small">
+                    <strong>$420K at critical risk</strong> — Valley Health and Metro Regional both have blocked implementations and declining usage. Focus on unblocking IT resources for Valley and re-engaging Sarah Chen at Metro. <strong>QBRs recommended for both within 2 weeks.</strong>
+                </p>
+            </div>
+
+            <!-- Renewal List -->
+            <div class="slds-m-bottom_medium">
+                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Upcoming Renewals</p>
+
+                <!-- Account 1: Critical -->
+                <div class="account-row critical">
+                    <div class="slds-grid slds-grid_vertical-align-start">
+                        <div class="health-circle critical slds-m-right_medium">34</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Valley Health Network</h3>
+                                <span class="impl-badge blocked">Impl Blocked</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">$200K ARR &bull; Renews Apr 15 &bull; 76 days</p>
+                            <div>
+                                <span class="risk-pill critical">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                    </svg>
+                                    Usage -23%
+                                </span>
+                                <span class="risk-pill critical">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#block_visitor"></use>
+                                    </svg>
+                                    Go-live blocked
+                                </span>
+                                <span class="risk-pill warning">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#user"></use>
+                                    </svg>
+                                    Power user inactive 14d
+                                </span>
+                            </div>
+                            <div class="ai-recommendation">
+                                <p class="slds-text-body_small"><strong>AI:</strong> Schedule emergency QBR with Sarah Chen. Escalate IT blocker to CIO.</p>
+                            </div>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <span class="trend-arrow down">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #c23934;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                                </svg>
+                                -12 pts
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">30 day trend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 2: Critical -->
+                <div class="account-row critical">
+                    <div class="slds-grid slds-grid_vertical-align-start">
+                        <div class="health-circle critical slds-m-right_medium">42</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Metro Regional Medical</h3>
+                                <span class="impl-badge progress">In Progress</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">$220K ARR &bull; Renews Mar 30 &bull; 60 days</p>
+                            <div>
+                                <span class="risk-pill critical">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#user"></use>
+                                    </svg>
+                                    Sponsor disengaged 30d
+                                </span>
+                                <span class="risk-pill warning">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                    </svg>
+                                    Usage -18%
+                                </span>
+                            </div>
+                            <div class="ai-recommendation">
+                                <p class="slds-text-body_small"><strong>AI:</strong> Re-engage Sarah Chen urgently. Send case study and request call this week.</p>
+                            </div>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <span class="trend-arrow down">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #c23934;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                                </svg>
+                                -8 pts
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">30 day trend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 3: Warning -->
+                <div class="account-row warning">
+                    <div class="slds-grid slds-grid_vertical-align-start">
+                        <div class="health-circle warning slds-m-right_medium">58</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Summit Care Partners</h3>
+                                <span class="impl-badge complete">Complete</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">$185K ARR &bull; Renews Apr 30 &bull; 91 days</p>
+                            <div>
+                                <span class="risk-pill warning">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                    </svg>
+                                    Usage flat
+                                </span>
+                                <span class="risk-pill info">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#new"></use>
+                                    </svg>
+                                    New stakeholder
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <span class="trend-arrow flat">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #706e6b;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#minus"></use>
+                                </svg>
+                                No change
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">30 day trend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 4: Healthy -->
+                <div class="account-row healthy">
+                    <div class="slds-grid slds-grid_vertical-align-start">
+                        <div class="health-circle healthy slds-m-right_medium">85</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Acme Health Systems</h3>
+                                <span class="impl-badge complete">Complete</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">$425K ARR &bull; Renews May 15 &bull; 106 days</p>
+                            <div>
+                                <span class="risk-pill success">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                    </svg>
+                                    High engagement
+                                </span>
+                                <span class="risk-pill success">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#trending"></use>
+                                    </svg>
+                                    Usage +15%
+                                </span>
+                                <span class="risk-pill info">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#expand"></use>
+                                    </svg>
+                                    Expansion opportunity
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <span class="trend-arrow up">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#arrowup"></use>
+                                </svg>
+                                +5 pts
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">30 day trend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account 5: Healthy -->
+                <div class="account-row healthy">
+                    <div class="slds-grid slds-grid_vertical-align-start">
+                        <div class="health-circle healthy slds-m-right_medium">92</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <h3 class="slds-text-heading_small slds-m-right_small">Lakeside Health</h3>
+                                <span class="impl-badge complete">Complete</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">$380K ARR &bull; Renews Jun 1 &bull; 123 days</p>
+                            <div>
+                                <span class="risk-pill success">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                    </svg>
+                                    Strong adoption
+                                </span>
+                                <span class="risk-pill success">
+                                    <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: currentColor;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#favorite"></use>
+                                    </svg>
+                                    CSAT 4.9/5
+                                </span>
+                            </div>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <span class="trend-arrow up">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#arrowup"></use>
+                                </svg>
+                                +3 pts
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">30 day trend</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Renewal Risk Dashboard</strong> — Partner Success View<br>
+                Proactive renewal management with AI-powered risk signals
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

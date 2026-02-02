@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Success Home — GTM Systems AI</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        :root {
+            --brand-primary: #0176d3;
+            --success: #2e844a;
+            --warning: #fe9339;
+            --error: #c23934;
+            --gray-1: #f3f3f3;
+            --gray-2: #e5e5e5;
+            --gray-3: #706e6b;
+            --text-primary: #181818;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-1);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .greeting span {
+            color: var(--brand-primary);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .header-stat {
+            text-align: center;
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .header-stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 380px;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--gray-2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .badge-critical { background: #fef1ee; color: var(--error); }
+        .badge-warning { background: #fef7e8; color: var(--warning); }
+        .badge-success { background: #ebf7e6; color: var(--success); }
+        .badge-ai { background: rgba(118, 168, 244, 0.15); color: var(--brand-primary); }
+
+        .card-body {
+            padding: 1rem 1.25rem;
+        }
+
+        /* Health Score */
+        .health-score {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .health-critical { background: var(--error); }
+        .health-warning { background: var(--warning); }
+        .health-healthy { background: var(--success); }
+
+        /* Account Item */
+        .account-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .account-item:last-child {
+            border-bottom: none;
+        }
+
+        .account-info {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .account-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .account-meta {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .account-arr {
+            text-align: right;
+        }
+
+        .account-arr-value {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .account-arr-days {
+            font-size: 0.6875rem;
+            color: var(--gray-3);
+        }
+
+        /* AI Insight */
+        .ai-insight {
+            background: linear-gradient(135deg, rgba(118, 168, 244, 0.1) 0%, rgba(1, 118, 211, 0.08) 100%);
+            border-left: 3px solid var(--brand-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 0.75rem;
+        }
+
+        .ai-insight-label {
+            font-size: 0.625rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .ai-insight-text {
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* Implementation Item */
+        .impl-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .impl-item:last-child {
+            border-bottom: none;
+        }
+
+        .impl-status {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .impl-info {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .impl-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .impl-meta {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .impl-progress {
+            width: 80px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.25rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .progress-label {
+            font-size: 0.625rem;
+            color: var(--gray-3);
+            text-align: right;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--gray-1);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.6875rem;
+            color: var(--gray-3);
+            margin-top: 0.25rem;
+        }
+
+        /* Task Item */
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-priority {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .task-content {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .task-desc {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        /* Sidebar */
+        .sidebar-card {
+            grid-row: span 2;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        /* QBR */
+        .qbr-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-2);
+        }
+
+        .qbr-item:last-child {
+            border-bottom: none;
+        }
+
+        .qbr-date {
+            width: 50px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .qbr-day {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .qbr-month {
+            font-size: 0.625rem;
+            color: var(--gray-3);
+            text-transform: uppercase;
+        }
+
+        .qbr-info {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .qbr-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .qbr-meta {
+            font-size: 0.75rem;
+            color: var(--gray-3);
+        }
+
+        .qbr-prep {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--brand-primary);
+            border-radius: 4px;
+            background: white;
+            color: var(--brand-primary);
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="page-header">
+            <h1 class="greeting">Good morning, <span>Jordan</span></h1>
+            <div class="header-stats">
+                <div class="header-stat">
+                    <div class="header-stat-value" style="color: var(--success);">$2.8M</div>
+                    <div class="header-stat-label">Book of Business</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value">78</div>
+                    <div class="header-stat-label">Avg Health Score</div>
+                </div>
+                <div class="header-stat">
+                    <div class="header-stat-value" style="color: var(--error);">3</div>
+                    <div class="header-stat-label">At Risk</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Renewals Coming Up -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Renewals (Next 90 Days)</span>
+                    <span class="card-badge badge-critical">2 at risk</span>
+                </div>
+                <div class="card-body">
+                    <div class="account-item">
+                        <div class="health-score health-critical">34</div>
+                        <div class="account-info">
+                            <div class="account-name">Valley Health Network</div>
+                            <div class="account-meta">Usage -23% • Sponsor quiet</div>
+                        </div>
+                        <div class="account-arr">
+                            <div class="account-arr-value">$200K</div>
+                            <div class="account-arr-days" style="color: var(--error);">76 days</div>
+                        </div>
+                    </div>
+                    <div class="account-item">
+                        <div class="health-score health-warning">58</div>
+                        <div class="account-info">
+                            <div class="account-name">Metro Regional Medical</div>
+                            <div class="account-meta">Exec sponsor changed</div>
+                        </div>
+                        <div class="account-arr">
+                            <div class="account-arr-value">$220K</div>
+                            <div class="account-arr-days" style="color: var(--warning);">60 days</div>
+                        </div>
+                    </div>
+                    <div class="account-item">
+                        <div class="health-score health-healthy">85</div>
+                        <div class="account-info">
+                            <div class="account-name">Acme Health Systems</div>
+                            <div class="account-meta">Expansion opportunity</div>
+                        </div>
+                        <div class="account-arr">
+                            <div class="account-arr-value">$425K</div>
+                            <div class="account-arr-days" style="color: var(--success);">106 days</div>
+                        </div>
+                    </div>
+
+                    <div class="ai-insight">
+                        <div class="ai-insight-label">Renewal Risk</div>
+                        <div class="ai-insight-text">Valley Health's usage dropped 23% after 2 power users went inactive. Recommend re-engagement call this week.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Implementations -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Active Implementations</span>
+                    <span class="card-badge badge-warning">1 blocked</span>
+                </div>
+                <div class="card-body">
+                    <div class="impl-item">
+                        <div class="impl-status" style="background: var(--error);">!</div>
+                        <div class="impl-info">
+                            <div class="impl-name">Metro Regional</div>
+                            <div class="impl-meta">Blocked: Waiting on IT credentials</div>
+                        </div>
+                        <div class="impl-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%; background: var(--warning);"></div>
+                            </div>
+                            <div class="progress-label">45%</div>
+                        </div>
+                    </div>
+                    <div class="impl-item">
+                        <div class="impl-status" style="background: var(--success);">✓</div>
+                        <div class="impl-info">
+                            <div class="impl-name">Coastal Medical Partners</div>
+                            <div class="impl-meta">On track • Go-live: Feb 15</div>
+                        </div>
+                        <div class="impl-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%; background: var(--success);"></div>
+                            </div>
+                            <div class="progress-label">78%</div>
+                        </div>
+                    </div>
+                    <div class="impl-item">
+                        <div class="impl-status" style="background: var(--brand-primary);">→</div>
+                        <div class="impl-info">
+                            <div class="impl-name">Sunrise Health Network</div>
+                            <div class="impl-meta">Just started • Kickoff completed</div>
+                        </div>
+                        <div class="impl-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 12%; background: var(--brand-primary);"></div>
+                            </div>
+                            <div class="progress-label">12%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Focus -->
+            <div class="card sidebar-card">
+                <div class="card-header">
+                    <span class="card-title">Today's Focus</span>
+                    <span class="card-badge badge-ai">AI Prioritized</span>
+                </div>
+                <div class="card-body">
+                    <div class="task-item">
+                        <div class="task-priority" style="background: var(--error);">1</div>
+                        <div class="task-content">
+                            <div class="task-title">Call Valley Health</div>
+                            <div class="task-desc">Re-engage inactive users before renewal</div>
+                        </div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-priority" style="background: var(--warning);">2</div>
+                        <div class="task-content">
+                            <div class="task-title">Unblock Metro impl</div>
+                            <div class="task-desc">Follow up with IT on credentials</div>
+                        </div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-priority" style="background: var(--brand-primary);">3</div>
+                        <div class="task-content">
+                            <div class="task-title">Prep Acme QBR</div>
+                            <div class="task-desc">Quarterly review next week</div>
+                        </div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-priority" style="background: var(--brand-primary);">4</div>
+                        <div class="task-content">
+                            <div class="task-title">Check Coastal go-live readiness</div>
+                            <div class="task-desc">2 weeks to launch</div>
+                        </div>
+                    </div>
+
+                    <div class="ai-insight">
+                        <div class="ai-insight-label">Priority Insight</div>
+                        <div class="ai-insight-text">Valley Health has $200K ARR renewing in 76 days with declining health. This should be your #1 focus today.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Health Overview -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Portfolio Health</span>
+                </div>
+                <div class="card-body">
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--success);">8</div>
+                            <div class="stat-label">Healthy (70+)</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--warning);">4</div>
+                            <div class="stat-label">Needs Attention</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: var(--error);">3</div>
+                            <div class="stat-label">At Risk (<50)</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-2);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.75rem; color: var(--gray-3);">Avg Health Score</span>
+                            <span style="font-size: 0.875rem; font-weight: 600;">78</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.75rem; color: var(--gray-3);">vs. Last Month</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--error);">-3 pts</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="font-size: 0.75rem; color: var(--gray-3);">NRR Target</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--success);">112%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming QBRs -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Upcoming QBRs</span>
+                </div>
+                <div class="card-body">
+                    <div class="qbr-item">
+                        <div class="qbr-date">
+                            <div class="qbr-day">5</div>
+                            <div class="qbr-month">Feb</div>
+                        </div>
+                        <div class="qbr-info">
+                            <div class="qbr-name">Acme Health Systems</div>
+                            <div class="qbr-meta">$425K ARR • Health: 85</div>
+                        </div>
+                        <button class="qbr-prep">Prep</button>
+                    </div>
+                    <div class="qbr-item">
+                        <div class="qbr-date">
+                            <div class="qbr-day">12</div>
+                            <div class="qbr-month">Feb</div>
+                        </div>
+                        <div class="qbr-info">
+                            <div class="qbr-name">Lakeside Health</div>
+                            <div class="qbr-meta">$180K ARR • Health: 72</div>
+                        </div>
+                        <button class="qbr-prep">Prep</button>
+                    </div>
+                    <div class="qbr-item">
+                        <div class="qbr-date">
+                            <div class="qbr-day">19</div>
+                            <div class="qbr-month">Feb</div>
+                        </div>
+                        <div class="qbr-info">
+                            <div class="qbr-name">Valley Health Network</div>
+                            <div class="qbr-meta" style="color: var(--error);">$200K ARR • Health: 34 ⚠</div>
+                        </div>
+                        <button class="qbr-prep">Prep</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

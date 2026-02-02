@@ -1,0 +1,3474 @@
+ {
+  "tray_export_version": 4,
+  "export_type": "workflow",
+  "workflows": [
+    {
+      "id": "54366161-8d87-4779-a1b8-6ed1adbee765",
+      "created": "2026-01-14T17:03:15.477292Z",
+      "workspace_id": "872fe400-6304-4349-aa9e-169b4049f653",
+      "project_id": "d51f2546-3a0a-47bc-a070-67ba22b3ee7e",
+      "group": "08ad264b-ddb7-4323-be44-282006d88b7f",
+      "creator": "8358210d-ccf4-4d0f-8fed-9609825c34e2",
+      "version": {
+        "id": "c6832ee7-367e-4685-b071-4816125e5168",
+        "created": "2026-01-28T21:45:41.237937Z"
+      },
+      "title": "Endpoint: Resource Requests",
+      "enabled": true,
+      "tags": [],
+      "settings": {
+        "config": {
+          "abridge_300_slack_icon": ":abridge--300:",
+          "abridge_300_slack_username": "Abridge 300",
+          "implementation_alert_name": "Pilot End Date Alert",
+          "live": true,
+          "salesforce_url": "https://abridgeai.lightning.force.com/",
+          "statuspage_dev_page_group_id": "gcnvzsf30dtd",
+          "statuspage_dev_page_id": "fnpl1zfw04dv",
+          "statuspage_prod_group_id": "bh8kl89rbjp8",
+          "statuspage_prod_nebula": "7hb8fqdvy2df",
+          "statuspage_prod_page_id": "9tfv4dgd43br",
+          "statuspage_test": true,
+          "ankit_slack_id": "U06JGBH18AG",
+          "brad_slack_id": "U09FJ7ZTNUR",
+          "laura_slack_id": "U087B21BK9D",
+          "ramon_slack_id": "U09L5N8J3S6",
+          "carrie_slack_id": "U09BD8QUGDV",
+          "taylor_slack_id": "U06UT9A8N6N"
+        },
+        "input_schema": {},
+        "output_schema": {}
+      },
+      "steps_structure": [
+        {
+          "name": "trigger",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "salesforce-1",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "storage-9",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "storage-10",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "branch-1",
+          "type": "branch",
+          "content": {
+            "__default__": [
+              {
+                "name": "terminate-1",
+                "type": "normal",
+                "content": {}
+              }
+            ],
+            "branch1": [
+              {
+                "name": "object-helpers-1",
+                "type": "normal",
+                "content": {}
+              },
+              {
+                "name": "storage-1",
+                "type": "normal",
+                "content": {}
+              }
+            ],
+            "branch2": [
+              {
+                "name": "object-helpers-3",
+                "type": "normal",
+                "content": {}
+              },
+              {
+                "name": "storage-3",
+                "type": "normal",
+                "content": {}
+              }
+            ],
+            "branch3": [
+              {
+                "name": "branch-2",
+                "type": "branch",
+                "content": {
+                  "__default__": [
+                    {
+                      "name": "terminate-4",
+                      "type": "normal",
+                      "content": {}
+                    }
+                  ],
+                  "branch1": [
+                    {
+                      "name": "object-helpers-5",
+                      "type": "normal",
+                      "content": {}
+                    },
+                    {
+                      "name": "storage-4",
+                      "type": "normal",
+                      "content": {}
+                    }
+                  ],
+                  "branch2": [
+                    {
+                      "name": "object-helpers-6",
+                      "type": "normal",
+                      "content": {}
+                    },
+                    {
+                      "name": "storage-5",
+                      "type": "normal",
+                      "content": {}
+                    }
+                  ]
+                }
+              }
+            ],
+            "branch4": [
+              {
+                "name": "object-helpers-7",
+                "type": "normal",
+                "content": {}
+              },
+              {
+                "name": "storage-6",
+                "type": "normal",
+                "content": {}
+              }
+            ],
+            "branch5": [
+              {
+                "name": "object-helpers-8",
+                "type": "normal",
+                "content": {}
+              },
+              {
+                "name": "storage-7",
+                "type": "normal",
+                "content": {}
+              }
+            ],
+            "branch6": [
+              {
+                "name": "object-helpers-9",
+                "type": "normal",
+                "content": {}
+              },
+              {
+                "name": "storage-8",
+                "type": "normal",
+                "content": {}
+              }
+            ],
+            "branch7": [
+              {
+                "name": "object-helpers-10",
+                "type": "normal",
+                "content": {}
+              },
+              {
+                "name": "storage-11",
+                "type": "normal",
+                "content": {}
+              }
+            ]
+          }
+        },
+        {
+          "name": "storage-2",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "object-helpers-4",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "object-helpers-2",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "slack-1",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "trigger-reply-1",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "terminate-3",
+          "type": "normal",
+          "content": {}
+        },
+        {
+          "name": "terminate-2",
+          "type": "normal",
+          "content": {}
+        }
+      ],
+      "steps": {
+        "branch-1": {
+          "title": "Request Type",
+          "connector": {
+            "name": "branch",
+            "version": "1.3"
+          },
+          "operation": "simple",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.salesforce-1.records[0].Type__c"
+            },
+            "branches": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "Demo/Road Map Request"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "Demo Request"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "Solution Consulting"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "Solution Consulting"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "ROI Call"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "ROI Call"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "ATP Code Request"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "ATP Code Request"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "Executive Request"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "Executive Request"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "Partner Referral Request"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "Partner Referral Request"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "Deployment_Success"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "Deployment Success"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "branch-2": {
+          "title": "Type",
+          "connector": {
+            "name": "branch",
+            "version": "1.3"
+          },
+          "operation": "simple",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "value": {
+              "type": "string",
+              "value": "{$.steps.salesforce-1.records[0].Resource_Request_Product__c}"
+            },
+            "branches": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "value": {
+                      "type": "string",
+                      "value": "Clinical Notes"
+                    },
+                    "label": {
+                      "type": "string",
+                      "value": "Notes"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "value": {
+                    "label": {
+                      "type": "string",
+                      "value": "Nursing"
+                    },
+                    "value": {
+                      "type": "string",
+                      "value": "Nursing"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-1": {
+          "title": "Create DR Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "Demo Request"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Assigned To:* <@{Ramon_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-10": {
+          "title": "Create Deployment Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "Deployment Success Request"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Assigned To:* <@{Taylor_Myers_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-2": {
+          "title": "JSON stringify",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "json_stringify",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-4.result.payload"
+            }
+          }
+        },
+        "object-helpers-3": {
+          "title": "Create SC Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "Solution Consulting Request"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Type of Call:* {$.steps.salesforce-1.records[0].Solution_Consulting_Call_Type__c}\n*Assigned To:* <@{Ankit_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-4": {
+          "title": "Add key/value pairs",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "payload": {
+                    "type": "object",
+                    "properties": {
+                      "channel": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "blocks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "text": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "fields": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "text",
+                                  "type"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "text",
+                            "type",
+                            "fields"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "payload"
+                    },
+                    "value": {
+                      "type": "object",
+                      "value": {
+                        "channel": {
+                          "type": "string",
+                          "value": "C08QT1QV9JM"
+                        },
+                        "text": {
+                          "type": "string",
+                          "value": "Resource Request"
+                        },
+                        "blocks": {
+                          "type": "jsonpath",
+                          "value": "$.steps.storage-2.value.blocks"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-5": {
+          "title": "Create ROI Notes Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "ROI Call Request"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Product:* Clinical Notes\n*Clinical Setting:* {$.steps.salesforce-1.records[0].Clinical_Setting__c}\n*Assigned To:* <@{Brad_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "divider"
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "fields": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*Annual Encounters*\n{$.steps.salesforce-1.records[0].Estimated_Annual_Encounters__c}"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*Implementation Fee*\n${$.steps.salesforce-1.records[0].Implementation_Fee__c}"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*Providers*\n{$.steps.salesforce-1.records[0].Total_Physician_Count__c} @ ${$.steps.salesforce-1.records[0].Monthly_Cost_Per_Provider__c}/mo"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*RNs*\n{$.steps.salesforce-1.records[0].Total_Number_of_RNs__c}"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-6": {
+          "title": "Create ROI Nursing Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "ROI Call Request - Nursing"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Product:* Nursing\n*Clinical Setting:* {$.steps.salesforce-1.records[0].Clinical_Setting__c}\n*Assigned To:* <@{Brad_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "divider"
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "fields": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*Implementation Fee*\n${$.steps.salesforce-1.records[0].Implementation_Fee__c}"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*RNs*\n{$.steps.salesforce-1.records[0].Total_Number_of_RNs__c}"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*RN FTEs*\n{$.steps.salesforce-1.records[0].Total_Number_of_RN_FTEs_for_Med_Surg__c}"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*Beds*\n{$.steps.salesforce-1.records[0].Total_Number_of_Staffed_Beds_in_Med_Surg__c}"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*Cost/Bed*\n${$.steps.salesforce-1.records[0].Monthly_Cost_Per_Staffed_Bed__c}/mo"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "*Pt Days*\n{$.steps.salesforce-1.records[0].Total_Patient_Days_for_Med_Surg__c}"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-7": {
+          "title": "Create ATP Code Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "ATP Code Request"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*ATP Agreement:* {$.steps.salesforce-1.records[0].ATP_Agreement__c}\n*Assigned To:* <@{Laura_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-8": {
+          "title": "Create Executive Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        },
+                        "elements": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "Executive Request"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Executive Requested:* {Exec_Requested}\n*Assigned To:* <@{Aamir_User_ID}> <@{Carrie_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "divider"
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "context"
+                            },
+                            "elements": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "mrkdwn"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "If approved, please proceed with scheduling with Holly or the relevant exec admin, per the <https://www.notion.so/abridge/Executive-Sales-Engagement-Prep-Sheet-702e96f96d0d4e16bd43767e28bb4a95|process documented here>."
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "object-helpers-9": {
+          "title": "Create Partner Refer Payload",
+          "connector": {
+            "name": "object-helpers",
+            "version": "4.1"
+          },
+          "operation": "add_key_value_pairs",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "accessory": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "style": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "source": {
+              "type": "object",
+              "value": {}
+            },
+            "list": {
+              "type": "array",
+              "value": [
+                {
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "blocks"
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "header"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "plain_text"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "Partner Referral Request"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*{$.steps.salesforce-1.records[0].Account_Name__c}*\n{$.steps.salesforce-1.records[0].Opportunity_Name__c}"
+                                }
+                              }
+                            },
+                            "accessory": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "button"
+                                },
+                                "text": {
+                                  "type": "object",
+                                  "value": {
+                                    "type": {
+                                      "type": "string",
+                                      "value": "plain_text"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "value": "Open in Salesforce"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "value": "https://abridgeai.lightning.force.com/lightning/r/Resource_Request__c/{$.steps.salesforce-1.records[0].Id}/view"
+                                },
+                                "style": {
+                                  "type": "string",
+                                  "value": "primary"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Assigned To:* <@{Aamir_User_ID}> <@{Carrie_User_ID}>\n*Preferred Date & Time:* {$.steps.salesforce-1.records[0].Preferred_Dates_Times__c}"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "value": {
+                            "type": {
+                              "type": "string",
+                              "value": "section"
+                            },
+                            "text": {
+                              "type": "object",
+                              "value": {
+                                "type": {
+                                  "type": "string",
+                                  "value": "mrkdwn"
+                                },
+                                "text": {
+                                  "type": "string",
+                                  "value": "*Comments:*\n>_{$.steps.salesforce-1.records[0].Request_Context__c}_"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        },
+        "salesforce-1": {
+          "title": "Find records",
+          "connector": {
+            "name": "salesforce",
+            "version": "8.8"
+          },
+          "operation": "find_records",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer",
+                "title": "Total count"
+              },
+              "next_page_offset": {
+                "type": "string",
+                "title": "Next page offset"
+              },
+              "records": {
+                "title": "Resource Requests",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "title": "Resource Request",
+                  "properties": {
+                    "Id": {
+                      "name": "Id",
+                      "type": "string",
+                      "title": "Record ID"
+                    },
+                    "Type__c": {
+                      "name": "Type__c",
+                      "type": "string",
+                      "title": "Type"
+                    },
+                    "Account_Name__c": {
+                      "name": "Account_Name__c",
+                      "type": "string",
+                      "title": "Account Name"
+                    },
+                    "Opportunity_Name__c": {
+                      "name": "Opportunity_Name__c",
+                      "type": "string",
+                      "title": "Opportunity Name"
+                    },
+                    "Preferred_Dates_Times__c": {
+                      "name": "Preferred_Dates_Times__c",
+                      "type": "string",
+                      "title": "Preferred Dates & Times"
+                    },
+                    "Request_Context__c": {
+                      "name": "Request_Context__c",
+                      "type": "string",
+                      "title": "Request Context"
+                    },
+                    "Solution_Consulting_Call_Type__c": {
+                      "name": "Solution_Consulting_Call_Type__c",
+                      "type": "string",
+                      "title": "Solution Consulting Call Type"
+                    },
+                    "Resource_Request_Product__c": {
+                      "name": "Resource_Request_Product__c",
+                      "type": "string",
+                      "title": "Resource Request Product"
+                    },
+                    "Clinical_Setting__c": {
+                      "name": "Clinical_Setting__c",
+                      "type": "string",
+                      "title": "Clinical Setting"
+                    },
+                    "Estimated_Annual_Encounters__c": {
+                      "name": "Estimated_Annual_Encounters__c",
+                      "type": "number",
+                      "title": "Estimated Annual Encounters"
+                    },
+                    "Implementation_Fee__c": {
+                      "name": "Implementation_Fee__c",
+                      "type": "number",
+                      "title": "Implementation Fee"
+                    },
+                    "Total_Physician_Count__c": {
+                      "name": "Total_Physician_Count__c",
+                      "type": "number",
+                      "title": "Total Physician Count"
+                    },
+                    "Number_of_Providers__c": {
+                      "name": "Number_of_Providers__c",
+                      "type": "number",
+                      "title": "Number of Providers"
+                    },
+                    "Monthly_Cost_Per_Provider__c": {
+                      "name": "Monthly_Cost_Per_Provider__c",
+                      "type": "number",
+                      "title": "Monthly Cost Per Provider"
+                    },
+                    "Total_Number_of_RNs__c": {
+                      "name": "Total_Number_of_RNs__c",
+                      "type": "number",
+                      "title": "Total Number of RNs"
+                    },
+                    "Total_Number_of_RN_FTEs_for_Med_Surg__c": {
+                      "name": "Total_Number_of_RN_FTEs_for_Med_Surg__c",
+                      "type": "number",
+                      "title": "Total Number of RN FTEs for Med/Surg"
+                    },
+                    "Total_Number_of_Staffed_Beds_in_Med_Surg__c": {
+                      "name": "Total_Number_of_Staffed_Beds_in_Med_Surg__c",
+                      "type": "number",
+                      "title": "Total Number of Staffed Beds in Med/Surg"
+                    },
+                    "Monthly_Cost_Per_Staffed_Bed__c": {
+                      "name": "Monthly_Cost_Per_Staffed_Bed__c",
+                      "type": "number",
+                      "title": "Monthly Cost Per Staffed Bed"
+                    },
+                    "Total_Patient_Days_for_Med_Surg__c": {
+                      "name": "Total_Patient_Days_for_Med_Surg__c",
+                      "type": "number",
+                      "title": "Total Patient Days for Med/Surg"
+                    },
+                    "ATP_Agreement__c": {
+                      "name": "ATP_Agreement__c",
+                      "type": "string",
+                      "title": "ATP Agreement Signed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "authentication": {
+            "group": "388f6356-e03d-40f7-aae4-6cedb4c56138",
+            "title": "Tray Salesforce Integration User - Production",
+            "service_icon": {
+              "icon_type": "url",
+              "value": "https://s3.amazonaws.com/images.tray.io/artisan/icons/dd966f42-81e8-4770-a3d8-d095ca41ab45.png"
+            },
+            "scopes": [
+              "api",
+              "full",
+              "refresh_token"
+            ],
+            "service_name": "salesforce",
+            "service_version": 1
+          },
+          "properties": {
+            "fields": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "string",
+                  "value": "Id"
+                },
+                {
+                  "type": "string",
+                  "value": "Type__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Account_Name__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Opportunity_Name__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Preferred_Dates_Times__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Request_Context__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Solution_Consulting_Call_Type__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Resource_Request_Product__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Clinical_Setting__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Estimated_Annual_Encounters__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Implementation_Fee__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Total_Physician_Count__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Number_of_Providers__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Monthly_Cost_Per_Provider__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Total_Number_of_RNs__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Total_Number_of_RN_FTEs_for_Med_Surg__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Total_Number_of_Staffed_Beds_in_Med_Surg__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Monthly_Cost_Per_Staffed_Bed__c"
+                },
+                {
+                  "type": "string",
+                  "value": "Total_Patient_Days_for_Med_Surg__c"
+                },
+                {
+                  "type": "string",
+                  "value": "ATP_Agreement__c"
+                }
+              ]
+            },
+            "conditions_type": {
+              "type": "string",
+              "value": "Match all conditions"
+            },
+            "include_all_fields": {
+              "type": "boolean",
+              "value": false
+            },
+            "object": {
+              "type": "string",
+              "value": "Resource_Request__c"
+            },
+            "conditions": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "field": {
+                      "type": "string",
+                      "value": "Id"
+                    },
+                    "operator": {
+                      "type": "string",
+                      "value": "Equal to"
+                    },
+                    "value": {
+                      "type": "jsonpath",
+                      "value": "$.steps.trigger.body.record_id"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "slack-1": {
+          "title": "Raw HTTP request (advanced)",
+          "connector": {
+            "name": "slack",
+            "version": "11.0"
+          },
+          "operation": "raw_http_request",
+          "output_schema": {},
+          "error_handling": {},
+          "authentication": {
+            "group": "f18da84d-119c-4cc2-bde0-a7dc119443fc",
+            "title": "Tray.AI Bot Agent Trigger",
+            "service_icon": {
+              "icon_type": "url",
+              "value": "https://s3.amazonaws.com/images.tray.io/artisan/icons/6632c308-2cd1-4f68-8128-e521e552a66b.png"
+            },
+            "scopes": [
+              "im:history",
+              "chat:write",
+              "users:read",
+              "mpim:history",
+              "groups:history",
+              "channels:history"
+            ],
+            "service_name": "slack",
+            "service_version": 5
+          },
+          "properties": {
+            "use_user_token": {
+              "type": "boolean",
+              "value": false
+            },
+            "method": {
+              "type": "string",
+              "value": "POST"
+            },
+            "include_raw_body": {
+              "type": "boolean",
+              "value": false
+            },
+            "parse_response": {
+              "type": "string",
+              "value": "true"
+            },
+            "url": {
+              "type": "object",
+              "value": {
+                "full_url": {
+                  "type": "string",
+                  "value": "https://slack.com/api/chat.postMessage "
+                }
+              }
+            },
+            "headers": {
+              "type": "array",
+              "value": [
+                {
+                  "type": "object",
+                  "value": {
+                    "key": {
+                      "type": "string",
+                      "value": "Content-Type"
+                    },
+                    "value": {
+                      "type": "string",
+                      "value": "application/json    "
+                    }
+                  }
+                }
+              ]
+            },
+            "body": {
+              "type": "object",
+              "value": {
+                "raw": {
+                  "type": "jsonpath",
+                  "value": "$.steps.object-helpers-2.result"
+                }
+              }
+            }
+          }
+        },
+        "storage-1": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-1.result"
+            }
+          }
+        },
+        "storage-10": {
+          "title": "Get Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "get",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "default_value": {
+              "type": "null",
+              "value": null
+            },
+            "key": {
+              "type": "string",
+              "value": "type"
+            }
+          }
+        },
+        "storage-11": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-10.result"
+            }
+          }
+        },
+        "storage-2": {
+          "title": "Get Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "get",
+          "output_schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "object",
+                "properties": {
+                  "blocks": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "text": {
+                          "type": "object",
+                          "properties": {
+                            "text": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "text": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "text",
+                              "type"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "text",
+                        "type",
+                        "fields"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "default_value": {
+              "type": "null",
+              "value": null
+            }
+          }
+        },
+        "storage-3": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-3.result"
+            }
+          }
+        },
+        "storage-4": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-5.result"
+            }
+          }
+        },
+        "storage-5": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-6.result"
+            }
+          }
+        },
+        "storage-6": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-7.result"
+            }
+          }
+        },
+        "storage-7": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-8.result"
+            }
+          }
+        },
+        "storage-8": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "blocks"
+            },
+            "value": {
+              "type": "jsonpath",
+              "value": "$.steps.object-helpers-9.result"
+            }
+          }
+        },
+        "storage-9": {
+          "title": "Set Value",
+          "connector": {
+            "name": "storage",
+            "version": "1.5"
+          },
+          "operation": "set",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "scope": {
+              "type": "string",
+              "value": "Current Run"
+            },
+            "key": {
+              "type": "string",
+              "value": "type"
+            },
+            "value": {
+              "type": "string",
+              "value": "Deployment_Success"
+            }
+          }
+        },
+        "terminate-1": {
+          "title": "Terminate run",
+          "connector": {
+            "name": "terminate",
+            "version": "1.1"
+          },
+          "operation": "terminate_run",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {}
+        },
+        "terminate-2": {
+          "title": "Terminate run",
+          "connector": {
+            "name": "terminate",
+            "version": "1.1"
+          },
+          "operation": "terminate_run",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {}
+        },
+        "terminate-3": {
+          "title": "Terminate run",
+          "connector": {
+            "name": "terminate",
+            "version": "1.1"
+          },
+          "operation": "terminate_run",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {}
+        },
+        "terminate-4": {
+          "title": "Terminate run",
+          "connector": {
+            "name": "terminate",
+            "version": "1.1"
+          },
+          "operation": "terminate_run",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {}
+        },
+        "trigger": {
+          "title": "API Operation",
+          "connector": {
+            "name": "api-operation-trigger",
+            "version": "1.0"
+          },
+          "operation": "request_response",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "request": {
+              "type": "object",
+              "value": {
+                "headers": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "x-tray-apim-client-id": {
+                        "type": "string",
+                        "title": "Client ID"
+                      },
+                      "x-forwarded-for": {
+                        "type": "string",
+                        "title": "IP Address"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "body": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "record_id": {
+                        "title": "record_id",
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                }
+              }
+            },
+            "response": {
+              "type": "object",
+              "value": {
+                "success": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "title": "message",
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "invalidInput": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "message"
+                    ],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "internalError": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "message"
+                    ],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                },
+                "forbidden": {
+                  "type": "object",
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "message"
+                    ],
+                    "advanced": []
+                  },
+                  "tag": "DynamicSchema"
+                }
+              }
+            },
+            "nonStrictMode": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        },
+        "trigger-reply-1": {
+          "title": "trigger-reply",
+          "connector": {
+            "name": "trigger-reply",
+            "version": "1.1"
+          },
+          "operation": "trigger-reply",
+          "output_schema": {},
+          "error_handling": {},
+          "properties": {
+            "response": {
+              "type": "object",
+              "value": {
+                "successBody": {
+                  "type": "object",
+                  "value": {
+                    "message": {
+                      "type": "string",
+                      "value": "Success"
+                    }
+                  },
+                  "tag": "DynamicObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "legacy_error_handling": false,
+      "dependencies": []
+    }
+  ],
+  "projects": [],
+  "data_tables": [],
+  "vector_tables": [],
+  "agents": [],
+  "apim_operations": []
+}

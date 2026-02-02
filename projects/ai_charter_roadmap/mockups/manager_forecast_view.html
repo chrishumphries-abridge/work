@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forecast View — Sales Manager View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Forecast header */
+        .forecast-header {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Big number */
+        .big-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        /* Progress bar */
+        .forecast-progress {
+            height: 12px;
+            background: #e5e5e5;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .forecast-progress-segments {
+            display: flex;
+            height: 100%;
+        }
+        .forecast-segment {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .quota-marker {
+            position: absolute;
+            top: -4px;
+            bottom: -4px;
+            width: 3px;
+            background: #080707;
+            border-radius: 2px;
+        }
+        /* Category cards */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .category-card {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .category-card.highlight {
+            border-color: #0176d3;
+            border-width: 2px;
+        }
+        .category-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .category-label {
+            font-size: 0.6875rem;
+            color: #706e6b;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+        .category-deals {
+            font-size: 0.75rem;
+            color: #706e6b;
+        }
+        /* Rep forecast row */
+        .rep-row {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .rep-row:last-child {
+            margin-bottom: 0;
+        }
+        .rep-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+        }
+        .rep-bar {
+            height: 8px;
+            background: #e5e5e5;
+            border-radius: 4px;
+            overflow: hidden;
+            flex: 1;
+        }
+        .rep-bar-segments {
+            display: flex;
+            height: 100%;
+        }
+        /* Risk card */
+        .risk-card {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .risk-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .risk-item:last-child {
+            border-bottom: none;
+        }
+        .risk-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .risk-dot.high { background: #c23934; }
+        .risk-dot.medium { background: #fe9339; }
+        .risk-dot.low { background: #2e844a; }
+        /* Two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <!-- Section Header -->
+            <div class="slds-media slds-media_center slds-m-bottom_medium">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container" style="background: linear-gradient(135deg, #032d60 0%, #014486 100%); border-radius: 0.5rem; padding: 0.625rem;">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true" style="fill: white;">
+                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#trending"></use>
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_medium">Q1 2026 Forecast</h1>
+                    <p class="slds-text-body_small slds-text-color_weak">West Region — 68 days remaining</p>
+                </div>
+                <div class="slds-no-flex">
+                    <span class="slds-badge slds-m-left_small" style="background: #eef4ff; color: #0176d3; font-size: 0.625rem;">AI</span>
+                </div>
+            </div>
+
+            <!-- Forecast Header Card -->
+            <div class="forecast-header">
+                <div class="slds-grid slds-grid_vertical-align-end slds-m-bottom_medium">
+                    <div class="slds-grow">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_x-small" style="font-size: 0.625rem;">Team Forecast</p>
+                        <div class="slds-grid slds-grid_vertical-align-end">
+                            <span class="big-number" style="color: #0176d3;">$2.4M</span>
+                            <span class="slds-text-body_regular slds-text-color_weak slds-m-left_small slds-m-bottom_x-small">of $3.2M quota</span>
+                        </div>
+                    </div>
+                    <div class="slds-text-align_right">
+                        <p class="slds-text-body_small slds-text-color_weak">Gap to Quota</p>
+                        <p class="slds-text-heading_medium" style="color: #c23934;">-$800K</p>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="forecast-progress slds-m-bottom_small">
+                    <div class="forecast-progress-segments">
+                        <div class="forecast-segment" style="width: 22%; background: #2e844a;"></div>
+                        <div class="forecast-segment" style="width: 28%; background: #0176d3;"></div>
+                        <div class="forecast-segment" style="width: 25%; background: #fe9339;"></div>
+                    </div>
+                    <div class="quota-marker" style="left: 100%;"></div>
+                </div>
+
+                <div class="slds-grid slds-grid_align-spread slds-text-body_small">
+                    <span><span style="color: #2e844a;">●</span> Closed Won</span>
+                    <span><span style="color: #0176d3;">●</span> Commit</span>
+                    <span><span style="color: #fe9339;">●</span> Best Case</span>
+                    <span><span style="color: #e5e5e5;">●</span> Pipeline</span>
+                    <span>| Quota</span>
+                </div>
+            </div>
+
+            <!-- Category Cards -->
+            <div class="category-grid slds-m-bottom_medium">
+                <div class="category-card">
+                    <div class="category-label">Closed Won</div>
+                    <div class="category-value" style="color: #2e844a;">$720K</div>
+                    <div class="category-deals">4 deals</div>
+                </div>
+                <div class="category-card highlight">
+                    <div class="category-label">Commit</div>
+                    <div class="category-value" style="color: #0176d3;">$880K</div>
+                    <div class="category-deals">5 deals</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-label">Best Case</div>
+                    <div class="category-value" style="color: #fe9339;">$800K</div>
+                    <div class="category-deals">6 deals</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-label">Pipeline</div>
+                    <div class="category-value" style="color: #706e6b;">$1.8M</div>
+                    <div class="category-deals">12 deals</div>
+                </div>
+            </div>
+
+            <!-- AI Insight -->
+            <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_medium">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                    </svg>
+                    <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Forecast Analysis</p>
+                </div>
+                <p class="slds-text-body_small">
+                    <strong>$800K gap to quota requires 2 best case deals to convert.</strong> Metro Regional ($680K) is the swing deal — if it slips, team will miss by $120K minimum. Marcus is 40% of the gap; focus coaching there. Sarah is on track to exceed.
+                </p>
+            </div>
+
+            <!-- Two Column: Rep Forecast + Risk -->
+            <div class="two-col">
+                <!-- Rep Forecast -->
+                <div>
+                    <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Rep Forecast</p>
+
+                    <!-- Marcus -->
+                    <div class="rep-row">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="rep-avatar slds-m-right_small" style="background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);">MR</div>
+                            <div class="slds-grow">
+                                <p class="slds-text-title_bold">Marcus Rodriguez</p>
+                                <p class="slds-text-body_small slds-text-color_weak">$640K commit of $1.0M quota</p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <span class="slds-badge" style="background: #fef1ee; color: #c23934;">-$360K</span>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="rep-bar">
+                                <div class="rep-bar-segments">
+                                    <div style="width: 25%; background: #2e844a;"></div>
+                                    <div style="width: 39%; background: #0176d3;"></div>
+                                    <div style="width: 20%; background: #fe9339;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small slds-m-left_small" style="color: #c23934;">64%</span>
+                        </div>
+                    </div>
+
+                    <!-- Sarah -->
+                    <div class="rep-row">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="rep-avatar slds-m-right_small" style="background: linear-gradient(135deg, #2e844a 0%, #1a5c2e 100%);">SK</div>
+                            <div class="slds-grow">
+                                <p class="slds-text-title_bold">Sarah Kim</p>
+                                <p class="slds-text-body_small slds-text-color_weak">$1.1M commit of $1.0M quota</p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <span class="slds-badge" style="background: #ebf7e6; color: #2e844a;">+$100K</span>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="rep-bar">
+                                <div class="rep-bar-segments">
+                                    <div style="width: 35%; background: #2e844a;"></div>
+                                    <div style="width: 75%; background: #0176d3;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small slds-m-left_small" style="color: #2e844a;">110%</span>
+                        </div>
+                    </div>
+
+                    <!-- James -->
+                    <div class="rep-row">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <div class="rep-avatar slds-m-right_small" style="background: linear-gradient(135deg, #0176d3 0%, #014486 100%);">JT</div>
+                            <div class="slds-grow">
+                                <p class="slds-text-title_bold">James Thompson</p>
+                                <p class="slds-text-body_small slds-text-color_weak">$660K commit of $1.2M quota</p>
+                            </div>
+                            <div class="slds-text-align_right">
+                                <span class="slds-badge" style="background: #fef7e8; color: #b47800;">-$540K</span>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="rep-bar">
+                                <div class="rep-bar-segments">
+                                    <div style="width: 15%; background: #2e844a;"></div>
+                                    <div style="width: 40%; background: #0176d3;"></div>
+                                    <div style="width: 30%; background: #fe9339;"></div>
+                                </div>
+                            </div>
+                            <span class="slds-text-body_small slds-m-left_small" style="color: #fe9339;">55%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk to Commit -->
+                <div>
+                    <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Risk to Commit</p>
+
+                    <div class="risk-card">
+                        <div class="risk-item">
+                            <span class="risk-dot high"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Acme Health — $425K</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Commit, but no activity 14 days</p>
+                            </div>
+                            <span class="slds-badge" style="background: #fef1ee; color: #c23934; font-size: 0.5625rem;">High Risk</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-dot medium"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Metro Regional — $680K</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Best Case, needs technical sign-off</p>
+                            </div>
+                            <span class="slds-badge" style="background: #fef7e8; color: #b47800; font-size: 0.5625rem;">Med Risk</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-dot medium"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Summit Care — $185K</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Commit, single-threaded</p>
+                            </div>
+                            <span class="slds-badge" style="background: #fef7e8; color: #b47800; font-size: 0.5625rem;">Med Risk</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-dot low"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Valley Health — $320K</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Commit, contract in legal</p>
+                            </div>
+                            <span class="slds-badge" style="background: #ebf7e6; color: #2e844a; font-size: 0.5625rem;">On Track</span>
+                        </div>
+                    </div>
+
+                    <!-- Upside Opportunity -->
+                    <p class="slds-text-title_caps slds-text-color_weak slds-m-top_medium slds-m-bottom_small" style="font-size: 0.625rem;">Upside Opportunity</p>
+
+                    <div class="risk-card">
+                        <div class="risk-item">
+                            <span class="risk-dot low"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Lakeside Health — $380K</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Pipeline, strong signals this week</p>
+                            </div>
+                            <span class="slds-badge" style="background: #ebf7e6; color: #2e844a; font-size: 0.5625rem;">Pull In?</span>
+                        </div>
+                        <div class="risk-item">
+                            <span class="risk-dot medium"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Coastal Medical — $290K</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Pipeline, could accelerate with exec push</p>
+                            </div>
+                            <span class="slds-badge" style="background: #eef4ff; color: #0176d3; font-size: 0.5625rem;">Possible</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Forecast View</strong> — Sales Manager View<br>
+                Team forecast with AI-powered risk analysis
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

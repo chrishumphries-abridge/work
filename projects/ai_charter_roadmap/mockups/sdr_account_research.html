@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Research — SDR View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Account header */
+        .account-header {
+            background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%);
+            border-radius: 0.5rem 0.5rem 0 0;
+            padding: 1.25rem;
+        }
+        /* Fit score */
+        .fit-badge-large {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            text-align: center;
+        }
+        .fit-score {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2e844a;
+        }
+        .fit-label {
+            font-size: 0.625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        .info-item {
+            text-align: center;
+            padding: 0.75rem;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+        }
+        .info-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #080707;
+        }
+        .info-label {
+            font-size: 0.5625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* News item */
+        .news-item {
+            display: flex;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-date {
+            width: 50px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .news-day {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #080707;
+        }
+        .news-month {
+            font-size: 0.625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Tech stack pill */
+        .tech-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.375rem 0.625rem;
+            background: #f3f3f3;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .tech-pill.match {
+            background: #ebf7e6;
+            color: #2e844a;
+        }
+        /* Person card */
+        .person-card {
+            background: #f3f3f3;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .person-card:last-child {
+            margin-bottom: 0;
+        }
+        .person-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+        }
+        /* Talking point */
+        .talking-point {
+            display: flex;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .talking-point:last-child {
+            border-bottom: none;
+        }
+        .point-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #0176d3;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        /* Similar account */
+        .similar-card {
+            background: #ebf7e6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .similar-card:last-child {
+            margin-bottom: 0;
+        }
+        /* Two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <article class="slds-card" style="overflow: hidden;">
+                <!-- Account Header -->
+                <div class="account-header">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="slds-grow">
+                            <p class="slds-text-body_small" style="color: rgba(255,255,255,0.8);">Account Research</p>
+                            <h1 class="slds-text-heading_large slds-text-color_inverse">Northshore Medical Center</h1>
+                            <p class="slds-text-body_regular" style="color: rgba(255,255,255,0.9);">Healthcare System &bull; Chicago, IL</p>
+                        </div>
+                        <div class="fit-badge-large">
+                            <div class="fit-score">82</div>
+                            <div class="fit-label">ICP Fit</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-card__body slds-card__body_inner">
+
+                    <!-- Company Info Grid -->
+                    <div class="info-grid slds-m-bottom_medium">
+                        <div class="info-item">
+                            <div class="info-value">450</div>
+                            <div class="info-label">Physicians</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">$380M</div>
+                            <div class="info-label">Revenue</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">3</div>
+                            <div class="info-label">Locations</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value">Epic</div>
+                            <div class="info-label">EHR</div>
+                        </div>
+                    </div>
+
+                    <!-- AI Research Summary -->
+                    <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Research Summary</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            <strong>High-fit account with active buying signals.</strong> Recently announced physician burnout initiative and hired new CMO from Lakeside Health (our customer). They use Epic EHR which integrates seamlessly. Focus on documentation efficiency and CMO relationship with Lakeside.
+                        </p>
+                    </div>
+
+                    <div class="two-col">
+                        <!-- Left Column -->
+                        <div>
+                            <!-- Recent News -->
+                            <div class="slds-m-bottom_medium">
+                                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Recent News & Events</p>
+                                <div class="news-item">
+                                    <div class="news-date slds-m-right_small">
+                                        <div class="news-day">24</div>
+                                        <div class="news-month">Jan</div>
+                                    </div>
+                                    <div>
+                                        <p class="slds-text-body_small slds-text-title_bold">New CMO announcement</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">Dr. James Miller joins from Lakeside Health (our customer)</p>
+                                    </div>
+                                </div>
+                                <div class="news-item">
+                                    <div class="news-date slds-m-right_small">
+                                        <div class="news-day">15</div>
+                                        <div class="news-month">Jan</div>
+                                    </div>
+                                    <div>
+                                        <p class="slds-text-body_small slds-text-title_bold">Physician burnout initiative</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">$2M budget announced for documentation efficiency</p>
+                                    </div>
+                                </div>
+                                <div class="news-item">
+                                    <div class="news-date slds-m-right_small">
+                                        <div class="news-day">8</div>
+                                        <div class="news-month">Jan</div>
+                                    </div>
+                                    <div>
+                                        <p class="slds-text-body_small slds-text-title_bold">Epic EHR upgrade completed</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">Now on latest version with ambient documentation support</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tech Stack -->
+                            <div class="slds-m-bottom_medium">
+                                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Tech Stack</p>
+                                <div>
+                                    <span class="tech-pill match">
+                                        <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                        </svg>
+                                        Epic EHR
+                                    </span>
+                                    <span class="tech-pill match">
+                                        <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                        </svg>
+                                        Microsoft 365
+                                    </span>
+                                    <span class="tech-pill">Workday HR</span>
+                                    <span class="tech-pill">ServiceNow</span>
+                                    <span class="tech-pill">Zoom</span>
+                                </div>
+                            </div>
+
+                            <!-- Similar Won Accounts -->
+                            <div>
+                                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Similar Accounts We've Won</p>
+                                <div class="similar-card">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <div class="slds-grow">
+                                            <p class="slds-text-body_small slds-text-title_bold">Lakeside Health</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">420 physicians &bull; Epic EHR &bull; Chicago</p>
+                                        </div>
+                                        <span class="slds-text-body_small" style="color: #2e844a; font-weight: 600;">$380K</span>
+                                    </div>
+                                    <p class="slds-text-body_small slds-m-top_x-small" style="font-style: italic; color: #2e844a;">
+                                        "40% reduction in documentation time" — CMO now at Northshore
+                                    </p>
+                                </div>
+                                <div class="similar-card">
+                                    <div class="slds-grid slds-grid_vertical-align-center">
+                                        <div class="slds-grow">
+                                            <p class="slds-text-body_small slds-text-title_bold">Midwest Medical Partners</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">510 physicians &bull; Epic EHR &bull; Milwaukee</p>
+                                        </div>
+                                        <span class="slds-text-body_small" style="color: #2e844a; font-weight: 600;">$425K</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div>
+                            <!-- Key People -->
+                            <div class="slds-m-bottom_medium">
+                                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Key People to Know</p>
+                                <div class="person-card">
+                                    <div class="slds-grid slds-grid_vertical-align-start">
+                                        <div class="person-avatar slds-m-right_small" style="background: #0176d3;">JM</div>
+                                        <div class="slds-grow">
+                                            <p class="slds-text-title_bold">Dr. James Miller</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">CMO — New (Jan 2026)</p>
+                                            <p class="slds-text-body_small slds-m-top_x-small">
+                                                <span class="slds-badge" style="background: #ebf7e6; color: #2e844a; font-size: 0.5625rem;">From Lakeside (customer)</span>
+                                            </p>
+                                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                                Led Lakeside's AI documentation rollout. Published on physician burnout.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="person-card">
+                                    <div class="slds-grid slds-grid_vertical-align-start">
+                                        <div class="person-avatar slds-m-right_small" style="background: #2e844a;">LP</div>
+                                        <div class="slds-grow">
+                                            <p class="slds-text-title_bold">Lisa Park</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">VP Clinical Operations</p>
+                                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                                Reports to CMO. 8 years at Northshore. Spoke at last week's call.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="person-card">
+                                    <div class="slds-grid slds-grid_vertical-align-start">
+                                        <div class="person-avatar slds-m-right_small" style="background: #706e6b;">?</div>
+                                        <div class="slds-grow">
+                                            <p class="slds-text-title_bold">CFO — Find Contact</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">Budget authority for initiatives</p>
+                                            <p class="slds-text-body_small slds-m-top_x-small" style="color: #0176d3;">
+                                                Suggested: Ask Lisa for intro
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Suggested Talking Points -->
+                            <div>
+                                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Suggested Talking Points</p>
+                                <div class="talking-point">
+                                    <span class="point-num">1</span>
+                                    <div>
+                                        <p class="slds-text-body_small slds-text-title_bold">Lakeside connection</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">"I noticed Dr. Miller joined from Lakeside — they've seen 40% documentation time savings..."</p>
+                                    </div>
+                                </div>
+                                <div class="talking-point">
+                                    <span class="point-num">2</span>
+                                    <div>
+                                        <p class="slds-text-body_small slds-text-title_bold">Burnout initiative</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">"Saw the announcement about the physician wellness initiative — how are you approaching documentation burden?"</p>
+                                    </div>
+                                </div>
+                                <div class="talking-point">
+                                    <span class="point-num">3</span>
+                                    <div>
+                                        <p class="slds-text-body_small slds-text-title_bold">Epic integration</p>
+                                        <p class="slds-text-body_small slds-text-color_weak">"With your recent Epic upgrade, you're now on a version that supports seamless ambient documentation..."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-card__footer">
+                    <div class="slds-grid slds-grid_align-spread">
+                        <a class="slds-card__footer-action" href="#">View in Salesforce</a>
+                        <button class="slds-button slds-button_brand">Start Call</button>
+                    </div>
+                </footer>
+            </article>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Account Research</strong> — SDR View<br>
+                Deep research for smarter conversations
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

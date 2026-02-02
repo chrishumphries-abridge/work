@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Dashboard — Sales Manager View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Signal indicators */
+        .signal-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .signal-indicator.negative { background: #c23934; }
+        .signal-indicator.warning { background: #fe9339; }
+        .signal-indicator.positive { background: #2e844a; }
+        /* Rep card styling */
+        .rep-card {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            transition: box-shadow 0.15s ease;
+        }
+        .rep-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .rep-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+        }
+        /* Health bar */
+        .health-bar {
+            height: 6px;
+            background: #e5e5e5;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .health-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+        .health-bar-fill.good { background: #2e844a; }
+        .health-bar-fill.warning { background: #fe9339; }
+        .health-bar-fill.critical { background: #c23934; }
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .stat-card {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 0.6875rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Deal row styling */
+        .deal-row {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .deal-row:last-child {
+            border-bottom: none;
+        }
+        /* Coaching badge */
+        .coaching-badge {
+            background: #fef7e8;
+            color: #b47800;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 700;
+        }
+        /* Two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <!-- Section Header -->
+            <div class="slds-media slds-media_center slds-m-bottom_medium">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container" style="background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%); border-radius: 0.5rem; padding: 0.625rem;">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true" style="fill: white;">
+                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#groups"></use>
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_medium">Team Dashboard</h1>
+                    <p class="slds-text-body_small slds-text-color_weak">West Region — Q1 2026</p>
+                </div>
+                <div class="slds-no-flex">
+                    <span class="slds-badge slds-m-left_small" style="background: #eef4ff; color: #0176d3; font-size: 0.625rem;">AI</span>
+                </div>
+            </div>
+
+            <!-- Team Stats -->
+            <div class="stats-grid slds-m-bottom_medium">
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #0176d3;">$4.2M</div>
+                    <div class="stat-label">Team Pipeline</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #c23934;">5</div>
+                    <div class="stat-label">Deals at Risk</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #2e844a;">68%</div>
+                    <div class="stat-label">Avg Deal Health</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$1.8M</div>
+                    <div class="stat-label">Forecast (Commit)</div>
+                </div>
+            </div>
+
+            <!-- AI Insight -->
+            <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_medium">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                    </svg>
+                    <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">Team Insight</p>
+                </div>
+                <p class="slds-text-body_small">
+                    <strong>2 reps have deals closing this week with missing next steps.</strong> Marcus has 3 deals without technical champions — consider coaching on multi-threading.
+                </p>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="two-col">
+                <!-- Left: At-Risk Deals -->
+                <div>
+                    <article class="slds-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container" style="background: #c23934; border-radius: 0.25rem; padding: 0.375rem;">
+                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true" style="fill: white;">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">At-Risk Deals</span>
+                                    </h2>
+                                </div>
+                            </header>
+                            <div class="slds-no-flex">
+                                <span class="slds-badge" style="background: #fef1ee; color: #c23934;">5 deals</span>
+                            </div>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div class="deal-row">
+                                <span class="signal-indicator negative slds-m-right_small"></span>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold slds-text-body_small">Acme Health Systems</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Marcus — No activity 14d</p>
+                                </div>
+                                <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$425K</span>
+                            </div>
+                            <div class="deal-row">
+                                <span class="signal-indicator negative slds-m-right_small"></span>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold slds-text-body_small">Valley Health Network</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Sarah — Competitor mentioned</p>
+                                </div>
+                                <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$320K</span>
+                            </div>
+                            <div class="deal-row">
+                                <span class="signal-indicator warning slds-m-right_small"></span>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold slds-text-body_small">Metro Regional Medical</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Marcus — Budget holder quiet</p>
+                                </div>
+                                <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$680K</span>
+                            </div>
+                            <div class="deal-row">
+                                <span class="signal-indicator warning slds-m-right_small"></span>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold slds-text-body_small">Summit Care Partners</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">James — Single-threaded</p>
+                                </div>
+                                <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$185K</span>
+                            </div>
+                            <div class="deal-row">
+                                <span class="signal-indicator warning slds-m-right_small"></span>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold slds-text-body_small">Riverside Health</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Sarah — Stale next step</p>
+                                </div>
+                                <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$290K</span>
+                            </div>
+                        </div>
+                        <footer class="slds-card__footer">
+                            <a class="slds-card__footer-action" href="#">View All At-Risk</a>
+                        </footer>
+                    </article>
+                </div>
+
+                <!-- Right: Coaching Opportunities -->
+                <div>
+                    <article class="slds-card">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container" style="background: #fe9339; border-radius: 0.25rem; padding: 0.375rem;">
+                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true" style="fill: white;">
+                                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#coaching"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <span class="slds-text-heading_small">Coaching Opportunities</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <ul class="slds-has-dividers_bottom-space">
+                                <li class="slds-item">
+                                    <div class="slds-grid slds-grid_vertical-align-start">
+                                        <div class="slds-grow">
+                                            <p class="slds-text-title_bold slds-text-body_small">Marcus: Multi-threading</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">3 deals without technical champions identified</p>
+                                        </div>
+                                        <span class="coaching-badge">Pattern</span>
+                                    </div>
+                                </li>
+                                <li class="slds-item">
+                                    <div class="slds-grid slds-grid_vertical-align-start">
+                                        <div class="slds-grow">
+                                            <p class="slds-text-title_bold slds-text-body_small">Sarah: Deal velocity</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">Avg cycle time 15% above team average</p>
+                                        </div>
+                                        <span class="coaching-badge">Trend</span>
+                                    </div>
+                                </li>
+                                <li class="slds-item">
+                                    <div class="slds-grid slds-grid_vertical-align-start">
+                                        <div class="slds-grow">
+                                            <p class="slds-text-title_bold slds-text-body_small">James: Next steps hygiene</p>
+                                            <p class="slds-text-body_small slds-text-color_weak">4 of 6 deals missing or stale next steps</p>
+                                        </div>
+                                        <span class="coaching-badge">Pattern</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <footer class="slds-card__footer">
+                            <a class="slds-card__footer-action" href="#">Schedule 1:1s</a>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Rep Performance Cards -->
+            <div class="slds-m-top_medium">
+                <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Rep Performance</p>
+                <div class="slds-grid slds-gutters_small">
+                    <!-- Rep 1: Marcus -->
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="rep-card">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                                <div class="rep-avatar slds-m-right_small" style="background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);">MR</div>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold">Marcus Rodriguez</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Account Executive</p>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-m-bottom_small">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p class="slds-text-body_small slds-text-color_weak">Pipeline</p>
+                                    <p class="slds-text-heading_small">$1.4M</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p class="slds-text-body_small slds-text-color_weak">Deals</p>
+                                    <p class="slds-text-heading_small">8</p>
+                                </div>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_xx-small">Deal Health</p>
+                            <div class="health-bar">
+                                <div class="health-bar-fill warning" style="width: 58%;"></div>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">58% avg — <span style="color: #c23934;">2 at risk</span></p>
+                        </div>
+                    </div>
+                    <!-- Rep 2: Sarah -->
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="rep-card">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                                <div class="rep-avatar slds-m-right_small" style="background: linear-gradient(135deg, #2e844a 0%, #1a5c2e 100%);">SK</div>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold">Sarah Kim</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Account Executive</p>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-m-bottom_small">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p class="slds-text-body_small slds-text-color_weak">Pipeline</p>
+                                    <p class="slds-text-heading_small">$1.6M</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p class="slds-text-body_small slds-text-color_weak">Deals</p>
+                                    <p class="slds-text-heading_small">6</p>
+                                </div>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_xx-small">Deal Health</p>
+                            <div class="health-bar">
+                                <div class="health-bar-fill good" style="width: 74%;"></div>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">74% avg — <span style="color: #fe9339;">1 at risk</span></p>
+                        </div>
+                    </div>
+                    <!-- Rep 3: James -->
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="rep-card">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                                <div class="rep-avatar slds-m-right_small" style="background: linear-gradient(135deg, #0176d3 0%, #014486 100%);">JT</div>
+                                <div class="slds-grow">
+                                    <p class="slds-text-title_bold">James Thompson</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Account Executive</p>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-m-bottom_small">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p class="slds-text-body_small slds-text-color_weak">Pipeline</p>
+                                    <p class="slds-text-heading_small">$1.2M</p>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <p class="slds-text-body_small slds-text-color_weak">Deals</p>
+                                    <p class="slds-text-heading_small">6</p>
+                                </div>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_xx-small">Deal Health</p>
+                            <div class="health-bar">
+                                <div class="health-bar-fill good" style="width: 72%;"></div>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">72% avg — <span style="color: #fe9339;">2 at risk</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Team Dashboard</strong> — Sales Manager View<br>
+                Pipeline oversight and coaching opportunities in one view
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

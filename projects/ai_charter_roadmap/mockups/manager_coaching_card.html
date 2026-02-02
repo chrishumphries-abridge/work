@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching Card — 1:1 Prep (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* Header gradient */
+        .coaching-header {
+            background: linear-gradient(135deg, #7f8de1 0%, #5a67d8 100%);
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 3px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        .stat-box {
+            text-align: center;
+            padding: 0.75rem;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+        }
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 0.5625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Signal indicators */
+        .signal-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .signal-indicator.negative { background: #c23934; }
+        .signal-indicator.warning { background: #fe9339; }
+        .signal-indicator.positive { background: #2e844a; }
+        /* Deal mini card */
+        .deal-mini {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .deal-mini:last-child {
+            margin-bottom: 0;
+        }
+        /* Coaching topic */
+        .coaching-topic {
+            border-left: 3px solid #fe9339;
+            padding: 0.75rem;
+            background: #fef7e8;
+            border-radius: 0 0.25rem 0.25rem 0;
+            margin-bottom: 0.5rem;
+        }
+        .coaching-topic:last-child {
+            margin-bottom: 0;
+        }
+        /* Win badge */
+        .win-badge {
+            background: #ebf7e6;
+            color: #2e844a;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <article class="slds-card" style="overflow: hidden;">
+                <!-- Header -->
+                <div class="coaching-header slds-p-around_medium">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <span class="slds-avatar slds-avatar_circle slds-avatar_large slds-m-right_small" style="background: white;">
+                            <abbr class="slds-avatar__initials" style="background: transparent; color: #5a67d8; font-size: 1.25rem;" title="Marcus Rodriguez">MR</abbr>
+                        </span>
+                        <div class="slds-grow">
+                            <h1 class="slds-text-heading_medium slds-text-color_inverse">Marcus Rodriguez</h1>
+                            <p class="slds-text-body_regular" style="color: rgba(255,255,255,0.9);">Account Executive &bull; West Region</p>
+                            <p class="slds-text-body_small" style="color: rgba(255,255,255,0.7);">18 months tenure</p>
+                        </div>
+                        <div class="slds-text-align_right">
+                            <span class="slds-badge" style="background: rgba(255,255,255,0.2); color: white;">1:1 Today 3pm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-card__body slds-card__body_inner">
+
+                    <!-- Performance Snapshot -->
+                    <div class="slds-m-bottom_medium">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Performance Snapshot</p>
+                        <div class="stats-row">
+                            <div class="stat-box">
+                                <div class="stat-value" style="color: #2e844a;">3</div>
+                                <div class="stat-label">Won (Q1)</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value" style="color: #c23934;">1</div>
+                                <div class="stat-label">Lost (Q1)</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">68</div>
+                                <div class="stat-label">Avg Cycle (days)</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">42%</div>
+                                <div class="stat-label">Win Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deal Portfolio -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-text-color_weak" style="font-size: 0.625rem;">Deal Portfolio</p>
+                            <span class="slds-badge slds-m-left_small" style="background: #fef1ee; color: #c23934;">2 at risk</span>
+                        </div>
+
+                        <div class="deal-mini">
+                            <span class="signal-indicator negative slds-m-right_small"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Acme Health Systems</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Stage 3 &bull; No activity 14d</p>
+                            </div>
+                            <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$425K</span>
+                        </div>
+                        <div class="deal-mini">
+                            <span class="signal-indicator warning slds-m-right_small"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Metro Regional Medical</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Stage 4 &bull; Budget holder quiet</p>
+                            </div>
+                            <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$680K</span>
+                        </div>
+                        <div class="deal-mini">
+                            <span class="signal-indicator positive slds-m-right_small"></span>
+                            <div class="slds-grow">
+                                <p class="slds-text-body_small slds-text-title_bold">Valley Health Network</p>
+                                <p class="slds-text-body_small slds-text-color_weak">Stage 5 &bull; Contract review</p>
+                            </div>
+                            <span class="slds-text-body_small" style="color: #0176d3; font-weight: 600;">$320K</span>
+                        </div>
+                    </div>
+
+                    <!-- AI Coaching Opportunities -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-text-color_weak" style="font-size: 0.625rem;">Coaching Opportunities</p>
+                            <span class="slds-badge slds-m-left_small" style="background: #eef4ff; color: #0176d3;">
+                                <svg class="slds-icon slds-icon_xx-small slds-m-right_xx-small" aria-hidden="true" style="fill: #0176d3;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                                </svg>
+                                AI Identified
+                            </span>
+                        </div>
+
+                        <div class="coaching-topic">
+                            <p class="slds-text-title_bold slds-text-body_small">Multi-threading</p>
+                            <p class="slds-text-body_small slds-text-color_weak">3 deals without technical champions. Only engaging 1-2 contacts per account.</p>
+                        </div>
+                        <div class="coaching-topic">
+                            <p class="slds-text-title_bold slds-text-body_small">Follow-up cadence</p>
+                            <p class="slds-text-body_small slds-text-color_weak">Avg response time to prospects: 2.3 days (team avg: 1.1 days)</p>
+                        </div>
+                        <div class="coaching-topic">
+                            <p class="slds-text-title_bold slds-text-body_small">Executive engagement</p>
+                            <p class="slds-text-body_small slds-text-color_weak">0 executive sponsor meetings in last 30 days across pipeline</p>
+                        </div>
+                    </div>
+
+                    <!-- Suggested 1:1 Topics -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Suggested 1:1 Topics</p>
+
+                        <ol class="slds-list_ordered">
+                            <li class="slds-item slds-p-vertical_x-small">
+                                <p class="slds-text-body_regular"><strong>Acme Health:</strong> Strategy to re-engage Sarah Chen and identify technical champion</p>
+                            </li>
+                            <li class="slds-item slds-p-vertical_x-small">
+                                <p class="slds-text-body_regular"><strong>Multi-threading:</strong> Review approach for expanding contacts in accounts</p>
+                            </li>
+                            <li class="slds-item slds-p-vertical_x-small">
+                                <p class="slds-text-body_regular"><strong>Response time:</strong> Discuss workload and prioritization</p>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- Recent Wins to Celebrate -->
+                    <div class="slds-border_top slds-p-top_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-text-color_weak" style="font-size: 0.625rem;">Recent Wins to Celebrate</p>
+                            <span class="win-badge slds-m-left_small">3 this quarter</span>
+                        </div>
+
+                        <ul class="slds-has-dividers_bottom-space">
+                            <li class="slds-item">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #2e844a;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                    </svg>
+                                    <div class="slds-grow">
+                                        <p class="slds-text-body_small"><strong>Midwest Health Partners</strong> — $380K closed Jan 22</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="slds-item">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #2e844a;">
+                                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                    </svg>
+                                    <div class="slds-grow">
+                                        <p class="slds-text-body_small"><strong>Coastal Medical Group</strong> — $245K closed Jan 15</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-card__footer">
+                    <a class="slds-card__footer-action" href="#">View Full Rep Profile</a>
+                </footer>
+            </article>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Coaching Card</strong> — 1:1 Prep<br>
+                AI-powered insights for meaningful coaching conversations
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

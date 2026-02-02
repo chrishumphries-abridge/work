@@ -3,366 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Next Steps Hygiene — Live Feature</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Next Steps Hygiene — Live Feature (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, #f8f9fb 0%, #f3f3f3 100%);
+            background: #f3f3f3;
             padding: 2rem;
             min-height: 100vh;
-            color: #181818;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
         }
-
-        /* Section header */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.875rem;
-            margin-bottom: 1.5rem;
-        }
-        .section-icon {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #ff9a3c 0%, #ff7b1c 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(255, 154, 60, 0.3);
-        }
-        .section-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-        }
-        .section-title {
-            font-size: 1.375rem;
-            font-weight: 700;
-            color: #181818;
-        }
-        .section-subtitle {
-            font-size: 0.875rem;
-            color: #706e6b;
-            margin-top: 0.125rem;
-        }
-
-        /* Issue badges */
-        .issue-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.3125rem 0.625rem;
-            border-radius: 5px;
-            font-size: 0.6875rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-        .issue-badge.critical {
-            background: #fef0ef;
-            color: #c23934;
-            border: 1px solid rgba(194, 57, 52, 0.3);
-        }
-        .issue-badge.warning {
-            background: #fef7e8;
-            color: #b47800;
-            border: 1px solid rgba(180, 120, 0, 0.3);
-        }
-
-        /* Deal card */
-        .deal-card {
-            background: white;
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            transition: all 0.2s ease;
-            overflow: hidden;
-        }
-        .deal-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            border-color: #d0d0d0;
-        }
-
-        .deal-header {
-            padding: 1.125rem 1.25rem;
-            border-bottom: 1px solid #f3f3f3;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .deal-name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #0176d3;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-        .deal-name:hover {
-            text-decoration: underline;
-        }
-        .deal-meta {
-            font-size: 0.8125rem;
-            color: #706e6b;
-        }
-        .deal-amount {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #181818;
-            text-align: right;
-            margin-bottom: 0.375rem;
-        }
-
-        .deal-body {
-            padding: 1.125rem 1.25rem;
-        }
-
-        /* Activity summary */
-        .activity-row {
-            display: flex;
-            align-items: center;
-            gap: 0.625rem;
-            padding: 0.5rem 0;
-            font-size: 0.8125rem;
-            color: #706e6b;
-        }
-        .activity-row:first-child {
-            padding-top: 0;
-        }
-        .activity-icon {
-            width: 18px;
-            height: 18px;
-            fill: #706e6b;
-            flex-shrink: 0;
-        }
-
-        /* Current next step */
-        .current-next-step {
-            background: #f8f9fb;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            color: #444;
-            margin-bottom: 0.75rem;
-            border-left: 3px solid #d0d0d0;
-        }
-        .current-label {
-            font-size: 0.6875rem;
-            font-weight: 600;
-            color: #706e6b;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            margin-bottom: 0.375rem;
-        }
-
-        /* AI insight box */
-        .ai-insight {
-            background: linear-gradient(135deg, #f0f6ff 0%, #e8f0fe 100%);
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
             border-left: 4px solid #0176d3;
-            border-radius: 0 10px 10px 0;
-            padding: 1rem 1.125rem;
-            margin-top: 1rem;
+            border-radius: 0 0.25rem 0.25rem 0;
         }
-        .ai-insight-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .ai-label {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            color: #0176d3;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .sparkle-icon {
-            width: 16px;
-            height: 16px;
-            fill: #0176d3;
-        }
-        .ai-text {
-            font-size: 0.875rem;
-            color: #181818;
-            line-height: 1.6;
-        }
-        .ai-text strong {
-            color: #0176d3;
-            font-weight: 600;
-        }
-
-        /* Button */
-        .update-btn {
-            margin-top: 1rem;
-            background: linear-gradient(135deg, #0176d3 0%, #014486 100%);
-            color: white;
-            border: none;
-            padding: 0.625rem 1.25rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .update-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(1, 118, 211, 0.3);
-        }
-
-        /* Caption */
-        .caption {
-            text-align: center;
-            margin-top: 2.5rem;
-            color: #706e6b;
-            font-size: 0.8125rem;
-            line-height: 1.6;
-        }
-        .caption strong {
-            color: #181818;
+        /* Current next step */
+        .current-step-box {
+            background: #f3f3f3;
+            border-left: 3px solid #b0adab;
+            border-radius: 0 0.25rem 0.25rem 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="slds-scope">
+        <div class="container">
 
-        <!-- Section Header -->
-        <div class="section-header">
-            <div class="section-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
+            <!-- Section Header -->
+            <div class="slds-media slds-media_center slds-m-bottom_medium">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container" style="background: linear-gradient(135deg, #ff9a3c 0%, #ff7b1c 100%); border-radius: 0.5rem; padding: 0.625rem;">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true" style="fill: white;">
+                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#task"></use>
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_medium">Next Steps Hygiene</h1>
+                    <p class="slds-text-body_small slds-text-color_weak">3 deals need your attention</p>
+                </div>
             </div>
-            <div>
-                <div class="section-title">Next Steps Hygiene</div>
-                <div class="section-subtitle">3 deals need your attention</div>
-            </div>
+
+            <!-- Deal Card 1: No Next Step -->
+            <article class="slds-card slds-m-bottom_medium">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <a href="#" class="slds-text-link slds-text-heading_small">Acme Health Systems</a>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 3: Discovery &bull; Closes Feb 28</p>
+                        </div>
+                    </header>
+                    <div class="slds-no-flex slds-text-align_right">
+                        <p class="slds-text-heading_small slds-m-bottom_xx-small">$425K</p>
+                        <span class="slds-badge" style="background: #fef1ee; color: #c23934; font-weight: 700;">No Next Step</span>
+                    </div>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <!-- Activity Summary -->
+                    <div class="slds-m-bottom_small">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                            <svg class="slds-icon slds-icon_x-small slds-icon-text-weak slds-m-right_x-small" aria-hidden="true">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#email"></use>
+                            </svg>
+                            <p class="slds-text-body_small slds-text-color_weak">Last email: Jan 24 — Sarah Chen (CMO)</p>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <svg class="slds-icon slds-icon_x-small slds-icon-text-weak slds-m-right_x-small" aria-hidden="true">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#video"></use>
+                            </svg>
+                            <p class="slds-text-body_small slds-text-color_weak">Last call: Jan 18 — Discovery with Mike (CIO)</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Insight -->
+                    <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_small">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Suggestion</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            <strong style="color: #0176d3;">Jan 29</strong> — Follow up with Sarah on Epic integration timeline. She asked about this on Jan 24 and is waiting for a response.
+                        </p>
+                    </div>
+
+                    <button class="slds-button slds-button_brand">Update Next Step</button>
+                </div>
+            </article>
+
+            <!-- Deal Card 2: Stale Next Step -->
+            <article class="slds-card slds-m-bottom_medium">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <a href="#" class="slds-text-link slds-text-heading_small">Metro Regional Medical</a>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 4: Proposal &bull; Closes Mar 15</p>
+                        </div>
+                    </header>
+                    <div class="slds-no-flex slds-text-align_right">
+                        <p class="slds-text-heading_small slds-m-bottom_xx-small">$680K</p>
+                        <span class="slds-badge" style="background: #fef7e8; color: #b47800; font-weight: 700;">Stale (12 days)</span>
+                    </div>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <!-- Current Next Step -->
+                    <div class="slds-box slds-box_x-small current-step-box slds-m-bottom_small">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_xx-small" style="font-size: 0.5625rem;">Current Next Step</p>
+                        <p class="slds-text-body_small">Send proposal to procurement team</p>
+                    </div>
+
+                    <!-- Activity Summary -->
+                    <div class="slds-m-bottom_small">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <svg class="slds-icon slds-icon_x-small slds-icon-text-weak slds-m-right_x-small" aria-hidden="true">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#email"></use>
+                            </svg>
+                            <p class="slds-text-body_small slds-text-color_weak">Last email: Jan 22 — David Chen (VP Ops) added to thread</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Insight -->
+                    <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_small">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Suggestion</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            <strong style="color: #0176d3;">Jan 28</strong> — Schedule intro call with David Chen (new VP Ops stakeholder). He was added to the email thread on Jan 22 but hasn't been engaged directly.
+                        </p>
+                    </div>
+
+                    <button class="slds-button slds-button_brand">Update Next Step</button>
+                </div>
+            </article>
+
+            <!-- Deal Card 3: No Next Step (smaller deal) -->
+            <article class="slds-card slds-m-bottom_medium">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <a href="#" class="slds-text-link slds-text-heading_small">Summit Care Partners</a>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 2: Qualification &bull; Closes Apr 30</p>
+                        </div>
+                    </header>
+                    <div class="slds-no-flex slds-text-align_right">
+                        <p class="slds-text-heading_small slds-m-bottom_xx-small">$185K</p>
+                        <span class="slds-badge" style="background: #fef1ee; color: #c23934; font-weight: 700;">No Next Step</span>
+                    </div>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <!-- Activity Summary -->
+                    <div class="slds-m-bottom_small">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <svg class="slds-icon slds-icon_x-small slds-icon-text-weak slds-m-right_x-small" aria-hidden="true">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#video"></use>
+                            </svg>
+                            <p class="slds-text-body_small slds-text-color_weak">Last call: Jan 20 — Intro call with Lisa (CNO)</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Insight -->
+                    <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_small">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Suggestion</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            <strong style="color: #0176d3;">Jan 30</strong> — Send case study to Lisa. She mentioned wanting to see how similar organizations have implemented during the intro call.
+                        </p>
+                    </div>
+
+                    <button class="slds-button slds-button_brand">Update Next Step</button>
+                </div>
+            </article>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Next Steps Hygiene</strong> — Live in Salesforce<br>
+                AI reads your recent activity and suggests what to do next
+            </p>
+
         </div>
-
-        <!-- Deal Card 1: No Next Step -->
-        <div class="deal-card">
-            <div class="deal-header">
-                <div>
-                    <a href="#" class="deal-name">Acme Health Systems</a>
-                    <div class="deal-meta">Stage 3: Discovery &bull; Closes Feb 28</div>
-                </div>
-                <div>
-                    <div class="deal-amount">$425K</div>
-                    <span class="issue-badge critical">No Next Step</span>
-                </div>
-            </div>
-            <div class="deal-body">
-                <!-- Activity Summary -->
-                <div class="activity-row">
-                    <svg class="activity-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    <span>Last email: Jan 24 — Sarah Chen (CMO)</span>
-                </div>
-                <div class="activity-row">
-                    <svg class="activity-icon" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-                    <span>Last call: Jan 18 — Discovery with Mike (CIO)</span>
-                </div>
-
-                <!-- AI Insight -->
-                <div class="ai-insight">
-                    <div class="ai-insight-header">
-                        <svg class="sparkle-icon" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                        <span class="ai-label">AI Suggestion</span>
-                    </div>
-                    <div class="ai-text">
-                        <strong>Jan 29</strong> — Follow up with Sarah on Epic integration timeline. She asked about this on Jan 24 and is waiting for a response.
-                    </div>
-                </div>
-
-                <button class="update-btn">Update Next Step</button>
-            </div>
-        </div>
-
-        <!-- Deal Card 2: Stale Next Step -->
-        <div class="deal-card">
-            <div class="deal-header">
-                <div>
-                    <a href="#" class="deal-name">Metro Regional Medical</a>
-                    <div class="deal-meta">Stage 4: Proposal &bull; Closes Mar 15</div>
-                </div>
-                <div>
-                    <div class="deal-amount">$680K</div>
-                    <span class="issue-badge warning">Stale (12 days)</span>
-                </div>
-            </div>
-            <div class="deal-body">
-                <!-- Current Next Step -->
-                <div class="current-next-step">
-                    <div class="current-label">Current Next Step</div>
-                    Send proposal to procurement team
-                </div>
-
-                <!-- Activity Summary -->
-                <div class="activity-row">
-                    <svg class="activity-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    <span>Last email: Jan 22 — David Chen (VP Ops) added to thread</span>
-                </div>
-
-                <!-- AI Insight -->
-                <div class="ai-insight">
-                    <div class="ai-insight-header">
-                        <svg class="sparkle-icon" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                        <span class="ai-label">AI Suggestion</span>
-                    </div>
-                    <div class="ai-text">
-                        <strong>Jan 28</strong> — Schedule intro call with David Chen (new VP Ops stakeholder). He was added to the email thread on Jan 22 but hasn't been engaged directly.
-                    </div>
-                </div>
-
-                <button class="update-btn">Update Next Step</button>
-            </div>
-        </div>
-
-        <!-- Deal Card 3: No Next Step (smaller deal) -->
-        <div class="deal-card">
-            <div class="deal-header">
-                <div>
-                    <a href="#" class="deal-name">Summit Care Partners</a>
-                    <div class="deal-meta">Stage 2: Qualification &bull; Closes Apr 30</div>
-                </div>
-                <div>
-                    <div class="deal-amount">$185K</div>
-                    <span class="issue-badge critical">No Next Step</span>
-                </div>
-            </div>
-            <div class="deal-body">
-                <div class="activity-row">
-                    <svg class="activity-icon" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-                    <span>Last call: Jan 20 — Intro call with Lisa (CNO)</span>
-                </div>
-
-                <div class="ai-insight">
-                    <div class="ai-insight-header">
-                        <svg class="sparkle-icon" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                        <span class="ai-label">AI Suggestion</span>
-                    </div>
-                    <div class="ai-text">
-                        <strong>Jan 30</strong> — Send case study to Lisa. She mentioned wanting to see how similar organizations have implemented during the intro call.
-                    </div>
-                </div>
-
-                <button class="update-btn">Update Next Step</button>
-            </div>
-        </div>
-
-        <!-- Caption -->
-        <p class="caption">
-            <strong>Next Steps Hygiene</strong> — Live in Salesforce<br>
-            AI reads your recent activity and suggests what to do next
-        </p>
     </div>
 </body>
 </html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospect Intelligence — SDR View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 3px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Fit score ring */
+        .fit-score-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .fit-ring {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        .fit-ring svg {
+            transform: rotate(-90deg);
+        }
+        .fit-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .fit-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2e844a;
+        }
+        .fit-label {
+            font-size: 0.5rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Match indicator */
+        .match-indicator {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .match-indicator:last-child {
+            margin-bottom: 0;
+        }
+        .match-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+        .match-dot.match { background: #2e844a; }
+        .match-dot.partial { background: #fe9339; }
+        .match-dot.no-match { background: #c23934; }
+        /* Contact card */
+        .contact-card {
+            background: #f3f3f3;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .contact-card.missing {
+            background: transparent;
+            border: 2px dashed #b0adab;
+        }
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            margin: 0 auto 0.5rem;
+        }
+        .contact-role {
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: white;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.125rem;
+            display: inline-block;
+            margin-bottom: 0.25rem;
+        }
+        /* Timeline item */
+        .timeline-item {
+            position: relative;
+            padding-left: 1.5rem;
+            padding-bottom: 1rem;
+            border-left: 2px solid #e5e5e5;
+            margin-left: 0.5rem;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        /* Timing badge */
+        .timing-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+        }
+        .timing-badge.optimal {
+            background: #ebf7e6;
+            color: #2e844a;
+        }
+        .timing-badge.fair {
+            background: #fef7e8;
+            color: #b47800;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <article class="slds-card">
+                <!-- Header -->
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container" style="background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%); border-radius: 0.375rem; padding: 0.4rem;">
+                                <svg class="slds-icon slds-icon_small" aria-hidden="true" style="fill: white;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span class="slds-text-heading_small">Prospect Intelligence</span>
+                                <span class="slds-badge slds-m-left_x-small" style="background: #eef4ff; color: #0176d3; font-size: 0.5625rem;">AI</span>
+                            </h2>
+                        </div>
+                    </header>
+                    <div class="slds-no-flex">
+                        <button class="slds-button slds-button_icon slds-button_icon-border" title="Refresh">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#refresh"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="slds-card__body slds-card__body_inner">
+
+                    <!-- Account Header -->
+                    <div class="slds-box slds-box_x-small slds-m-bottom_medium" style="background: #f3f3f3;">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="slds-grow">
+                                <h3 class="slds-text-heading_small">Northshore Medical Center</h3>
+                                <p class="slds-text-body_small slds-text-color_weak">Healthcare &bull; 450 physicians &bull; Chicago, IL</p>
+                            </div>
+                            <span class="timing-badge optimal">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#clock"></use>
+                                </svg>
+                                Best time: Tue/Wed 10-11am
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Account Fit Score -->
+                    <div class="slds-m-bottom_medium">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Account Fit Score</p>
+                        <div class="fit-score-container">
+                            <div class="fit-ring">
+                                <svg width="80" height="80">
+                                    <circle cx="40" cy="40" r="32" fill="none" stroke="#e5e5e5" stroke-width="6"/>
+                                    <circle cx="40" cy="40" r="32" fill="none" stroke="#2e844a" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="36"/>
+                                </svg>
+                                <div class="fit-text">
+                                    <div class="fit-value">82</div>
+                                    <div class="fit-label">Fit</div>
+                                </div>
+                            </div>
+                            <div class="slds-grow">
+                                <div class="match-indicator">
+                                    <span class="match-dot match"></span>
+                                    <span class="slds-text-body_small">Size matches best customers (400-600 physicians)</span>
+                                </div>
+                                <div class="match-indicator">
+                                    <span class="match-dot match"></span>
+                                    <span class="slds-text-body_small">Uses Epic EHR (high compatibility)</span>
+                                </div>
+                                <div class="match-indicator">
+                                    <span class="match-dot partial"></span>
+                                    <span class="slds-text-body_small">Midwest region (growing market)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Similar Accounts We've Won -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Similar Accounts We've Won</p>
+                        <div class="slds-grid slds-gutters_x-small">
+                            <div class="slds-col">
+                                <div class="slds-box slds-box_x-small" style="background: #ebf7e6;">
+                                    <p class="slds-text-body_small slds-text-title_bold">Lakeside Health</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">420 physicians &bull; $380K</p>
+                                </div>
+                            </div>
+                            <div class="slds-col">
+                                <div class="slds-box slds-box_x-small" style="background: #ebf7e6;">
+                                    <p class="slds-text-body_small slds-text-title_bold">Midwest Partners</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">510 physicians &bull; $425K</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Buying Committee -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-text-color_weak" style="font-size: 0.625rem;">Buying Committee</p>
+                            <span class="slds-text-body_small slds-text-color_weak slds-m-left_small">2 of 4 identified</span>
+                        </div>
+                        <div class="slds-grid slds-gutters_x-small">
+                            <div class="slds-col slds-size_1-of-4">
+                                <div class="contact-card">
+                                    <div class="contact-avatar" style="background: #0176d3;">JM</div>
+                                    <span class="contact-role" style="background: #0176d3;">Champion</span>
+                                    <p class="slds-text-body_small slds-text-title_bold">Dr. James Miller</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">CMO</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <div class="contact-card">
+                                    <div class="contact-avatar" style="background: #2e844a;">LP</div>
+                                    <span class="contact-role" style="background: #2e844a;">Influencer</span>
+                                    <p class="slds-text-body_small slds-text-title_bold">Lisa Park</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">VP Operations</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <div class="contact-card missing">
+                                    <div class="contact-avatar" style="background: #b0adab;">?</div>
+                                    <span class="contact-role" style="background: #b0adab; color: #706e6b;">Budget</span>
+                                    <p class="slds-text-body_small slds-text-color_weak" style="font-style: italic;">Find CFO</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-4">
+                                <div class="contact-card missing">
+                                    <div class="contact-avatar" style="background: #b0adab;">?</div>
+                                    <span class="contact-role" style="background: #b0adab; color: #706e6b;">IT</span>
+                                    <p class="slds-text-body_small slds-text-color_weak" style="font-style: italic;">Find CIO/CTO</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Engagement Timeline -->
+                    <div class="slds-m-bottom_medium slds-border_top slds-p-top_medium">
+                        <p class="slds-text-title_caps slds-text-color_weak slds-m-bottom_small" style="font-size: 0.625rem;">Engagement Timeline</p>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: #0176d3;"></div>
+                            <p class="slds-text-body_small slds-text-title_bold">Email opened</p>
+                            <p class="slds-text-body_small slds-text-color_weak">Jan 25 — Dr. Miller opened product overview email (3x)</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: #2e844a;"></div>
+                            <p class="slds-text-body_small slds-text-title_bold">Website visit</p>
+                            <p class="slds-text-body_small slds-text-color_weak">Jan 24 — Pricing page viewed from company IP</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: #fe9339;"></div>
+                            <p class="slds-text-body_small slds-text-title_bold">Intro call</p>
+                            <p class="slds-text-body_small slds-text-color_weak">Jan 18 — 15 min call with Lisa Park (VP Ops)</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background: #706e6b;"></div>
+                            <p class="slds-text-body_small slds-text-title_bold">First outreach</p>
+                            <p class="slds-text-body_small slds-text-color_weak">Jan 10 — Cold email to Dr. Miller</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Insight -->
+                    <div class="slds-box slds-box_x-small ai-insight-box">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Insight</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            This account matches 3 of your best customer profiles. Dr. Miller has opened your email 3 times — strong buying signal. <strong>Best time to call: Tue/Wed 10-11am</strong> based on past responses from similar accounts.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <footer class="slds-card__footer">
+                    <div class="slds-grid slds-grid_align-spread">
+                        <a class="slds-card__footer-action" href="#">View Full Account</a>
+                        <button class="slds-button slds-button_brand">Log Call</button>
+                    </div>
+                </footer>
+            </article>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Prospect Intelligence</strong> — SDR View<br>
+                Account fit and engagement signals at a glance
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

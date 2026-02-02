@@ -1,0 +1,107 @@
+[
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*ROI Call Request - Notes*"
+    }
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "<@U06JGBH18AG> <@U07ABC123XY>"
+    }
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Account:* Mercy Health System"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Opportunity:* Mercy Health - Clinical Notes Expansion"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Product:* Clinical Notes"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Clinical Setting:* Ambulatory"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Preferred Date & Time:* Feb 5-7, 2026 - Mornings preferred (EST)"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*Comments & Special Requests:*\nCustomer wants to see integration with Epic EHR. Key stakeholders: CMO, CMIO, and Director of Clinical Informatics."
+    }
+  },
+  {
+    "type": "divider"
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*Client Metrics*"
+    }
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Est. Annual Encounters:*\n450,000"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Implementation Fee:*\n$75,000"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Total Provider Count:*\n150"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Number of Providers:*\n175"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Monthly Cost Per Provider:*\n$299"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Total Number of RNs:*\n85"
+      }
+    ]
+  }
+]

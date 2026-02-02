@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outreach Priorities — SDR View (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
+    <style>
+        body {
+            background: #f3f3f3;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        /* AI insight styling */
+        .ai-insight-box {
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
+            border-left: 4px solid #0176d3;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        /* Prospect row */
+        .prospect-row {
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: box-shadow 0.15s ease;
+        }
+        .prospect-row:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .prospect-row:last-child {
+            margin-bottom: 0;
+        }
+        /* Priority number */
+        .priority-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+        /* Fit score badge */
+        .fit-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+        }
+        .fit-badge.high {
+            background: #ebf7e6;
+            color: #2e844a;
+        }
+        .fit-badge.medium {
+            background: #fef7e8;
+            color: #b47800;
+        }
+        .fit-badge.low {
+            background: #fef1ee;
+            color: #c23934;
+        }
+        /* Timing indicator */
+        .timing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+        }
+        .timing-indicator.now {
+            background: #ebf7e6;
+            color: #2e844a;
+            animation: pulse 2s infinite;
+        }
+        .timing-indicator.soon {
+            background: #eef4ff;
+            color: #0176d3;
+        }
+        .timing-indicator.later {
+            background: #f3f3f3;
+            color: #706e6b;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        /* Talk track */
+        .talk-track {
+            background: #f8f8f8;
+            border-left: 2px solid #0176d3;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0 0.25rem 0.25rem 0;
+            margin-top: 0.75rem;
+            font-size: 0.8125rem;
+            color: #444;
+        }
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border: 1px solid #dddbda;
+            border-radius: 0.5rem;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 0.625rem;
+            color: #706e6b;
+            text-transform: uppercase;
+        }
+        /* Filter pills */
+        .filter-pills {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-pill {
+            padding: 0.375rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            border: 1px solid #dddbda;
+            background: white;
+            color: #706e6b;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .filter-pill:hover {
+            background: #f3f3f3;
+        }
+        .filter-pill.active {
+            background: #0176d3;
+            border-color: #0176d3;
+            color: white;
+        }
+        /* Response rate bar */
+        .response-bar {
+            width: 60px;
+            height: 4px;
+            background: #e5e5e5;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .response-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slds-scope">
+        <div class="container">
+
+            <!-- Section Header -->
+            <div class="slds-media slds-media_center slds-m-bottom_medium">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container" style="background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%); border-radius: 0.5rem; padding: 0.625rem;">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true" style="fill: white;">
+                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#call"></use>
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_medium">Today's Outreach Priorities</h1>
+                    <p class="slds-text-body_small slds-text-color_weak">Wednesday, January 29, 2026</p>
+                </div>
+                <div class="slds-no-flex">
+                    <span class="slds-badge slds-m-left_small" style="background: #eef4ff; color: #0176d3; font-size: 0.625rem;">AI Prioritized</span>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar slds-m-bottom_medium">
+                <div class="stat-item">
+                    <div class="stat-value" style="color: #2e844a;">12</div>
+                    <div class="stat-label">Ready to Call</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" style="color: #0176d3;">4</div>
+                    <div class="stat-label">Optimal Window</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">85</div>
+                    <div class="stat-label">Avg Fit Score</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">32%</div>
+                    <div class="stat-label">Avg Response Rate</div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="slds-m-bottom_medium">
+                <div class="filter-pills">
+                    <span class="filter-pill active">Best Time Now</span>
+                    <span class="filter-pill">Highest Fit</span>
+                    <span class="filter-pill">Hot Signals</span>
+                    <span class="filter-pill">Last Contacted</span>
+                    <span class="filter-pill">My Territory</span>
+                </div>
+            </div>
+
+            <!-- AI Insight -->
+            <div class="slds-box slds-box_x-small ai-insight-box slds-m-bottom_medium">
+                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                    <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                        <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                    </svg>
+                    <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">AI Insight</p>
+                </div>
+                <p class="slds-text-body_small">
+                    <strong>4 prospects are in their optimal call window right now</strong> (10-11am). Focus on Northshore and Lakeside first — both opened emails this week and have 80%+ fit scores.
+                </p>
+            </div>
+
+            <!-- Prospect List -->
+            <div class="slds-m-bottom_medium">
+                <!-- Prospect 1 -->
+                <div class="prospect-row">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="priority-num slds-m-right_small" style="background: #2e844a;">1</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <p class="slds-text-title_bold">Dr. James Miller</p>
+                                <span class="slds-badge slds-m-left_x-small" style="background: #ebf7e6; color: #2e844a; font-size: 0.5625rem;">Email opened 3x</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">CMO — Northshore Medical Center &bull; 450 physicians</p>
+                        </div>
+                        <div class="slds-text-align_right slds-m-right_medium">
+                            <span class="timing-indicator now">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#clock"></use>
+                                </svg>
+                                Call Now
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Last: 4 days ago</p>
+                        </div>
+                        <div class="slds-text-align_center slds-m-right_medium">
+                            <span class="fit-badge high">Fit 82</span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Response</p>
+                            <div class="response-bar slds-m-top_xx-small">
+                                <div class="response-fill" style="width: 45%; background: #2e844a;"></div>
+                            </div>
+                        </div>
+                        <button class="slds-button slds-button_brand">Call</button>
+                    </div>
+                    <div class="talk-track">
+                        <strong>Talk track:</strong> Reference their Epic EHR integration — Lakeside Health (similar size) saw 40% time savings. Ask about their documentation workflow pain points.
+                    </div>
+                </div>
+
+                <!-- Prospect 2 -->
+                <div class="prospect-row">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="priority-num slds-m-right_small" style="background: #2e844a;">2</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <p class="slds-text-title_bold">Sarah Chen</p>
+                                <span class="slds-badge slds-m-left_x-small" style="background: #eef4ff; color: #0176d3; font-size: 0.5625rem;">Pricing page visit</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">VP Clinical Operations — Lakeside Health &bull; 380 physicians</p>
+                        </div>
+                        <div class="slds-text-align_right slds-m-right_medium">
+                            <span class="timing-indicator now">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #2e844a;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#clock"></use>
+                                </svg>
+                                Call Now
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Last: 6 days ago</p>
+                        </div>
+                        <div class="slds-text-align_center slds-m-right_medium">
+                            <span class="fit-badge high">Fit 88</span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Response</p>
+                            <div class="response-bar slds-m-top_xx-small">
+                                <div class="response-fill" style="width: 38%; background: #2e844a;"></div>
+                            </div>
+                        </div>
+                        <button class="slds-button slds-button_brand">Call</button>
+                    </div>
+                    <div class="talk-track">
+                        <strong>Talk track:</strong> They viewed pricing — be ready to discuss packages. Similar to Midwest Partners who signed $425K. Focus on ROI and implementation timeline.
+                    </div>
+                </div>
+
+                <!-- Prospect 3 -->
+                <div class="prospect-row">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="priority-num slds-m-right_small" style="background: #0176d3;">3</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <p class="slds-text-title_bold">Michael Torres</p>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">CIO — Valley Regional Medical &bull; 520 physicians</p>
+                        </div>
+                        <div class="slds-text-align_right slds-m-right_medium">
+                            <span class="timing-indicator soon">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #0176d3;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#clock"></use>
+                                </svg>
+                                Best: 2-3pm
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Last: 8 days ago</p>
+                        </div>
+                        <div class="slds-text-align_center slds-m-right_medium">
+                            <span class="fit-badge high">Fit 79</span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Response</p>
+                            <div class="response-bar slds-m-top_xx-small">
+                                <div class="response-fill" style="width: 28%; background: #fe9339;"></div>
+                            </div>
+                        </div>
+                        <button class="slds-button slds-button_neutral">Queue</button>
+                    </div>
+                </div>
+
+                <!-- Prospect 4 -->
+                <div class="prospect-row">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="priority-num slds-m-right_small" style="background: #0176d3;">4</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <p class="slds-text-title_bold">Dr. Emily Watson</p>
+                                <span class="slds-badge slds-m-left_x-small" style="background: #fef7e8; color: #b47800; font-size: 0.5625rem;">Follow-up due</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">CMO — Summit Health Partners &bull; 290 physicians</p>
+                        </div>
+                        <div class="slds-text-align_right slds-m-right_medium">
+                            <span class="timing-indicator later">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #706e6b;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#clock"></use>
+                                </svg>
+                                Best: Tomorrow
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Last: 12 days ago</p>
+                        </div>
+                        <div class="slds-text-align_center slds-m-right_medium">
+                            <span class="fit-badge medium">Fit 71</span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Response</p>
+                            <div class="response-bar slds-m-top_xx-small">
+                                <div class="response-fill" style="width: 22%; background: #fe9339;"></div>
+                            </div>
+                        </div>
+                        <button class="slds-button slds-button_neutral">Queue</button>
+                    </div>
+                </div>
+
+                <!-- Prospect 5 -->
+                <div class="prospect-row">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <div class="priority-num slds-m-right_small" style="background: #706e6b;">5</div>
+                        <div class="slds-grow">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <p class="slds-text-title_bold">Robert Kim</p>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">CFO — Coastal Medical Group &bull; 340 physicians</p>
+                        </div>
+                        <div class="slds-text-align_right slds-m-right_medium">
+                            <span class="timing-indicator later">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="true" style="fill: #706e6b;">
+                                    <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#clock"></use>
+                                </svg>
+                                Best: Thu 9am
+                            </span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Last: 15 days ago</p>
+                        </div>
+                        <div class="slds-text-align_center slds-m-right_medium">
+                            <span class="fit-badge medium">Fit 68</span>
+                            <p class="slds-text-body_small slds-text-color_weak slds-m-top_xx-small">Response</p>
+                            <div class="response-bar slds-m-top_xx-small">
+                                <div class="response-fill" style="width: 15%; background: #c23934;"></div>
+                            </div>
+                        </div>
+                        <button class="slds-button slds-button_neutral">Queue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Outreach Priorities</strong> — SDR View<br>
+                AI-optimized call list based on timing and account fit
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

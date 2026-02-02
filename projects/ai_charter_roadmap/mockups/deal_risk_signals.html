@@ -3,427 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deal Risk Signals — Ready to Launch</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Deal Risk Signals — Ready to Launch (SLDS)</title>
+    <link rel="stylesheet" href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/styles/salesforce-lightning-design-system.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, #f8f9fb 0%, #f3f3f3 100%);
+            background: #f3f3f3;
             padding: 2rem;
             min-height: 100vh;
-            color: #181818;
         }
         .container {
             max-width: 900px;
             margin: 0 auto;
         }
-
-        /* Section header */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.875rem;
-            margin-bottom: 1.5rem;
-        }
-        .section-icon {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, #ea4335 0%, #c5221f 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(234, 67, 53, 0.3);
-        }
-        .section-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-        }
-        .section-title {
-            font-size: 1.375rem;
-            font-weight: 700;
-            color: #181818;
-        }
-        .section-subtitle {
-            font-size: 0.875rem;
-            color: #706e6b;
-            margin-top: 0.125rem;
-        }
-
-        /* Risk badges */
-        .risk-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            padding: 0.3125rem 0.75rem;
-            border-radius: 5px;
-            font-size: 0.6875rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-        .risk-badge.critical {
-            background: #c23934;
-            color: white;
-        }
-        .risk-badge.high {
-            background: #e8710a;
-            color: white;
-        }
-
-        /* Deal card */
-        .deal-card {
-            background: white;
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            margin-bottom: 1.25rem;
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-        .deal-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        }
-        .deal-card.critical {
-            border-left: 5px solid #c23934;
-        }
-        .deal-card.high {
-            border-left: 5px solid #e8710a;
-        }
-
-        .deal-header {
-            padding: 1.125rem 1.25rem;
-            background: #fafbfc;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .deal-title-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.25rem;
-        }
-        .deal-name {
-            font-size: 1.0625rem;
-            font-weight: 600;
-            color: #0176d3;
-            text-decoration: none;
-        }
-        .deal-name:hover {
-            text-decoration: underline;
-        }
-        .deal-meta {
-            font-size: 0.8125rem;
-            color: #706e6b;
-        }
-        .deal-amount {
-            font-size: 1.375rem;
-            font-weight: 700;
-            color: #181818;
-        }
-
-        .deal-body {
-            padding: 1.125rem 1.25rem;
-        }
-
-        /* Signal list */
-        .signal-list {
-            list-style: none;
-        }
-        .signal-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.875rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #f3f3f3;
-        }
-        .signal-item:last-child {
-            border-bottom: none;
-        }
+        /* Signal indicators */
         .signal-indicator {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            margin-top: 0.25rem;
             flex-shrink: 0;
         }
         .signal-indicator.negative { background: #c23934; }
-        .signal-indicator.warning { background: #e8710a; }
-        .signal-indicator.positive { background: #188038; }
-
-        .signal-text {
-            font-size: 0.9375rem;
-            font-weight: 500;
-            color: #181818;
+        .signal-indicator.warning { background: #fe9339; }
+        .signal-indicator.positive { background: #2e844a; }
+        /* Deal card border accents */
+        .deal-card-critical {
+            border-left: 4px solid #c23934;
         }
-        .signal-detail {
-            font-size: 0.8125rem;
-            color: #706e6b;
-            margin-top: 0.1875rem;
+        .deal-card-high {
+            border-left: 4px solid #fe9339;
         }
-
         /* Buying group section */
         .buying-group-section {
-            background: #f8f9fb;
-            border-radius: 10px;
-            padding: 1rem 1.125rem;
-            margin-top: 1rem;
+            background: #f3f3f3;
+            border-radius: 0.25rem;
         }
-        .buying-group-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-        }
-        .buying-group-title {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            color: #706e6b;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .buying-group-score {
-            font-size: 0.75rem;
-            color: #706e6b;
-        }
-        .stakeholder-row {
-            display: flex;
-            align-items: center;
-            gap: 0.625rem;
-            padding: 0.5rem 0;
-            font-size: 0.8125rem;
-        }
+        /* Stakeholder badge */
         .stakeholder-badge {
             background: #0176d3;
             color: white;
-            padding: 0.1875rem 0.5rem;
-            border-radius: 4px;
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
             font-size: 0.625rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
             min-width: 65px;
             text-align: center;
+            display: inline-block;
         }
         .stakeholder-badge.missing {
             background: transparent;
             color: #706e6b;
             border: 1.5px dashed #b0adab;
         }
-        .stakeholder-name {
-            color: #181818;
-            flex: 1;
-        }
-        .stakeholder-status {
-            color: #706e6b;
-            font-size: 0.75rem;
-        }
-        .stakeholder-status.warning { color: #b47800; }
-        .stakeholder-status.danger { color: #c23934; }
-
         /* AI recommendation */
         .ai-recommendation {
-            background: linear-gradient(135deg, #f0f6ff 0%, #e8f0fe 100%);
+            background: linear-gradient(135deg, #eef4ff 0%, #e8f0fe 100%);
             border-left: 4px solid #0176d3;
-            border-radius: 0 10px 10px 0;
-            padding: 1rem 1.125rem;
-            margin-top: 1.125rem;
-        }
-        .ai-rec-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .ai-label {
-            font-size: 0.6875rem;
-            font-weight: 700;
-            color: #0176d3;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .sparkle-icon {
-            width: 16px;
-            height: 16px;
-            fill: #0176d3;
-        }
-        .ai-text {
-            font-size: 0.875rem;
-            color: #181818;
-            line-height: 1.6;
-        }
-
-        /* Caption */
-        .caption {
-            text-align: center;
-            margin-top: 2.5rem;
-            color: #706e6b;
-            font-size: 0.8125rem;
-            line-height: 1.6;
-        }
-        .caption strong {
-            color: #181818;
+            border-radius: 0 0.25rem 0.25rem 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="slds-scope">
+        <div class="container">
 
-        <!-- Section Header -->
-        <div class="section-header">
-            <div class="section-icon">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                </svg>
+            <!-- Section Header -->
+            <div class="slds-media slds-media_center slds-m-bottom_medium">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container" style="background: linear-gradient(135deg, #ea4335 0%, #c5221f 100%); border-radius: 0.5rem; padding: 0.625rem;">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true" style="fill: white;">
+                            <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                        </svg>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h1 class="slds-text-heading_medium">Deal Risk Signals</h1>
+                    <p class="slds-text-body_small slds-text-color_weak">2 deals need attention</p>
+                </div>
             </div>
-            <div>
-                <div class="section-title">Deal Risk Signals</div>
-                <div class="section-subtitle">2 deals need attention</div>
-            </div>
+
+            <!-- Deal Card 1: Critical Risk -->
+            <article class="slds-card slds-m-bottom_medium deal-card-critical">
+                <div class="slds-card__header slds-grid" style="background: #fafbfc;">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <a href="#" class="slds-text-link slds-text-heading_small slds-m-right_small">Acme Health Systems</a>
+                                <span class="slds-badge slds-badge_inverse" style="background: #c23934;">Critical</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 3: Discovery &bull; Closes in 14 days</p>
+                        </div>
+                    </header>
+                    <div class="slds-no-flex slds-text-align_right">
+                        <p class="slds-text-heading_medium">$425K</p>
+                    </div>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <!-- Risk Signals -->
+                    <ul class="slds-has-dividers_bottom-space slds-m-bottom_medium">
+                        <li class="slds-item">
+                            <div class="slds-grid slds-grid_vertical-align-start slds-gutters_small">
+                                <div class="slds-col slds-shrink-none slds-p-top_xx-small">
+                                    <span class="signal-indicator negative"></span>
+                                </div>
+                                <div class="slds-col">
+                                    <p class="slds-text-title_bold">No activity in 14 days</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Last contact was Jan 13 with Sarah Chen</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="slds-item">
+                            <div class="slds-grid slds-grid_vertical-align-start slds-gutters_small">
+                                <div class="slds-col slds-shrink-none slds-p-top_xx-small">
+                                    <span class="signal-indicator negative"></span>
+                                </div>
+                                <div class="slds-col">
+                                    <p class="slds-text-title_bold">Budget holder disengaged</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">CFO hasn't responded since December 18</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="slds-item">
+                            <div class="slds-grid slds-grid_vertical-align-start slds-gutters_small">
+                                <div class="slds-col slds-shrink-none slds-p-top_xx-small">
+                                    <span class="signal-indicator warning"></span>
+                                </div>
+                                <div class="slds-col">
+                                    <p class="slds-text-title_bold">Missing technical champion</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">No IT stakeholder identified in buying group</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- Buying Group -->
+                    <div class="slds-box slds-box_x-small buying-group-section slds-m-bottom_medium">
+                        <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-text-color_weak" style="font-size: 0.625rem;">Buying Group</p>
+                            <p class="slds-text-body_small slds-text-color_weak">3 of 5 roles filled</p>
+                        </div>
+                        <ul>
+                            <li class="slds-p-vertical_xx-small">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="stakeholder-badge slds-m-right_small">Champion</span>
+                                    <span class="slds-text-body_small slds-grow">Sarah Chen (CMO)</span>
+                                    <span class="slds-text-body_small" style="color: #b47800;">Quiet 14d</span>
+                                </div>
+                            </li>
+                            <li class="slds-p-vertical_xx-small">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="stakeholder-badge slds-m-right_small">Budget</span>
+                                    <span class="slds-text-body_small slds-grow">Tom Richards (CFO)</span>
+                                    <span class="slds-text-body_small" style="color: #c23934;">No response 39d</span>
+                                </div>
+                            </li>
+                            <li class="slds-p-vertical_xx-small">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="stakeholder-badge slds-m-right_small">Exec</span>
+                                    <span class="slds-text-body_small slds-grow">Mike Johnson (CIO)</span>
+                                    <span class="slds-text-body_small slds-text-color_weak">Active</span>
+                                </div>
+                            </li>
+                            <li class="slds-p-vertical_xx-small">
+                                <div class="slds-grid slds-grid_vertical-align-center">
+                                    <span class="stakeholder-badge missing slds-m-right_small">Technical</span>
+                                    <span class="slds-text-body_small slds-text-color_weak" style="font-style: italic;">Not identified</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- AI Recommendation -->
+                    <div class="slds-box slds-box_x-small ai-recommendation">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">Recommended Action</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            Re-engage Tom (CFO) before the close date. He needs to approve budget, but hasn't responded in over a month. Consider having Sarah (your champion) set up a joint call, or escalate through Mike (CIO) who's been active.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Deal Card 2: High Risk -->
+            <article class="slds-card slds-m-bottom_medium deal-card-high">
+                <div class="slds-card__header slds-grid" style="background: #fafbfc;">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <a href="#" class="slds-text-link slds-text-heading_small slds-m-right_small">Valley Health Network</a>
+                                <span class="slds-badge slds-badge_inverse" style="background: #fe9339;">High Risk</span>
+                            </div>
+                            <p class="slds-text-body_small slds-text-color_weak">Stage 4: Proposal &bull; Closes in 28 days</p>
+                        </div>
+                    </header>
+                    <div class="slds-no-flex slds-text-align_right">
+                        <p class="slds-text-heading_medium">$320K</p>
+                    </div>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <!-- Risk Signals -->
+                    <ul class="slds-has-dividers_bottom-space slds-m-bottom_medium">
+                        <li class="slds-item">
+                            <div class="slds-grid slds-grid_vertical-align-start slds-gutters_small">
+                                <div class="slds-col slds-shrink-none slds-p-top_xx-small">
+                                    <span class="signal-indicator negative"></span>
+                                </div>
+                                <div class="slds-col">
+                                    <p class="slds-text-title_bold">Competitor mentioned</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">"Nuance" mentioned in call with IT lead on Jan 22</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="slds-item">
+                            <div class="slds-grid slds-grid_vertical-align-start slds-gutters_small">
+                                <div class="slds-col slds-shrink-none slds-p-top_xx-small">
+                                    <span class="signal-indicator warning"></span>
+                                </div>
+                                <div class="slds-col">
+                                    <p class="slds-text-title_bold">Single-threaded relationship</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">Only 1 active contact in buying group</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="slds-item">
+                            <div class="slds-grid slds-grid_vertical-align-start slds-gutters_small">
+                                <div class="slds-col slds-shrink-none slds-p-top_xx-small">
+                                    <span class="signal-indicator positive"></span>
+                                </div>
+                                <div class="slds-col">
+                                    <p class="slds-text-title_bold">Recent activity</p>
+                                    <p class="slds-text-body_small slds-text-color_weak">3 calls this week with champion</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- AI Recommendation -->
+                    <div class="slds-box slds-box_x-small ai-recommendation">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                            <svg class="slds-icon slds-icon_x-small slds-m-right_x-small" aria-hidden="true" style="fill: #0176d3;">
+                                <use xlink:href="https://unpkg.com/@salesforce-ux/design-system@2.24.3/assets/icons/utility-sprite/svg/symbols.svg#sparkle"></use>
+                            </svg>
+                            <p class="slds-text-title_caps" style="font-size: 0.625rem; color: #0176d3;">Recommended Action</p>
+                        </div>
+                        <p class="slds-text-body_small">
+                            Address the Nuance comparison directly. Review the competitive battlecard and schedule a follow-up with the IT lead to understand their evaluation criteria. Also work to expand beyond your single contact — ask for intros to other stakeholders.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Caption -->
+            <p class="slds-text-align_center slds-text-color_weak slds-m-top_large slds-text-body_small">
+                <strong class="slds-text-color_default">Deal Risk Signals</strong> — Ready to Launch<br>
+                Proactive alerts with AI-powered recommendations
+            </p>
+
         </div>
-
-        <!-- Deal Card 1: Critical Risk -->
-        <div class="deal-card critical">
-            <div class="deal-header">
-                <div>
-                    <div class="deal-title-row">
-                        <a href="#" class="deal-name">Acme Health Systems</a>
-                        <span class="risk-badge critical">Critical</span>
-                    </div>
-                    <div class="deal-meta">Stage 3: Discovery &bull; Closes in 14 days</div>
-                </div>
-                <div class="deal-amount">$425K</div>
-            </div>
-            <div class="deal-body">
-                <!-- Risk Signals -->
-                <ul class="signal-list">
-                    <li class="signal-item">
-                        <span class="signal-indicator negative"></span>
-                        <div>
-                            <div class="signal-text">No activity in 14 days</div>
-                            <div class="signal-detail">Last contact was Jan 13 with Sarah Chen</div>
-                        </div>
-                    </li>
-                    <li class="signal-item">
-                        <span class="signal-indicator negative"></span>
-                        <div>
-                            <div class="signal-text">Budget holder disengaged</div>
-                            <div class="signal-detail">CFO hasn't responded since December 18</div>
-                        </div>
-                    </li>
-                    <li class="signal-item">
-                        <span class="signal-indicator warning"></span>
-                        <div>
-                            <div class="signal-text">Missing technical champion</div>
-                            <div class="signal-detail">No IT stakeholder identified in buying group</div>
-                        </div>
-                    </li>
-                </ul>
-
-                <!-- Buying Group -->
-                <div class="buying-group-section">
-                    <div class="buying-group-header">
-                        <span class="buying-group-title">Buying Group</span>
-                        <span class="buying-group-score">3 of 5 roles filled</span>
-                    </div>
-                    <div class="stakeholder-row">
-                        <span class="stakeholder-badge">Champion</span>
-                        <span class="stakeholder-name">Sarah Chen (CMO)</span>
-                        <span class="stakeholder-status warning">Quiet 14d</span>
-                    </div>
-                    <div class="stakeholder-row">
-                        <span class="stakeholder-badge">Budget</span>
-                        <span class="stakeholder-name">Tom Richards (CFO)</span>
-                        <span class="stakeholder-status danger">No response 39d</span>
-                    </div>
-                    <div class="stakeholder-row">
-                        <span class="stakeholder-badge">Exec</span>
-                        <span class="stakeholder-name">Mike Johnson (CIO)</span>
-                        <span class="stakeholder-status">Active</span>
-                    </div>
-                    <div class="stakeholder-row">
-                        <span class="stakeholder-badge missing">Technical</span>
-                        <span class="stakeholder-name" style="color: #706e6b; font-style: italic;">Not identified</span>
-                    </div>
-                </div>
-
-                <!-- AI Recommendation -->
-                <div class="ai-recommendation">
-                    <div class="ai-rec-header">
-                        <svg class="sparkle-icon" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                        <span class="ai-label">Recommended Action</span>
-                    </div>
-                    <div class="ai-text">
-                        Re-engage Tom (CFO) before the close date. He needs to approve budget, but hasn't responded in over a month. Consider having Sarah (your champion) set up a joint call, or escalate through Mike (CIO) who's been active.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Deal Card 2: High Risk -->
-        <div class="deal-card high">
-            <div class="deal-header">
-                <div>
-                    <div class="deal-title-row">
-                        <a href="#" class="deal-name">Valley Health Network</a>
-                        <span class="risk-badge high">High Risk</span>
-                    </div>
-                    <div class="deal-meta">Stage 4: Proposal &bull; Closes in 28 days</div>
-                </div>
-                <div class="deal-amount">$320K</div>
-            </div>
-            <div class="deal-body">
-                <!-- Risk Signals -->
-                <ul class="signal-list">
-                    <li class="signal-item">
-                        <span class="signal-indicator negative"></span>
-                        <div>
-                            <div class="signal-text">Competitor mentioned</div>
-                            <div class="signal-detail">"Nuance" mentioned in call with IT lead on Jan 22</div>
-                        </div>
-                    </li>
-                    <li class="signal-item">
-                        <span class="signal-indicator warning"></span>
-                        <div>
-                            <div class="signal-text">Single-threaded relationship</div>
-                            <div class="signal-detail">Only 1 active contact in buying group</div>
-                        </div>
-                    </li>
-                    <li class="signal-item">
-                        <span class="signal-indicator positive"></span>
-                        <div>
-                            <div class="signal-text">Recent activity</div>
-                            <div class="signal-detail">3 calls this week with champion</div>
-                        </div>
-                    </li>
-                </ul>
-
-                <!-- AI Recommendation -->
-                <div class="ai-recommendation">
-                    <div class="ai-rec-header">
-                        <svg class="sparkle-icon" viewBox="0 0 24 24"><path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5L12 2z"/></svg>
-                        <span class="ai-label">Recommended Action</span>
-                    </div>
-                    <div class="ai-text">
-                        Address the Nuance comparison directly. Review the competitive battlecard and schedule a follow-up with the IT lead to understand their evaluation criteria. Also work to expand beyond your single contact — ask for intros to other stakeholders.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Caption -->
-        <p class="caption">
-            <strong>Deal Risk Signals</strong> — Ready to Launch<br>
-            Proactive alerts with AI-powered recommendations
-        </p>
     </div>
 </body>
 </html>
