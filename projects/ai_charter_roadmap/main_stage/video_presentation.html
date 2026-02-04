@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Stage: AI as a Multiplier</title>
+    <style>
+        :root {
+            --brand-red: #EA2C00;
+            --brand-cream: #EEE6DD;
+            --brand-black: #000000;
+            --brand-white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--brand-black);
+            min-height: 100vh;
+            overflow: hidden;
+            color: var(--brand-white);
+        }
+
+        /* ============================================ */
+        /* SLIDE BASE */
+        /* ============================================ */
+        .slide {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            pointer-events: none;
+            padding: 4rem;
+        }
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* ============================================ */
+        /* INTRO */
+        /* ============================================ */
+        .intro-slide {
+            background: #000;
+        }
+        .intro-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(234, 44, 0, 0.15);
+            border: 1px solid rgba(234, 44, 0, 0.3);
+            border-radius: 2rem;
+            padding: 0.5rem 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.3s forwards;
+        }
+        .intro-badge span {
+            color: var(--brand-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .intro-title {
+            font-size: 5.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.5s forwards;
+            line-height: 1.1;
+        }
+        .intro-title .highlight {
+            background: linear-gradient(135deg, var(--brand-red) 0%, #ff6b4a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .intro-subtitle {
+            font-size: 2.25rem;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.7s forwards;
+        }
+        .intro-author {
+            margin-top: 4rem;
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.5);
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.9s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================ */
+        /* THE CEILING SLIDE */
+        /* ============================================ */
+        .ceiling-slide {
+            background: #000;
+        }
+        .ceiling-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+        .ceiling-title {
+            font-size: 4.5rem;
+            font-weight: 600;
+            text-align: center;
+            max-width: 1000px;
+            line-height: 1.15;
+        }
+        .ceiling-title .dim { color: rgba(255,255,255,0.4); }
+
+        .tools-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .tool-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .slide.active .tool-card {
+            animation: fadeUp 0.5s ease forwards;
+        }
+        .slide.active .tool-card:nth-child(1) { animation-delay: 0.3s; }
+        .slide.active .tool-card:nth-child(2) { animation-delay: 0.4s; }
+        .slide.active .tool-card:nth-child(3) { animation-delay: 0.5s; }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .tool-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .tool-desc {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .ceiling-line {
+            width: 100%;
+            max-width: 800px;
+            height: 6px;
+            background: linear-gradient(90deg, transparent, var(--brand-red), transparent);
+            margin: 3rem 0;
+            opacity: 0;
+        }
+        .slide.active .ceiling-line {
+            animation: expandLine 0.8s ease 0.7s forwards;
+        }
+        @keyframes expandLine {
+            from { opacity: 0; transform: scaleX(0); }
+            to { opacity: 1; transform: scaleX(1); }
+        }
+
+        .ceiling-label {
+            font-size: 1.5rem;
+            color: var(--brand-red);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            font-weight: 600;
+            opacity: 0;
+        }
+        .slide.active .ceiling-label {
+            animation: fadeUp 0.5s ease 0.9s forwards;
+        }
+
+        .declarative-screenshots {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2.5rem;
+        }
+        .decl-screenshot {
+            max-width: 500px;
+            opacity: 0;
+            transform: translateY(20px);
+            text-align: center;
+        }
+        .slide.active .decl-screenshot {
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .slide.active .decl-screenshot:nth-child(1) { animation-delay: 0.3s; }
+        .slide.active .decl-screenshot:nth-child(2) { animation-delay: 0.5s; }
+
+        .decl-screenshot img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .decl-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ============================================ */
+        /* THE UNLOCK SLIDE */
+        /* ============================================ */
+        .unlock-slide {
+            background: #000;
+        }
+        .unlock-title {
+            font-size: 5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 4rem;
+            line-height: 1.15;
+        }
+        .unlock-title .highlight {
+            color: var(--brand-red);
+        }
+
+        .unlock-visual {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        .unlock-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 3.5rem 4rem;
+            text-align: center;
+            min-width: 320px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .slide.active .unlock-box {
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .slide.active .unlock-box:nth-child(1) { animation-delay: 0.3s; }
+        .slide.active .unlock-box:nth-child(3) { animation-delay: 0.5s; }
+
+        .unlock-box-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        .unlock-box-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .unlock-box-desc {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .unlock-arrow {
+            font-size: 5rem;
+            color: var(--brand-red);
+            opacity: 0;
+        }
+        .slide.active .unlock-arrow {
+            animation: fadeUp 0.5s ease 0.4s forwards;
+        }
+
+        .claude-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, rgba(234, 44, 0, 0.15), rgba(234, 44, 0, 0.05));
+            border: 1px solid rgba(234, 44, 0, 0.3);
+            border-radius: 16px;
+            padding: 1.25rem 2rem;
+            margin-top: 3rem;
+            opacity: 0;
+        }
+        .slide.active .claude-badge {
+            animation: fadeUp 0.5s ease 0.7s forwards;
+        }
+        .claude-badge-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--brand-red), #ff6b4a);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+        .claude-badge-text {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--brand-red);
+        }
+
+        /* ============================================ */
+        /* WHAT I'VE BUILT SLIDE */
+        /* ============================================ */
+        .built-slide {
+            background: #000;
+        }
+        .built-title {
+            font-size: 3rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .built-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+        }
+        .built-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .slide.active .built-card {
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .slide.active .built-card:nth-child(1) { animation-delay: 0.2s; }
+        .slide.active .built-card:nth-child(2) { animation-delay: 0.35s; }
+        .slide.active .built-card:nth-child(3) { animation-delay: 0.5s; }
+
+        .built-card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 1.75rem;
+        }
+        .built-card:nth-child(1) .built-card-icon { background: linear-gradient(135deg, var(--brand-red), #ff6b4a); }
+        .built-card:nth-child(2) .built-card-icon { background: linear-gradient(135deg, var(--brand-red), #ff6b4a); }
+        .built-card:nth-child(3) .built-card-icon { background: linear-gradient(135deg, var(--brand-red), #ff6b4a); }
+
+        .built-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .built-card-desc {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+        .built-card-status {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-live {
+            background: rgba(234, 44, 0, 0.2);
+            color: var(--brand-red);
+        }
+        .status-building {
+            background: rgba(234, 44, 0, 0.2);
+            color: var(--brand-red);
+        }
+
+        /* ============================================ */
+        /* FEATURE SLIDES WITH SCREENSHOTS */
+        /* ============================================ */
+        .feature-slide {
+            background: #000;
+        }
+        .feature-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .feature-badge-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(234, 44, 0, 0.15);
+            border: 1px solid rgba(234, 44, 0, 0.3);
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            margin-bottom: 1rem;
+        }
+        .feature-badge-inline span {
+            color: var(--brand-red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .status-dot.live {
+            background: var(--brand-red);
+            box-shadow: 0 0 8px rgba(234, 44, 0, 0.6);
+        }
+        .feature-title {
+            font-size: 2.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .feature-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .screenshot-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 1200px;
+        }
+        .screenshot-step {
+            flex: 1;
+            max-width: 350px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .slide.active .screenshot-step {
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .slide.active .screenshot-step:nth-child(1) { animation-delay: 0.2s; }
+        .slide.active .screenshot-step:nth-child(3) { animation-delay: 0.4s; }
+        .slide.active .screenshot-step:nth-child(5) { animation-delay: 0.6s; }
+
+        .screenshot-step img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .step-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 500;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.3);
+            flex-shrink: 0;
+            opacity: 0;
+        }
+        .slide.active .flow-arrow {
+            animation: fadeUp 0.4s ease forwards;
+        }
+        .slide.active .flow-arrow:nth-child(2) { animation-delay: 0.3s; }
+        .slide.active .flow-arrow:nth-child(4) { animation-delay: 0.5s; }
+
+        .built-grid.single {
+            justify-content: center;
+        }
+        .built-card.large {
+            max-width: 400px;
+        }
+
+        /* ============================================ */
+        /* TEASER SLIDE */
+        /* ============================================ */
+        .teaser-slide {
+            background: #000;
+        }
+        .teaser-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .feature-badge-inline.building {
+            background: rgba(234, 44, 0, 0.15);
+            border-color: rgba(234, 44, 0, 0.3);
+        }
+        .feature-badge-inline.building span {
+            color: var(--brand-red);
+        }
+        .status-dot.building {
+            background: var(--brand-red);
+            box-shadow: 0 0 8px rgba(234, 44, 0, 0.6);
+        }
+        .teaser-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        .mockup-preview {
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+        }
+        .slide.active .mockup-preview {
+            animation: mockupReveal 0.8s ease 0.3s forwards;
+        }
+        @keyframes mockupReveal {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .mockup-frame {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .mockup-chrome {
+            background: #2d2d2d;
+            padding: 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .chrome-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .chrome-dot.red { background: #ff5f57; }
+        .chrome-dot.yellow { background: #febc2e; }
+        .chrome-dot.green { background: #28c840; }
+        .chrome-title {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+        .mockup-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            pointer-events: none;
+        }
+        .teaser-caption {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1.125rem;
+            color: rgba(255,255,255,0.6);
+            opacity: 0;
+        }
+        .slide.active .teaser-caption {
+            animation: fadeUp 0.5s ease 0.6s forwards;
+        }
+
+        /* ============================================ */
+        /* SINGLE SCREENSHOT SLIDES - STAGE READY */
+        /* ============================================ */
+        .single-screenshot-slide {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .single-screenshot {
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .screenshot-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            padding: 0.75rem 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.7);
+        }
+        .screenshot-badge.live {
+            background: rgba(234, 44, 0, 0.2);
+            border-color: rgba(234, 44, 0, 0.4);
+            color: var(--brand-red);
+        }
+        .screenshot-badge.building {
+            background: rgba(234, 44, 0, 0.2);
+            border-color: rgba(234, 44, 0, 0.4);
+            color: var(--brand-red);
+        }
+        .screenshot-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        .screenshot-desc {
+            font-size: 1.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .screenshot-frame {
+            opacity: 0;
+            transform: scale(0.95) translateY(30px);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slide.active .screenshot-frame {
+            animation: screenshotReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+        }
+        @keyframes screenshotReveal {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .screenshot-frame::before {
+            content: '';
+            position: absolute;
+            inset: -30px;
+            background: linear-gradient(135deg, var(--brand-red), var(--brand-red));
+            border-radius: 30px;
+            opacity: 0.2;
+            z-index: -1;
+            filter: blur(40px);
+        }
+        .screenshot-frame img {
+            max-width: 90vw;
+            max-height: 60vh;
+            border-radius: 20px;
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.7),
+                0 0 0 1px rgba(255,255,255,0.1);
+        }
+        .screenshot-frame.large img {
+            max-height: 65vh;
+        }
+        .mockup-fallback {
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 5rem;
+        }
+        .mockup-fallback p {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .mockup-fallback a {
+            color: var(--brand-red);
+            text-decoration: none;
+            font-size: 1.25rem;
+        }
+        .mockup-fallback a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================ */
+        /* ACCOUNT PAGE TEASER */
+        /* ============================================ */
+        .account-teaser-slide {
+            background: #000;
+        }
+        .account-teaser {
+            text-align: center;
+            width: 100%;
+            max-width: 1800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .account-teaser-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        .account-teaser-desc {
+            font-size: 1.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 2.5rem;
+        }
+        .account-preview-frame {
+            width: 95vw;
+            max-width: 1600px;
+            background: #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.7),
+                0 0 0 1px rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: scale(0.95) translateY(30px);
+        }
+        .slide.active .account-preview-frame {
+            animation: screenshotReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+        }
+        .preview-chrome {
+            background: #2d2d2d;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .chrome-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .chrome-dots .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+        .chrome-dots .dot.red { background: #ff5f57; }
+        .chrome-dots .dot.yellow { background: #febc2e; }
+        .chrome-dots .dot.green { background: #28c840; }
+        .chrome-url {
+            flex: 1;
+            text-align: center;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.4);
+            font-family: monospace;
+        }
+        .account-iframe {
+            width: 100%;
+            height: 72vh;
+            border: none;
+            background: #fff;
+            pointer-events: none;
+        }
+
+        /* ============================================ */
+        /* CLOSE SLIDE */
+        /* ============================================ */
+        .close-slide {
+            background: #000;
+        }
+        .close-title {
+            font-size: 5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.15;
+            opacity: 0;
+        }
+        .slide.active .close-title {
+            animation: fadeUp 0.6s ease 0.2s forwards;
+        }
+        .close-subtitle {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            opacity: 0;
+        }
+        .slide.active .close-subtitle {
+            animation: fadeUp 0.6s ease 0.4s forwards;
+        }
+        .close-subtitle .highlight {
+            color: var(--brand-red);
+            font-weight: 600;
+        }
+
+        /* ============================================ */
+        /* PROGRESS & CONTROLS */
+        /* ============================================ */
+        .progress-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 200;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .progress-dot:hover { background: rgba(255,255,255,0.5); }
+        .progress-dot.active {
+            background: var(--brand-red);
+            transform: scale(1.25);
+        }
+
+        .timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--brand-red), #ff6b4a);
+            width: 0%;
+            transition: width 0.1s linear;
+            z-index: 300;
+        }
+
+        .controls {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.75rem;
+            z-index: 200;
+        }
+        .control-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .control-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .time-display {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer-bar" id="timerBar"></div>
+
+    <!-- SLIDE 0: The Ceiling - Intro -->
+    <div class="slide ceiling-slide active" id="slide0">
+        <div class="ceiling-visual">
+            <h2 class="ceiling-title">Working in Salesforce <span class="dim">has constraints.</span></h2>
+            <div class="ceiling-line"></div>
+            <div class="ceiling-label">← The Ceiling →</div>
+        </div>
+    </div>
+
+    <!-- SLIDE 1: App Builder -->
+    <div class="slide single-screenshot-slide" id="slide1">
+        <div class="single-screenshot">
+            <div class="screenshot-badge">Before</div>
+            <h3 class="screenshot-title">Point-and-Click Tools</h3>
+            <p class="screenshot-desc">Drag and drop. Powerful — but limited to what's available.</p>
+            <div class="screenshot-frame">
+                <img src="declarative-app-builder.png" alt="Point-and-click builder">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: Flow Builder -->
+    <div class="slide single-screenshot-slide" id="slide2">
+        <div class="single-screenshot">
+            <div class="screenshot-badge">Before</div>
+            <h3 class="screenshot-title">Visual Automation</h3>
+            <p class="screenshot-desc">Complex logic — but still within the box.</p>
+            <div class="screenshot-frame">
+                <img src="declarative-flow-builder.png" alt="Visual automation builder">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: The Unlock -->
+    <div class="slide single-screenshot-slide" id="slide3">
+        <div class="single-screenshot">
+            <h3 class="screenshot-title">AI removed the ceiling.</h3>
+            <div class="screenshot-frame large">
+                <img src="ai-coding-workflow.png" alt="AI coding workflow">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Next Steps - Context -->
+    <div class="slide single-screenshot-slide" id="slide4">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">Next Steps Hygiene</h3>
+            <p class="screenshot-desc">On every opportunity — right where reps work.</p>
+            <div class="screenshot-frame large">
+                <img src="next-steps-context.png" alt="Next Steps on the opportunity page">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Next Steps - Intro -->
+    <div class="slide single-screenshot-slide" id="slide5">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">Next Steps Hygiene</h3>
+            <p class="screenshot-desc">Stale next step? AI flags it and shows recent activity.</p>
+            <div class="screenshot-frame">
+                <img src="next-steps-1-overview.png" alt="Stale next step warning">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Next Steps - AI Suggestion -->
+    <div class="slide single-screenshot-slide" id="slide6">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">AI Suggests What's Next</h3>
+            <p class="screenshot-desc">Based on recent activity, AI recommends your next action.</p>
+            <div class="screenshot-frame">
+                <img src="next-steps-2-suggestion.png" alt="AI suggestion appears">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Next Steps - One Click -->
+    <div class="slide single-screenshot-slide" id="slide7">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">One Click to Update</h3>
+            <p class="screenshot-desc">Accept the suggestion. Done. No typing required.</p>
+            <div class="screenshot-frame">
+                <img src="next-steps-3-applied.png" alt="One click to use">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Buying Groups - Context -->
+    <div class="slide single-screenshot-slide" id="slide8">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">Buying Groups</h3>
+            <p class="screenshot-desc">On the account page — showing the team behind the deal.</p>
+            <div class="screenshot-frame large">
+                <img src="buying-groups-context.png" alt="Buying Groups on the account page">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Buying Groups - Members -->
+    <div class="slide single-screenshot-slide" id="slide9">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">Buying Groups</h3>
+            <p class="screenshot-desc">See every stakeholder, their role, and engagement level.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-1-members.png" alt="Buying group members">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: Buying Groups - Activity -->
+    <div class="slide single-screenshot-slide" id="slide10">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">Drill Into Activity</h3>
+            <p class="screenshot-desc">See every email, meeting, and engagement for each contact.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-activity.png" alt="Contact activity">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: Buying Groups - Coverage -->
+    <div class="slide single-screenshot-slide" id="slide11">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">Spot Coverage Gaps</h3>
+            <p class="screenshot-desc">Know which key personas are missing from the deal.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-2-coverage.png" alt="Coverage gaps">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: Buying Groups - Add -->
+    <div class="slide single-screenshot-slide" id="slide12">
+        <div class="single-screenshot">
+            <div class="screenshot-badge live">In Production</div>
+            <h3 class="screenshot-title">Add Missing Roles</h3>
+            <p class="screenshot-desc">AI suggests contacts to fill the gaps. One click to add.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-3-add.png" alt="Add members">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: Account Page Teaser -->
+    <div class="slide account-teaser-slide" id="slide13">
+        <div class="account-teaser">
+            <div class="screenshot-badge building">Building Now</div>
+            <h2 class="account-teaser-title">The Account Page</h2>
+            <p class="account-teaser-desc">Buying group, next steps, pipeline, key moments — one view.</p>
+            <div class="account-preview-frame">
+                <div class="preview-chrome">
+                    <div class="chrome-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="chrome-url">salesforce.com/account/northshore-health</span>
+                </div>
+                <iframe src="../mockups/account_page.html" class="account-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="progress-container">
+        <div class="progress-dot active" data-step="0"></div>
+        <div class="progress-dot" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+        <div class="progress-dot" data-step="5"></div>
+        <div class="progress-dot" data-step="6"></div>
+        <div class="progress-dot" data-step="7"></div>
+        <div class="progress-dot" data-step="8"></div>
+        <div class="progress-dot" data-step="9"></div>
+        <div class="progress-dot" data-step="10"></div>
+        <div class="progress-dot" data-step="11"></div>
+        <div class="progress-dot" data-step="12"></div>
+        <div class="progress-dot" data-step="13"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="control-btn" id="restartBtn">↻ Restart</button>
+        <button class="control-btn" id="pauseBtn">⏸ Pause</button>
+    </div>
+
+    <div class="time-display" id="timeDisplay">0:00 / 1:30</div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progressDots = document.querySelectorAll('.progress-dot');
+        const timerBar = document.getElementById('timerBar');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const restartBtn = document.getElementById('restartBtn');
+
+        let currentSlide = 0;
+        let isPaused = false;
+        let startTime = Date.now();
+        let pausedTime = 0;
+
+        // Timing (ms) - 15 slides, ~90 sec total
+        // 0:Ceiling, 1:AppBuilder, 2:FlowBuilder, 3:Unlock,
+        // 4:NextSteps Context, 5-7:NextSteps Detail, 8:BuyingGroups Context,
+        // 9-12:BuyingGroups Detail, 13:AccountPage, 14:Close
+        const SLIDE_DURATIONS = [
+            5000,  // 0: Ceiling intro
+            6000,  // 1: App Builder
+            6000,  // 2: Flow Builder
+            8000,  // 3: The Unlock
+            5000,  // 4: Next Steps Context
+            5000,  // 5: Next Steps 1
+            4000,  // 6: Next Steps 2
+            4000,  // 7: Next Steps 3
+            5000,  // 8: Buying Groups Context
+            5000,  // 9: Buying Groups Members
+            4000,  // 10: Buying Groups Activity
+            4000,  // 11: Buying Groups Coverage
+            4000,  // 12: Buying Groups Add
+            10000  // 13: Account Page
+        ];
+        const TOTAL_DURATION = SLIDE_DURATIONS.reduce((a, b) => a + b, 0);
+
+        let slideTimer = null;
+        let progressTimer = null;
+
+        function formatTime(ms) {
+            const totalSec = Math.floor(ms / 1000);
+            const min = Math.floor(totalSec / 60);
+            const sec = totalSec % 60;
+            return `${min}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgress() {
+            progressDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = index;
+            updateProgress();
+        }
+
+        function scheduleNext() {
+            if (isPaused || currentSlide >= slides.length - 1) return;
+
+            clearTimeout(slideTimer);
+            slideTimer = setTimeout(() => {
+                showSlide(currentSlide + 1);
+                scheduleNext();
+            }, SLIDE_DURATIONS[currentSlide]);
+        }
+
+        function updateTimerBar() {
+            if (isPaused) return;
+
+            const elapsed = Date.now() - startTime - pausedTime;
+            const percent = Math.min((elapsed / TOTAL_DURATION) * 100, 100);
+            timerBar.style.width = percent + '%';
+            timeDisplay.textContent = `${formatTime(elapsed)} / ${formatTime(TOTAL_DURATION)}`;
+
+            if (percent < 100) {
+                progressTimer = requestAnimationFrame(updateTimerBar);
+            }
+        }
+
+        function restart() {
+            currentSlide = 0;
+            startTime = Date.now();
+            pausedTime = 0;
+            isPaused = false;
+            pauseBtn.textContent = '⏸ Pause';
+            showSlide(0);
+            scheduleNext();
+            updateTimerBar();
+        }
+
+        function togglePause() {
+            if (isPaused) {
+                isPaused = false;
+                pauseBtn.textContent = '⏸ Pause';
+                startTime = Date.now() - pausedTime;
+                scheduleNext();
+                updateTimerBar();
+            } else {
+                isPaused = true;
+                pauseBtn.textContent = '▶ Play';
+                pausedTime = Date.now() - startTime;
+                clearTimeout(slideTimer);
+                cancelAnimationFrame(progressTimer);
+            }
+        }
+
+        // Event listeners
+        restartBtn.addEventListener('click', restart);
+        pauseBtn.addEventListener('click', togglePause);
+
+        progressDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+                // Recalculate timing
+                let elapsed = 0;
+                for (let j = 0; j < i; j++) elapsed += SLIDE_DURATIONS[j];
+                startTime = Date.now() - elapsed;
+                pausedTime = 0;
+                if (!isPaused) scheduleNext();
+            });
+        });
+
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                    if (!isPaused) scheduleNext();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                    if (!isPaused) scheduleNext();
+                }
+            } else if (e.key === 'p') {
+                togglePause();
+            } else if (e.key === 'r') {
+                restart();
+            }
+        });
+
+        // Start
+        scheduleNext();
+        updateTimerBar();
+    </script>
+</body>
+</html>
