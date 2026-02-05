@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RevOps Showcase: What We Shipped</title>
+    <style>
+        :root {
+            --brand-red: #EA2C00;
+            --brand-cream: #EEE6DD;
+            --brand-black: #000000;
+            --brand-white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--brand-black);
+            min-height: 100vh;
+            overflow: hidden;
+            color: var(--brand-white);
+        }
+
+        .slide {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            pointer-events: none;
+            padding: 4rem;
+            background: #000;
+        }
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Title Slide */
+        .title-slide h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        .title-slide h1 .highlight {
+            color: var(--brand-red);
+        }
+        .title-slide .subtitle {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+        }
+        .section-header h2 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-header .desc {
+            font-size: 1.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Screenshot Slides */
+        .screenshot-slide {
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .screenshot-badge {
+            display: inline-block;
+            background: rgba(234, 44, 0, 0.2);
+            border: 1px solid rgba(234, 44, 0, 0.4);
+            border-radius: 2rem;
+            padding: 0.75rem 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--brand-red);
+        }
+        .screenshot-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        .screenshot-desc {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+        .screenshot-frame {
+            opacity: 0;
+            transform: scale(0.95) translateY(30px);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slide.active .screenshot-frame {
+            animation: screenshotReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+        }
+        @keyframes screenshotReveal {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .screenshot-frame::before {
+            content: '';
+            position: absolute;
+            inset: -30px;
+            background: linear-gradient(135deg, var(--brand-red), var(--brand-red));
+            border-radius: 30px;
+            opacity: 0.15;
+            z-index: -1;
+            filter: blur(40px);
+        }
+        .screenshot-frame img {
+            max-width: 90vw;
+            max-height: 55vh;
+            border-radius: 16px;
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.7),
+                0 0 0 1px rgba(255,255,255,0.1);
+        }
+        .screenshot-frame.large img {
+            max-height: 60vh;
+        }
+
+        /* Account Page Teaser */
+        .account-teaser {
+            text-align: center;
+            width: 100%;
+            max-width: 1800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .account-teaser-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .account-teaser-desc {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 2rem;
+        }
+        .account-preview-frame {
+            width: 90vw;
+            max-width: 1400px;
+            background: #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.7),
+                0 0 0 1px rgba(255,255,255,0.1);
+            opacity: 0;
+            transform: scale(0.95) translateY(30px);
+        }
+        .slide.active .account-preview-frame {
+            animation: screenshotReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+        }
+        .preview-chrome {
+            background: #2d2d2d;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .chrome-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .chrome-dots .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .chrome-dots .dot.red { background: #ff5f57; }
+        .chrome-dots .dot.yellow { background: #febc2e; }
+        .chrome-dots .dot.green { background: #28c840; }
+        .chrome-url {
+            flex: 1;
+            text-align: center;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.4);
+            font-family: monospace;
+        }
+        .account-iframe {
+            width: 100%;
+            height: 65vh;
+            border: none;
+            background: #fff;
+            pointer-events: none;
+        }
+
+        /* Progress & Controls */
+        .progress-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 200;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .progress-dot:hover { background: rgba(255,255,255,0.5); }
+        .progress-dot.active {
+            background: var(--brand-red);
+            transform: scale(1.25);
+        }
+
+        .controls {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.75rem;
+            z-index: 200;
+        }
+        .control-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .control-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        /* Placeholder for missing screenshots */
+        .placeholder {
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 4rem 6rem;
+            text-align: center;
+        }
+        .placeholder p {
+            color: rgba(255,255,255,0.4);
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- SLIDE 0: Title -->
+    <div class="slide active" id="slide0">
+        <div class="title-slide">
+            <h1>What We <span class="highlight">Shipped</span></h1>
+            <p class="subtitle">GTM Systems — Live in Production</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 1: Next Steps Section Header -->
+    <div class="slide" id="slide1">
+        <div class="section-header">
+            <h2>Next Steps Hygiene</h2>
+            <p class="desc">AI suggests what to do next. One click to update.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: Next Steps - Context -->
+    <div class="slide" id="slide2">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">On Every Opportunity</h3>
+            <p class="screenshot-desc">Right where reps work.</p>
+            <div class="screenshot-frame large">
+                <img src="next-steps-context.png" alt="Next Steps on the opportunity">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Next Steps - Overview -->
+    <div class="slide" id="slide3">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Stale Next Step?</h3>
+            <p class="screenshot-desc">AI flags it and shows recent activity.</p>
+            <div class="screenshot-frame">
+                <img src="next-steps-1-overview.png" alt="Stale next step warning">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Next Steps - AI Suggestion -->
+    <div class="slide" id="slide4">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">AI Suggests What's Next</h3>
+            <p class="screenshot-desc">Based on recent activity.</p>
+            <div class="screenshot-frame">
+                <img src="next-steps-2-suggestion.png" alt="AI suggestion">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Next Steps - One Click -->
+    <div class="slide" id="slide5">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">One Click to Update</h3>
+            <p class="screenshot-desc">Accept the suggestion. Done.</p>
+            <div class="screenshot-frame">
+                <img src="next-steps-3-applied.png" alt="One click update">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Buying Groups Section Header -->
+    <div class="slide" id="slide6">
+        <div class="section-header">
+            <h2>Buying Groups</h2>
+            <p class="desc">See who's in every deal. Know the team.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Buying Groups - Context -->
+    <div class="slide" id="slide7">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">On the Account Page</h3>
+            <p class="screenshot-desc">The team behind the deal.</p>
+            <div class="screenshot-frame large">
+                <img src="buying-groups-context.png" alt="Buying Groups on account">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Buying Groups - Members -->
+    <div class="slide" id="slide8">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Every Stakeholder</h3>
+            <p class="screenshot-desc">Role, engagement, at a glance.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-1-members.png" alt="Buying group members">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Buying Groups - Activity -->
+    <div class="slide" id="slide9">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Drill Into Activity</h3>
+            <p class="screenshot-desc">Every email, meeting, engagement.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-activity.png" alt="Contact activity">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: Buying Groups - Coverage -->
+    <div class="slide" id="slide10">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Spot Coverage Gaps</h3>
+            <p class="screenshot-desc">Know who's missing from the deal.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-2-coverage.png" alt="Coverage gaps">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: Buying Groups - Add -->
+    <div class="slide" id="slide11">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Add Missing Roles</h3>
+            <p class="screenshot-desc">AI suggests. One click to add.</p>
+            <div class="screenshot-frame">
+                <img src="buying-groups-3-add.png" alt="Add members">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: Status Page Section Header -->
+    <div class="slide" id="slide12">
+        <div class="section-header">
+            <h2>Status Page</h2>
+            <p class="desc">Quality of life improvements.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: Status Page - Placeholder -->
+    <div class="slide" id="slide13">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Status Page</h3>
+            <p class="screenshot-desc">Add screenshot here</p>
+            <div class="screenshot-frame">
+                <div class="placeholder">
+                    <p>Screenshot needed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 14: What's Next Header -->
+    <div class="slide" id="slide14">
+        <div class="section-header">
+            <h2>What's Next</h2>
+            <p class="desc">The Account Page.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 15: Account Page Teaser -->
+    <div class="slide" id="slide15">
+        <div class="account-teaser">
+            <div class="screenshot-badge">Building Now</div>
+            <h2 class="account-teaser-title">The Account Page</h2>
+            <p class="account-teaser-desc">Buying group, next steps, pipeline, key moments — one view.</p>
+            <div class="account-preview-frame">
+                <div class="preview-chrome">
+                    <div class="chrome-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="chrome-url">salesforce.com/account/northshore-health</span>
+                </div>
+                <iframe src="../mockups/account_page.html" class="account-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Dots -->
+    <div class="progress-container">
+        <div class="progress-dot active" data-step="0"></div>
+        <div class="progress-dot" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+        <div class="progress-dot" data-step="5"></div>
+        <div class="progress-dot" data-step="6"></div>
+        <div class="progress-dot" data-step="7"></div>
+        <div class="progress-dot" data-step="8"></div>
+        <div class="progress-dot" data-step="9"></div>
+        <div class="progress-dot" data-step="10"></div>
+        <div class="progress-dot" data-step="11"></div>
+        <div class="progress-dot" data-step="12"></div>
+        <div class="progress-dot" data-step="13"></div>
+        <div class="progress-dot" data-step="14"></div>
+        <div class="progress-dot" data-step="15"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="control-btn" id="restartBtn">↻ Restart</button>
+        <button class="control-btn" id="pauseBtn">⏸ Pause</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progressDots = document.querySelectorAll('.progress-dot');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const restartBtn = document.getElementById('restartBtn');
+
+        let currentSlide = 0;
+        let isPaused = false;
+
+        // Timing (ms) - 16 slides
+        const SLIDE_DURATIONS = [
+            4000,  // 0: Title
+            3000,  // 1: Next Steps header
+            5000,  // 2: Next Steps context
+            5000,  // 3: Next Steps overview
+            4000,  // 4: Next Steps suggestion
+            4000,  // 5: Next Steps one click
+            3000,  // 6: Buying Groups header
+            5000,  // 7: Buying Groups context
+            5000,  // 8: Buying Groups members
+            4000,  // 9: Buying Groups activity
+            4000,  // 10: Buying Groups coverage
+            4000,  // 11: Buying Groups add
+            3000,  // 12: Status Page header
+            5000,  // 13: Status Page
+            3000,  // 14: What's Next header
+            8000   // 15: Account Page
+        ];
+
+        let slideTimer = null;
+
+        function updateProgress() {
+            progressDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = index;
+            updateProgress();
+        }
+
+        function scheduleNext() {
+            if (isPaused || currentSlide >= slides.length - 1) return;
+
+            clearTimeout(slideTimer);
+            slideTimer = setTimeout(() => {
+                showSlide(currentSlide + 1);
+                scheduleNext();
+            }, SLIDE_DURATIONS[currentSlide]);
+        }
+
+        function restart() {
+            currentSlide = 0;
+            isPaused = false;
+            pauseBtn.textContent = '⏸ Pause';
+            showSlide(0);
+            scheduleNext();
+        }
+
+        function togglePause() {
+            if (isPaused) {
+                isPaused = false;
+                pauseBtn.textContent = '⏸ Pause';
+                scheduleNext();
+            } else {
+                isPaused = true;
+                pauseBtn.textContent = '▶ Play';
+                clearTimeout(slideTimer);
+            }
+        }
+
+        // Event listeners
+        restartBtn.addEventListener('click', restart);
+        pauseBtn.addEventListener('click', togglePause);
+
+        progressDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+                if (!isPaused) scheduleNext();
+            });
+        });
+
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                    if (!isPaused) scheduleNext();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                    if (!isPaused) scheduleNext();
+                }
+            } else if (e.key === 'p') {
+                togglePause();
+            } else if (e.key === 'r') {
+                restart();
+            }
+        });
+
+        // Start
+        scheduleNext();
+    </script>
+</body>
+</html>
