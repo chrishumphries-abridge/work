@@ -426,30 +426,52 @@
         </div>
     </div>
 
-    <!-- SLIDE 13: Status Page - Placeholder -->
+    <!-- SLIDE 13: Status Page 1 -->
     <div class="slide" id="slide13">
         <div class="screenshot-slide">
             <div class="screenshot-badge">In Production</div>
             <h3 class="screenshot-title">Status Page</h3>
-            <p class="screenshot-desc">Add screenshot here</p>
-            <div class="screenshot-frame">
-                <div class="placeholder">
-                    <p>Screenshot needed</p>
-                </div>
+            <p class="screenshot-desc">Quick visibility into system health.</p>
+            <div class="screenshot-frame large">
+                <img src="status-page-1.png" alt="Status Page">
             </div>
         </div>
     </div>
 
-    <!-- SLIDE 14: What's Next Header -->
+    <!-- SLIDE 14: Status Page 2 -->
     <div class="slide" id="slide14">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Status Page</h3>
+            <p class="screenshot-desc">Details at a glance.</p>
+            <div class="screenshot-frame">
+                <img src="status-page-2.png" alt="Status Page detail">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 15: Status Page 3 -->
+    <div class="slide" id="slide15">
+        <div class="screenshot-slide">
+            <div class="screenshot-badge">In Production</div>
+            <h3 class="screenshot-title">Status Page</h3>
+            <p class="screenshot-desc">Everything in one place.</p>
+            <div class="screenshot-frame">
+                <img src="status-page-3.png" alt="Status Page full view">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 16: What's Next Header -->
+    <div class="slide" id="slide16">
         <div class="section-header">
             <h2>What's Next</h2>
             <p class="desc">The Account Page.</p>
         </div>
     </div>
 
-    <!-- SLIDE 15: Account Page Teaser -->
-    <div class="slide" id="slide15">
+    <!-- SLIDE 17: Account Page Teaser -->
+    <div class="slide" id="slide17">
         <div class="account-teaser">
             <div class="screenshot-badge">Building Now</div>
             <h2 class="account-teaser-title">The Account Page</h2>
@@ -486,6 +508,8 @@
         <div class="progress-dot" data-step="13"></div>
         <div class="progress-dot" data-step="14"></div>
         <div class="progress-dot" data-step="15"></div>
+        <div class="progress-dot" data-step="16"></div>
+        <div class="progress-dot" data-step="17"></div>
     </div>
 
     <!-- Controls -->
@@ -503,7 +527,7 @@
         let currentSlide = 0;
         let isPaused = false;
 
-        // Timing (ms) - 16 slides
+        // Timing (ms) - 18 slides
         const SLIDE_DURATIONS = [
             4000,  // 0: Title
             3000,  // 1: Next Steps header
@@ -518,9 +542,11 @@
             4000,  // 10: Buying Groups coverage
             4000,  // 11: Buying Groups add
             3000,  // 12: Status Page header
-            5000,  // 13: Status Page
-            3000,  // 14: What's Next header
-            8000   // 15: Account Page
+            5000,  // 13: Status Page 1
+            4000,  // 14: Status Page 2
+            4000,  // 15: Status Page 3
+            3000,  // 16: What's Next header
+            8000   // 17: Account Page
         ];
 
         let slideTimer = null;
