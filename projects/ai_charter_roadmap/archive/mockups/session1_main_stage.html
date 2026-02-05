@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Stage: How I'm AI-Pilling</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            display: none;
+            min-height: 100vh;
+            padding: 60px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .nav button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+
+        /* Title Slide */
+        .title-slide {
+            text-align: center;
+        }
+
+        .title-slide h1 {
+            font-size: 72px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-slide .subtitle {
+            font-size: 28px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 60px;
+        }
+
+        .title-slide .presenters {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .presenter {
+            text-align: center;
+        }
+
+        .presenter-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .presenter-name {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .presenter-role {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Content Slides */
+        .content-slide h2 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #667eea;
+        }
+
+        .content-slide p {
+            font-size: 24px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+            max-width: 900px;
+        }
+
+        .content-slide .quote {
+            font-size: 32px;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+            border-left: 4px solid #667eea;
+            padding-left: 30px;
+            margin: 40px 0;
+            max-width: 800px;
+        }
+
+        /* Evolution Timeline */
+        .evolution-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .evolution-timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 0;
+        }
+
+        .evolution-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            max-width: 180px;
+            margin: 0 auto;
+        }
+
+        /* Demo Placeholder */
+        .demo-placeholder {
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 80px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .demo-placeholder h3 {
+            font-size: 24px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .demo-placeholder p {
+            color: rgba(255,255,255,0.6);
+            font-size: 16px;
+        }
+
+        .demo-placeholder .demo-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        /* Screenshot placeholder */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .screenshot-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .screenshot-header {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .screenshot-body {
+            padding: 60px 40px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Before/After */
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .before-card, .after-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .before-card {
+            border: 2px solid rgba(255,100,100,0.3);
+        }
+
+        .after-card {
+            border: 2px solid rgba(100,255,150,0.3);
+        }
+
+        .card-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .before-card .card-label { color: #ff6b6b; }
+        .after-card .card-label { color: #51cf66; }
+
+        .card-time {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .arrow-icon {
+            font-size: 48px;
+            color: #667eea;
+        }
+
+        /* Key points list */
+        .key-points {
+            list-style: none;
+            margin-top: 40px;
+        }
+
+        .key-points li {
+            font-size: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .key-points li:last-child {
+            border-bottom: none;
+        }
+
+        .point-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        /* CTA Slide */
+        .cta-slide {
+            text-align: center;
+        }
+
+        .cta-slide h2 {
+            font-size: 56px;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .cta-slide p {
+            font-size: 24px;
+            color: rgba(255,255,255,0.7);
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide title-slide active" id="slide1">
+        <h1>How I'm AI-Pilling</h1>
+        <p class="subtitle">A journey from constraints to possibilities</p>
+        <div class="presenters">
+            <div class="presenter">
+                <div class="presenter-avatar">CH</div>
+                <div class="presenter-name">Chris Humphries</div>
+                <div class="presenter-role">RevOps</div>
+            </div>
+            <div class="presenter">
+                <div class="presenter-avatar">BK</div>
+                <div class="presenter-name">Brad [Last Name]</div>
+                <div class="presenter-role">[Role]</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: The Constraint -->
+    <div class="slide content-slide" id="slide2">
+        <h2>We had ideas. Tools had limits.</h2>
+        <p class="quote">"I used to be limited by what my tools would let me do. I had ideas for better experiences, but building them meant development time we didn't have."</p>
+        <div class="demo-placeholder">
+            <div class="demo-icon">📊</div>
+            <h3>[PLACEHOLDER: Screenshot of Native Salesforce]</h3>
+            <p>Show a cluttered, field-heavy native SFDC layout</p>
+        </div>
+    </div>
+
+    <!-- Slide 3: The Unlock -->
+    <div class="slide content-slide" id="slide3">
+        <h2>AI changed how I build.</h2>
+        <p class="quote">"The unlock wasn't using AI for features. It was using AI to build. I can go from conversation to working prototype in hours."</p>
+        <div class="before-after">
+            <div class="before-card">
+                <div class="card-label">Before</div>
+                <div class="card-time">Weeks</div>
+                <p>To prototype an idea</p>
+            </div>
+            <div class="arrow-icon">→</div>
+            <div class="after-card">
+                <div class="card-label">After</div>
+                <div class="card-time">Hours</div>
+                <p>Conversation to working code</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: The Evolution Arc -->
+    <div class="slide content-slide" id="slide4">
+        <h2>Let me show you the arc.</h2>
+        <p>Buying Groups: from concept to production</p>
+        <div class="evolution-timeline">
+            <div class="evolution-step">
+                <div class="step-number">1</div>
+                <div class="step-title">The Concept</div>
+                <div class="step-desc">Started with slides and ideas</div>
+            </div>
+            <div class="evolution-step">
+                <div class="step-number">2</div>
+                <div class="step-title">First Version</div>
+                <div class="step-desc">AI-assisted iterations</div>
+            </div>
+            <div class="evolution-step">
+                <div class="step-number">3</div>
+                <div class="step-title">New Version</div>
+                <div class="step-desc">Fully vibe coded</div>
+            </div>
+            <div class="evolution-step">
+                <div class="step-number">4</div>
+                <div class="step-title">Scoring</div>
+                <div class="step-desc">Easy to add on top</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Demo - Old Slides -->
+    <div class="slide content-slide" id="slide5">
+        <h2>Step 1: The Concept</h2>
+        <div class="demo-placeholder">
+            <div class="demo-icon">📑</div>
+            <h3>[PLACEHOLDER: Old Buying Group Slides]</h3>
+            <p>Show the original concept slides — where the idea started</p>
+            <p style="margin-top: 20px; font-size: 14px; color: #667eea;">TODO: Find old buying group concept slides</p>
+        </div>
+    </div>
+
+    <!-- Slide 6: Demo - First Version -->
+    <div class="slide content-slide" id="slide6">
+        <h2>Step 2: First Version</h2>
+        <p>AI-assisted iterations — not vibe coded, but AI helped refine</p>
+        <div class="demo-placeholder">
+            <div class="demo-icon">🔧</div>
+            <h3>[PLACEHOLDER: First Buying Group Component]</h3>
+            <p>Show the early iteration — functional but basic</p>
+        </div>
+    </div>
+
+    <!-- Slide 7: Demo - New Version -->
+    <div class="slide content-slide" id="slide7">
+        <h2>Step 3: Fully Vibe Coded</h2>
+        <p>This version was built entirely with AI assistance.</p>
+        <div class="demo-placeholder">
+            <div class="demo-icon">✨</div>
+            <h3>[LIVE DEMO: Current Buying Groups in Salesforce]</h3>
+            <p>Show the production component — polished, functional, live</p>
+            <p style="margin-top: 20px; font-size: 14px; color: #51cf66;">Ready for live demo</p>
+        </div>
+    </div>
+
+    <!-- Slide 8: Demo - Scoring -->
+    <div class="slide content-slide" id="slide8">
+        <h2>Step 4: Easy to Add On Top</h2>
+        <p>Once the foundation is there, adding features is fast.</p>
+        <div class="demo-placeholder">
+            <div class="demo-icon">📈</div>
+            <h3>[DEMO: Buying Group Scoring]</h3>
+            <p>Show how scoring layers onto the existing component</p>
+        </div>
+    </div>
+
+    <!-- Slide 9: What This Means -->
+    <div class="slide content-slide" id="slide9">
+        <h2>What this means for us.</h2>
+        <ul class="key-points">
+            <li>
+                <span class="point-icon">🚀</span>
+                <span><strong>Speed:</strong> Prototype in hours, not sprints</span>
+            </li>
+            <li>
+                <span class="point-icon">🔓</span>
+                <span><strong>Freedom:</strong> No longer limited to native tools</span>
+            </li>
+            <li>
+                <span class="point-icon">🔄</span>
+                <span><strong>Iteration:</strong> Show, get feedback, build again</span>
+            </li>
+            <li>
+                <span class="point-icon">🎯</span>
+                <span><strong>Focus:</strong> Ship what actually helps</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Slide 10: Close -->
+    <div class="slide cta-slide" id="slide10">
+        <h2>This is how I'm AI-pilling.</h2>
+        <p>It's not about the features AI powers.<br>It's about how AI changes what we can build.</p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <button onclick="prevSlide()">← Previous</button>
+        <button onclick="nextSlide()">Next →</button>
+    </div>
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            if (n < 1) n = 1;
+            if (n > totalSlides) n = totalSlides;
+
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            document.getElementById('slide' + n).classList.add('active');
+            currentSlide = n;
+            document.getElementById('currentSlide').textContent = n;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>

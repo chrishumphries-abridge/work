@@ -814,41 +814,7 @@
             transform: scale(1.25);
         }
 
-        .timer-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--brand-red), #ff6b4a);
-            width: 0%;
-            transition: width 0.1s linear;
-            z-index: 300;
-        }
-
-        .controls {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            display: flex;
-            gap: 0.75rem;
-            z-index: 200;
-        }
-        .control-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.7);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .control-btn:hover {
-            background: rgba(255,255,255,0.15);
-            color: white;
-        }
-
-        .time-display {
+        .slide-count {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
@@ -859,7 +825,7 @@
     </style>
 </head>
 <body>
-    <div class="timer-bar" id="timerBar"></div>
+    <!-- Click anywhere, press arrow keys, or use progress dots to navigate -->
 
     <!-- SLIDE 0: The Ceiling - Intro -->
     <div class="slide ceiling-slide active" id="slide0">
@@ -1050,161 +1016,59 @@
         <div class="progress-dot" data-step="13"></div>
     </div>
 
-    <!-- Controls -->
-    <div class="controls">
-        <button class="control-btn" id="restartBtn">↻ Restart</button>
-        <button class="control-btn" id="pauseBtn">⏸ Pause</button>
-    </div>
-
-    <div class="time-display" id="timeDisplay">0:00 / 1:30</div>
+    <div class="slide-count" id="slideCount">1 / 14</div>
 
     <script>
         const slides = document.querySelectorAll('.slide');
         const progressDots = document.querySelectorAll('.progress-dot');
-        const timerBar = document.getElementById('timerBar');
-        const timeDisplay = document.getElementById('timeDisplay');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const restartBtn = document.getElementById('restartBtn');
+        const slideCount = document.getElementById('slideCount');
 
         let currentSlide = 0;
-        let isPaused = false;
-        let startTime = Date.now();
-        let pausedTime = 0;
 
-        // Timing (ms) - 15 slides, ~90 sec total
-        // 0:Ceiling, 1:AppBuilder, 2:FlowBuilder, 3:Unlock,
-        // 4:NextSteps Context, 5-7:NextSteps Detail, 8:BuyingGroups Context,
-        // 9-12:BuyingGroups Detail, 13:AccountPage, 14:Close
-        const SLIDE_DURATIONS = [
-            5000,  // 0: Ceiling intro
-            6000,  // 1: App Builder
-            6000,  // 2: Flow Builder
-            8000,  // 3: The Unlock
-            5000,  // 4: Next Steps Context
-            5000,  // 5: Next Steps 1
-            4000,  // 6: Next Steps 2
-            4000,  // 7: Next Steps 3
-            5000,  // 8: Buying Groups Context
-            5000,  // 9: Buying Groups Members
-            4000,  // 10: Buying Groups Activity
-            4000,  // 11: Buying Groups Coverage
-            4000,  // 12: Buying Groups Add
-            10000  // 13: Account Page
-        ];
-        const TOTAL_DURATION = SLIDE_DURATIONS.reduce((a, b) => a + b, 0);
-
-        let slideTimer = null;
-        let progressTimer = null;
-
-        function formatTime(ms) {
-            const totalSec = Math.floor(ms / 1000);
-            const min = Math.floor(totalSec / 60);
-            const sec = totalSec % 60;
-            return `${min}:${sec.toString().padStart(2, '0')}`;
-        }
-
-        function updateProgress() {
+        function updateUI() {
             progressDots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlide);
             });
+            slideCount.textContent = `${currentSlide + 1} / ${slides.length}`;
         }
 
         function showSlide(index) {
+            if (index < 0 || index >= slides.length) return;
             slides.forEach(s => s.classList.remove('active'));
             slides[index].classList.add('active');
             currentSlide = index;
-            updateProgress();
+            updateUI();
         }
 
-        function scheduleNext() {
-            if (isPaused || currentSlide >= slides.length - 1) return;
-
-            clearTimeout(slideTimer);
-            slideTimer = setTimeout(() => {
-                showSlide(currentSlide + 1);
-                scheduleNext();
-            }, SLIDE_DURATIONS[currentSlide]);
-        }
-
-        function updateTimerBar() {
-            if (isPaused) return;
-
-            const elapsed = Date.now() - startTime - pausedTime;
-            const percent = Math.min((elapsed / TOTAL_DURATION) * 100, 100);
-            timerBar.style.width = percent + '%';
-            timeDisplay.textContent = `${formatTime(elapsed)} / ${formatTime(TOTAL_DURATION)}`;
-
-            if (percent < 100) {
-                progressTimer = requestAnimationFrame(updateTimerBar);
-            }
-        }
-
-        function restart() {
-            currentSlide = 0;
-            startTime = Date.now();
-            pausedTime = 0;
-            isPaused = false;
-            pauseBtn.textContent = '⏸ Pause';
-            showSlide(0);
-            scheduleNext();
-            updateTimerBar();
-        }
-
-        function togglePause() {
-            if (isPaused) {
-                isPaused = false;
-                pauseBtn.textContent = '⏸ Pause';
-                startTime = Date.now() - pausedTime;
-                scheduleNext();
-                updateTimerBar();
-            } else {
-                isPaused = true;
-                pauseBtn.textContent = '▶ Play';
-                pausedTime = Date.now() - startTime;
-                clearTimeout(slideTimer);
-                cancelAnimationFrame(progressTimer);
-            }
-        }
-
-        // Event listeners
-        restartBtn.addEventListener('click', restart);
-        pauseBtn.addEventListener('click', togglePause);
-
+        // Click progress dots
         progressDots.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                showSlide(i);
-                // Recalculate timing
-                let elapsed = 0;
-                for (let j = 0; j < i; j++) elapsed += SLIDE_DURATIONS[j];
-                startTime = Date.now() - elapsed;
-                pausedTime = 0;
-                if (!isPaused) scheduleNext();
-            });
+            dot.addEventListener('click', () => showSlide(i));
         });
 
-        // Keyboard
+        // Click anywhere to advance (except on progress dots)
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.progress-container')) return;
+            if (currentSlide < slides.length - 1) {
+                showSlide(currentSlide + 1);
+            }
+        });
+
+        // Keyboard: arrow keys, space to advance, backspace to go back
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight' || e.key === ' ') {
                 e.preventDefault();
-                if (currentSlide < slides.length - 1) {
-                    showSlide(currentSlide + 1);
-                    if (!isPaused) scheduleNext();
-                }
-            } else if (e.key === 'ArrowLeft') {
-                if (currentSlide > 0) {
-                    showSlide(currentSlide - 1);
-                    if (!isPaused) scheduleNext();
-                }
-            } else if (e.key === 'p') {
-                togglePause();
-            } else if (e.key === 'r') {
-                restart();
+                showSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+                e.preventDefault();
+                showSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                showSlide(0);
+            } else if (e.key === 'End') {
+                showSlide(slides.length - 1);
             }
         });
 
-        // Start
-        scheduleNext();
-        updateTimerBar();
+        updateUI();
     </script>
 </body>
 </html>

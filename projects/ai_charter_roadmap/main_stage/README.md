@@ -27,8 +27,10 @@ Salesforce admins have always been limited to declarative — point-and-click. A
 
 ## Deliverables
 
-- [ ] **Slide content** — What I Built / Impact / Tools
-- [ ] **Video** — 60-90 sec screen capture of shipped component
+- [x] **Slide content** — What I Built / Impact / Tools
+- [x] **Video** — video_presentation.html (auto-advance)
+- [ ] **Record Next Steps generation video** — show AI generating in real time ("doing it" moment)
+- [ ] **Add Tray.io** to tools mentioned alongside Claude Code
 - [ ] Submit to deck (tagged in WIP)
 
 ---
@@ -36,8 +38,8 @@ Salesforce admins have always been limited to declarative — point-and-click. A
 ## Talking Points (5 min)
 
 1. Intro — who you are, what you do (30 sec)
-2. The old world — declarative ceiling (1 min)
-3. The unlock — AI coding agents (1 min)
-4. Video plays (60-90 sec)
+2. The old world — Salesforce is hierarchical, UX hasn't improved in 20 years (Classic → Lightning). Declarative ceiling. (1 min)
+3. The unlock — AI coding agents: Claude Code, Tray, JASPT. "This looks scarier than it actually is." (1 min)
+4. Video plays — include Next Steps generation happening live (60-90 sec)
 5. What this means — ceiling is gone (45 sec)
-6. Close — "Same admin skillset. Way more possible." (15 sec)
+6. Close — "Same admin skillset. Way more possible." Account Page tease. (15 sec)
