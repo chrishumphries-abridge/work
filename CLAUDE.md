@@ -136,8 +136,54 @@ These tasks often have subtasks added from meeting action items:
 | "va-intel is done" | Archive it |
 | "it's Friday" / "close out week" | Weekly close-out |
 | "monthly review" | System maintenance |
+| "scope this out" / "break this down" | Run scope-project workflow |
+| "Marketing wants X" / "translate this request" | Run clarify-request workflow |
+| "what did I ship" / "status update" | Run status-report workflow |
+| "should I do A or B" / "help me decide" | Run trade-off workflow |
+| "what's coming up" / "anything on my radar" | Run look-ahead workflow |
 
 **No special syntax needed.** If you dump a thought, I capture it. If you ask a question, I search. If you mention finishing something, I archive.
+
+---
+
+## PM Assistant Workflows
+
+These skills help you think like a PM even as a team of one.
+
+### Initiative Breakdown (`/scope-project`)
+Turn vague requests into structured Asana tasks with dependencies. Helps you:
+- Clarify the real goal and success criteria
+- Break work into phases with clear deliverables
+- Create parent task + subtasks in Asana
+- Document decisions in project CLAUDE.md
+
+### Stakeholder Translation (`/clarify-request`)
+Decode what people actually need vs. what they asked for. Produces:
+- Translation of surface request to underlying need
+- 2-3 options at different effort levels
+- Clear recommendation with reasoning
+- Questions to ask the stakeholder
+
+### Status Reporting (`/status-report`)
+Generate manager-ready updates from your Asana data. Creates:
+- Narrative summary of the period
+- Work grouped by theme (not raw task lists)
+- Business impact framing
+- Blockers with owners and actions
+
+### Trade-off Analysis (`/trade-off`)
+Compare options systematically when you're stuck. Delivers:
+- Side-by-side comparison on standard criteria
+- Clear recommendation with reasoning
+- Conditions that would change the decision
+- Documentation for future reference
+
+### Proactive Planning (`/look-ahead`)
+See what's coming and get early warnings. Surfaces:
+- Tasks due in next 2 weeks
+- Dependencies and who you're waiting on
+- Risks with timelines
+- Suggested actions to get ahead
 
 ---
 
