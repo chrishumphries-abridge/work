@@ -1,5 +1,28 @@
 # Claude Code Context
 
+## About Me
+
+**Chris Humphries** — GTM Systems Engineer on the Revenue Systems & Analytics team, within RevOps, within the Commercial division at **Abridge** (AI healthcare tech).
+
+### What I Do
+- **Commercial systems management** — Salesforce administration, configuration, and automation for go-to-market
+- **Automation** — Tray.io workflows, Slack integrations, approval processes, data pipelines
+- **Administration** — User management, permissions, integrations (HockeyStack, Planhat, Attention, Ironclad, LaunchDarkly)
+
+### How I Work
+- Think and operate like an engineer, but work is primarily **declarative** (Salesforce flows, config, Tray workflows)
+- Increasingly moving toward **code-first** using Claude Code (Apex, LWC, scripting)
+- Team of one — I am the RevOps systems team, so I think like a PM too
+- Use **Ugmonk Analog** physical cards for daily task management (3 focused tasks to start, expand from there)
+
+### Two Workspaces
+| Directory | Purpose |
+|-----------|---------|
+| `/Users/chris/work` | Planning, project docs, meeting notes, daily operations (this repo) |
+| `/Users/chris/sfdx` | Salesforce DX projects — Apex, LWC, flows, metadata (separate repo) |
+
+---
+
 ## MCP Servers
 
 ### Asana
@@ -33,7 +56,7 @@ When user says "plan my day" or similar:
 - **Capture inbox**: Check `_capture/` for yesterday's quick captures
 
 ### 2. Write Daily Plan
-- Save to `/Users/chris/work/Daily Plans/YYYY-MM-DD-daily-plan.md`
+- Save to `/Users/chris/work/daily-plans/YYYY-MM-DD-daily-plan.md`
 - Include:
   - Today's schedule with meeting prep notes
   - **Time blocks** — suggested task allocation based on calendar gaps
@@ -52,7 +75,7 @@ When user says "plan my day" or similar:
   4. Quick wins that unblock others
 
 ### Important: Keep Daily Plan File Updated
-- The daily plan file (`/Users/chris/work/Daily Plans/YYYY-MM-DD-daily-plan.md`) is the source of truth
+- The daily plan file (`/Users/chris/work/daily-plans/YYYY-MM-DD-daily-plan.md`) is the source of truth
 - **Always update the file** when:
   - Analog card changes (new priorities, completed items, replanning)
   - Tasks are added/completed
@@ -102,23 +125,13 @@ Add to the daily plan file:
 
 ### 5. Git Backup
 - Commit any new/changed files
-- Push to GitHub (private repo: `chrishumphries-abridge/obsidian`)
+- Push to GitHub (private repo: `chrishumphries-abridge/work`)
 - Ensures all work is safely backed up
 
 ### 6. Closure
 - Daily plan file is now "closed" for the day
 - Incomplete Analog items mentally move to Next card
 - Clean break from work
-
----
-
-## Key Asana Tasks (Reference)
-
-These tasks often have subtasks added from meeting action items:
-- `1212678343509925` - Planhat SFDC Integration User
-- `1212678343509927` - HockeyStack Integration User
-- `1212660736378965` - LaunchDarkly <> Slack (due Jan 30)
-- `1212638428440720` - Launch Next Steps Hygiene In CW
 
 ---
 
@@ -205,11 +218,11 @@ Add to Friday's daily plan:
 - **Blocked tasks** — table: task, blocker, owner
 
 ### 3. Create Weekly Report
-- Save to `/Users/chris/work/Weekly Reports/YYYY-WXX-weekly-report.md`
+- Save to `/Users/chris/work/weekly-reports/YYYY-WXX-weekly-report.md`
 - Include: summary, shipped items, completed count, deferred table, blocked table, next week focus
 
 ### 4. Create Next Week Plan
-- Save to `/Users/chris/work/Daily Plans/YYYY-WXX-weekly-plan.md`
+- Save to `/Users/chris/work/daily-plans/YYYY-WXX-weekly-plan.md`
 - **Priority order: unfinished → deferred → new**
 - Day-by-day breakdown (Mon-Fri only — user doesn't work weekends)
 - Sunday due dates = Monday in practice
@@ -260,19 +273,42 @@ When user says "monthly review" (or first Friday of month):
 ## File Structure
 
 ```
-work/
-├── CLAUDE.md              # This file - main context
-├── _capture/              # Quick capture inbox (daily files)
-├── Daily Plans/           # Daily plans + weekly plans
-├── Weekly Reports/        # Friday close-out reports
-├── meeting_notes/         # Meeting transcript processing (has own CLAUDE.md)
-├── projects/              # Active projects (each has own CLAUDE.md)
-├── archive/               # Completed projects (preserved with context)
-├── resource_requests/     # Slack block templates
-├── reference/             # One-off docs, guides, templates
-│   └── templates/         # Project templates
-├── Reviews/               # Performance reviews
-└── .claude/skills/        # Custom skills
+work/                          # This repo — planning, docs, operations
+├── CLAUDE.md                  # This file - main context
+├── .gitignore                 # Ignores .DS_Store
+├── _capture/                  # Quick capture inbox (daily files)
+├── daily-plans/               # Daily plans + weekly plans
+├── weekly-reports/            # Friday close-out reports
+├── meeting-notes/             # Meeting transcript processing (has own CLAUDE.md)
+├── projects/                  # Active projects (each has own CLAUDE.md)
+│   ├── buying-group-scoring/
+│   ├── commercial-segment-updates/
+│   ├── documentation-agent/
+│   ├── launchdarkly-slack/
+│   ├── resource-requests/
+│   └── va-intel/
+├── archive/                   # Completed projects (preserved with context)
+│   ├── ai-charter-roadmap/
+│   ├── alco-ai-talk/
+│   └── cko-ai-foundations/
+├── reference/                 # Operational guides and templates
+│   ├── salesforce-certificate-update-guide.md
+│   ├── salesforce-forecasting-team-changes-best-practices.md
+│   ├── Manager-Territory-Team-Field-Flow-Instructions.md
+│   └── templates/
+├── reviews/                   # Performance reviews
+└── .claude/skills/            # Custom skills (16 skills)
+
+~/sfdx/                        # Salesforce DX projects (separate repo)
+├── account_page_redesign/     # Active — Account page LWC work
+├── approvals/                 # Commercial segment approval flows
+├── buying_group_scoring/      # Buying group scoring model
+├── revenue_intelligence/      # My Pipeline — AI pipeline dashboard (has CLAUDE.md)
+├── sfdc_admin/                # General admin work (has CLAUDE.md)
+├── home_page/                 # Home page customization
+├── cko_demo/                  # CKO demo builds
+├── scripts/                   # Utility scripts
+└── [30+ other SFDX projects]
 ```
 
 ---
@@ -310,21 +346,21 @@ work/
 
 ### OpenAI API Keys
 - Dev team periodically rotates/deletes OpenAI API keys
-- This breaks Tray workflows that use OpenAI (e.g., VA Intel LLM vetting)
+- This breaks Tray workflows that use OpenAI (e.g., VA Intel LLM vetting, Revenue Intelligence LLM)
 - No alerting currently in place — discovered when workflow fails
-- Task to address: `1212722772937719` (due Jan 24)
 
 ### Tray.io Workflows
 - VA Intel pipeline has 6 workflows across 3 layers (capture → process → output)
 - Layer 2 (LLM vetting) depends on OpenAI API
 - If digest stops working, check OpenAI key first
+- Revenue Intelligence (My Pipeline) also uses Tray as LLM middleware
 
 ---
 
 ## Session Startup
 
 **At the start of each session**, proactively:
-1. Read today's daily plan (`Daily Plans/YYYY-MM-DD-daily-plan.md`) if it exists
+1. Read today's daily plan (`daily-plans/YYYY-MM-DD-daily-plan.md`) if it exists
 2. Check active project docs for any in-progress work (see Active Projects below)
 3. Review recent git commits to understand what changed recently
 
@@ -336,30 +372,45 @@ This prevents the user from having to re-explain context. Come prepared.
 
 Check each project's CLAUDE.md for current status and context.
 
-### VA Intel Slack Digest
-- **Docs**: `projects/va-intel/VA-Intel-Slack-Digest-Options.md` ← **check Build Status section**
-- **Sources**: Orange Slices, Reddit (3 subs), veterans.house.gov, LinkedIn (Shulkin, Paul)
-- **Architecture**: Layer 1 (capture) → Layer 2 (LLM vetting) → Layer 3 (daily digest via Slack Canvas)
-- **Dependency**: OpenAI API key for LLM vetting
+### Revenue Intelligence (My Pipeline) — `~/sfdx/revenue_intelligence/`
+- **Summary**: AI-powered pipeline dashboard for sales reps (LWC + Apex)
+- **Status**: Next Steps Hygiene launched; Deal Risk Signals and Forecast in progress
+- **CLAUDE.md**: `~/sfdx/revenue_intelligence/CLAUDE.md` ← **full technical context**
+- **Stakeholders**: Jeremy (product), Zach (buying groups/forecast), Peter (milestones), Pine (releases)
+- **Stack**: LWC, Apex, CMDT, Platform Cache, Tray.io (LLM middleware), OpenAI
 
 ### Commercial Segment Approval Workflows
-- **Docs**: `projects/commercial_segment_updates/CLAUDE.md` ← **full project context**
+- **Docs**: `projects/commercial-segment-updates/CLAUDE.md` ← **full project context**
 - **Summary**: SFDC approval workflows for small deals (<10 physicians) and Standard PS Model
 - **Components**: SFDC flows + Tray.io webhooks + Slack Block Kit
+- **Status**: SFDC components deployed (draft), Tray workflows and Slack integration remaining
 
-### AI Charter Roadmap
-- **Docs**: `projects/ai_charter_roadmap/`
-- **Summary**: AI capability roadmap presentation for leadership
+### VA Intel Slack Digest
+- **Docs**: `projects/va-intel/CLAUDE.md`
+- **Summary**: Automated daily VA news digest via Slack Canvas
+- **Architecture**: Layer 1 (capture) → Layer 2 (LLM vetting) → Layer 3 (Slack Canvas digest)
+- **Dependency**: OpenAI API key for LLM vetting
 
 ### Buying Group Scoring
 - **Docs**: `projects/buying-group-scoring/`
 - **Summary**: Scoring model for buying group engagement
+- **SFDX**: `~/sfdx/buying_group_scoring/`
 
-### Meeting Notes Processing
-- **Docs**: `meeting_notes/CLAUDE.md`
-- **Summary**: Workflow for processing meeting transcripts into action items
+### Account Page Redesign — `~/sfdx/account_page_redesign/`
+- **Summary**: Account page LWC work (active as of Feb 2026)
 
 ### LaunchDarkly <> Slack
 - **Docs**: `projects/launchdarkly-slack/approval-request-integration.md`
 - **Summary**: Slack-triggered approval requests to add users to feature flags
-- **Asana**: `1212660736378965` (due Jan 30)
+
+### Resource Requests
+- **Docs**: `projects/resource-requests/`
+- **Summary**: Slack Block Kit templates and Tray webhook workflows for resource request routing
+
+### Meeting Notes Processing
+- **Docs**: `meeting-notes/CLAUDE.md`
+- **Summary**: Workflow for processing meeting transcripts into action items
+
+### Documentation Agent
+- **Docs**: `projects/documentation-agent/CLAUDE.md`
+- **Summary**: Claude-powered documentation generation from code/metadata
