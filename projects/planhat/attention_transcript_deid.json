@@ -1,0 +1,193 @@
+{
+	"method": "get",
+	"path": "/",
+	"body": {
+		"attributes": {
+			"attendees": [
+				{
+					"email": "jane.parker@lakewoodmed.com",
+					"id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+					"name": "Jane Parker"
+				}
+			],
+			"boards": [],
+			"bots": [],
+			"createdAt": "2026-02-13T16:28:18.304Z",
+			"crmExportStatus": "PENDING",
+			"dealUUID": "b2c3d4e5-f6a7-8901-bcde-2345678901bc",
+			"deprecatedLabelCategories": null,
+			"externalAccounts": [
+				{
+					"code": "account",
+					"id": "001Xx00000xXXxxXXX"
+				}
+			],
+			"externalContacts": [
+				{
+					"code": "contact",
+					"id": "003Xx00000xXXxxXXX"
+				}
+			],
+			"externalIntelligenceOpportunityID": "006Xx00000xXXxxXXX",
+			"externalOpportunity": {
+				"title": "Lakewood Medical Group Renewal - 2026",
+				"uuid": "006Xx00000xXXxxXXX"
+			},
+			"extractedIntelligence": {
+				"c3d4e5f6-a7b8-9012-cdef-3456789012cd__d4e5f6a7-b8c9-0123-defa-4567890123de": {
+					"category": "CRM",
+					"id": "e5f6a7b8-c9d0-1234-efab-5678901234ef",
+					"key": "c3d4e5f6-a7b8-9012-cdef-3456789012cd__d4e5f6a7-b8c9-0123-defa-4567890123de",
+					"options": {
+						"maxValues": 1,
+						"values": [
+							"Competitor A",
+							"Competitor B",
+							"Competitor C",
+							"Competitor D",
+							"Competitor E",
+							"Other Human Scribes"
+						]
+					},
+					"source": "ai_conversation",
+					"title": "Competition"
+				},
+				"crm__vendorcoimplementation__productfeedback__text": {
+					"category": "CRM",
+					"id": "f6a7b8c9-d0e1-2345-fabc-6789012345fa",
+					"key": "crm__vendorcoimplementation__productfeedback__text",
+					"source": "ai_conversation",
+					"title": "Product Feedback",
+					"value": "Based on the conversation, here is the product feedback provided:\n\n• Positive endorsement of product value: Jane indicated that seasoned users are highly dependent on the platform and expressed frustration when it wasn't working (\"today wrecked the world. They're like, what do I do? I don't have it\"). She also mentioned that if hesitant providers would just try it, they would see it's a benefit, particularly for documenting clinical decision making.\n\n• Comparison to competitor: Jane noted that their EMR software is developing its own AI documentation tool but described it as \"clunky,\" comparing the choice between solutions to \"Android and iPhone\" - suggesting users need to find what suits them best. This indicates the platform is viewed favorably compared to the native EMR solution.\n\n• Adoption challenge: While not direct product feedback, Jane identified that getting non-users to adopt the tool remains a challenge, suggesting that initial trial/onboarding experience is critical for conversion."
+				},
+				"crm__vendorcoimplementation__questions__text": {
+					"category": "CRM",
+					"id": "a7b8c9d0-e1f2-3456-abcd-7890123456ab",
+					"key": "crm__vendorcoimplementation__questions__text",
+					"source": "ai_conversation",
+					"title": "Questions",
+					"value": "Questions Asked by Jane Parker (Prospect) and Answers from Sarah Mitchell (VendorCo)\n\nQuestion 1: Can we turn on production and let clinicians use it live since they already know how to use the system?\n\nAnswer: Sarah agreed to try this approach. She mentioned she could turn it back on and test it, though she wanted to verify with Tom first. She noted that she had already removed the SSO from the environments, so there might be historical context disrupting sign-in ability. She suggested adding Jane to test in the production environment first to ensure it works before rolling it out to all clinicians.\n\nQuestion 2: When clinicians log in, which site should they use - the temporary test site or the production site?\n\nAnswer: Sarah confirmed that the test environment had worked perfectly for Tom. However, she indicated she might need engineers to remove certain configurations to resolve the current login issues.\n\nQuestion 3: When you pulled the users with @Lakewood email addresses, is it about the same list we have, or did you find additional people?\n\nAnswer: Sarah offered to show Jane the list she pulled so they could compare. She pulled up the data showing currently six active users who had signed in under their access code. She was able to show Jane which users had been actively using the platform and when.\n\nQuestion 4: If clinicians can't get into the current system, can we just make it live in production?\n\nAnswer: Sarah explained that making it live in production right now would be risky because clinicians would not be able to access their previous notes if they hadn't completed them. She didn't want to lock them out of their current accounts if they had outstanding notes that hadn't been completed yet. She recommended resolving the login issue first before making it live.\n\nQuestion 5: Do we have Monday off, or are clinicians working on Monday?\n\nAnswer: Jane clarified that clinicians are working on Monday (not a holiday). Sarah confirmed they would want the issue resolved before then.\n\nQuestion 6: How did clinicians set up their self-service accounts - through us or on their own?\n\nAnswer: Jane indicated she didn't know who was on the list because clinicians had set up accounts on their own. Sarah explained that clinicians setting up self-service accounts on their own had created accounts, and when she created the SSO, she didn't provision them there. Their login was still stuck on their self-service accounts. She would need an engineer to wipe that clean and resolve the issue.\n\nQuestion 7: Can you show me your list of active users so we can compare it to our list?\n\nAnswer: Sarah pulled up the data showing six users who had ever signed in under their access code. She showed Jane the active users list and was able to display a Gantt chart showing which users had been using the platform regularly and in which weeks. The six active users were: Dr. Roberts, Dr. Adams, Lisa Chen, Dr. Hayes, Dr. Evans, and Dr. Cooper.\n\nQuestion 8: Should we remove Dr. Patel from the list since she doesn't appear to be using it?\n\nAnswer: Sarah offered to remove Dr. Patel from the list immediately. However, Jane then questioned whether Dr. Patel might be logging in under a non-Lakewood domain. Sarah confirmed that would be the only other possibility and that this was a risk with the migration. Jane decided to keep Dr. Patel on the list temporarily and verify with her directly before making changes.\n\nQuestion 9: Can clinicians test the login from their phones to help troubleshoot?\n\nAnswer: Sarah recommended that clinicians try signing in on their phones again, as that's what they would use for recording (unless they had been doing web recording on their computer). She asked Jane to find out if they could try on their phones and report if the issue was still present."
+				},
+				"crm__implementation__actionitems__text": {
+					"category": "CRM",
+					"id": "b8c9d0e1-f2a3-4567-bcde-8901234567bc",
+					"key": "crm__implementation__actionitems__text",
+					"source": "ai_conversation",
+					"title": "Action Items ",
+					"value": "Sarah Mitchell:\n- Meet with engineers to resolve self-serve access issue preventing users from signing in - 2026-02-13\n- Work with engineer to wipe clean the self-service accounts causing login conflicts - 2026-02-13\n- Test SSO login with Jane in production environment - 2026-02-16 (Monday morning at 7:30)\n\nJane Parker:\n- Verify with Dr. Patel whether she's using the platform and if she's logging in under a non-Lakewood domain\n- Have Dr. Roberts and Lisa Chen try signing in on their phones to test if error persists\n- Send both error screenshots (computer and phone) to Sarah\n- Test SSO login - 2026-02-16 (Monday morning at 7:30)\n\nDr. Roberts and Lisa Chen:\n- Try signing in on their phones to test if login error is resolved"
+				},
+				"crm__implementation__keydiscussionpoints__text": {
+					"category": "CRM",
+					"id": "c9d0e1f2-a3b4-5678-cdef-9012345678cd",
+					"key": "crm__implementation__keydiscussionpoints__text",
+					"source": "ai_conversation",
+					"title": "Key Discussion Points",
+					"value": "Based on the transcript, here are the key discussion points addressed during the call:\n\n1. SSO (Single Sign-On) Integration Issues\n- The primary issue was that clinicians were unable to log in to the platform due to SSO configuration problems\n- The error message displayed: \"Sorry, there was an issue signing you in. Unsupported auth type undefined\"\n- Sarah had removed SSO from both production and staging environments to resolve conflicts\n- The problem stemmed from users having self-serve accounts with the same domain name, which conflicted with the new SSO setup\n\n2. User Access Management\n- Discussion about which clinicians were actively using the platform versus those who claimed to be using it\n- Verification of the current user list: 6 active users identified (Dr. Roberts, Dr. Adams, Lisa Chen, Dr. Hayes, Dr. Evans, Dr. Cooper)\n- Consideration of removing Dr. Patel from the list due to apparent non-usage to avoid unnecessary charges\n- Addition of new users: Dr. Rivera and Dr. Foster identified as new users to be added\n\n3. Migration Strategy and Timing\n- Concern about making the system live in production while users had incomplete notes from previous days\n- Discussion about the risk of locking users out of their current accounts during migration\n- Scheduling considerations around half-day work schedules and the upcoming Monday workday\n- Decision to schedule follow-up testing for Monday morning at 7:30\n\n4. User Adoption Challenges\n- Some clinicians were hesitant to adopt the platform\n- Jane mentioned one provider who struggles with documenting clinical decision-making but hasn't tried the tool yet\n- Discussion about the need for persuasion and one-on-one training for hesitant users\n- Recognition that seasoned users were heavily reliant on the tool (\"wrecked the world\" when it wasn't available)\n\n5. Testing and Troubleshooting Approach\n- Need to test login functionality on both desktop/laptop and mobile devices\n- Request for screenshots of errors from different devices to diagnose the issue\n- Plan for Sarah to work with engineers to completely remove historical self-service account data\n- Proposal to have Jane test the system once changes were implemented\n\n6. Usage Analytics and Reporting\n- Review of usage data showing which users were actively using the platform and how consistently\n- Discussion of a Gantt chart visualization to show user activity patterns over time\n- Identification that some users on the list weren't actually using the system despite claims\n\n7. Communication Plans\n- Jane planned to send out emails and training invitations to potential new users\n- Need to verify with specific users (like Dr. Patel) about their actual usage patterns\n- Coordination needed with clinicians to attempt test logins"
+				},
+				"crm__implementation__nextstepsummary__text": {
+					"category": "CRM",
+					"id": "d0e1f2a3-b4c5-6789-defa-0123456789de",
+					"key": "crm__implementation__nextstepsummary__text",
+					"source": "ai_conversation",
+					"title": "Next Step Summary",
+					"value": "Next Steps:\n\n• Sarah to work with engineers to resolve SSO login issues preventing clinicians from accessing the platform (unsupported auth type error)\n\n• Jane to verify with Dr. Patel if she's actively using the platform before finalizing user list\n\n• Follow-up meeting scheduled for Monday, February 16, 2026 at 7:30 AM to retest login access"
+				},
+				"crm__implementation__risksorblockerstogolive__text": {
+					"category": "CRM",
+					"id": "e1f2a3b4-c5d6-7890-efab-1234567890ef",
+					"key": "crm__implementation__risksorblockerstogolive__text",
+					"source": "ai_deal",
+					"title": "Risks or Blockers to Go-Live",
+					"value": "- SSO authentication issues are preventing user logins due to conflicts between self-service accounts and the new SSO setup, requiring engineering intervention before go-live.\n- Incomplete notes migration could lock users out of current accounts and prevent completion of outstanding notes, risking documentation gaps and workflow disruption.\n- User list discrepancies (uncertainty about which clinicians are active users) may cause billing issues and unclear adoption metrics, needing verification before full deployment."
+				}
+			},
+			"finishedAt": "2026-02-13T17:08:35.957Z",
+			"importMetadata": null,
+			"importStatus": "NONE",
+			"labelTagsToFilterIfNA": null,
+			"labels": {
+				"Call Type": "Weekly Recurring Meeting",
+				"PX Calls": "Weekly Recurring Meeting",
+				"Product(s) Discussed": "Clinical Notes",
+				"Sales Calls": "N/A"
+			},
+			"linkedCrmRecords": [
+				{
+					"code": "opportunity",
+					"id": "006Xx00000xXXxxXXX"
+				},
+				{
+					"code": "contact",
+					"id": "003Xx00000xXXxxXXX"
+				},
+				{
+					"code": "account",
+					"id": "001Xx00000xXXxxXXX"
+				}
+			],
+			"liveStreamEndedAt": "0001-01-01T00:00:00.000Z",
+			"liveStreamStartedAt": "0001-01-01T00:00:00.000Z",
+			"mediaDuration": 2364.0334,
+			"mediaStorageStatus": "IMPORTING",
+			"participants": [
+				{
+					"email": "twilson@lakewoodmed.com",
+					"id": "twilson@lakewoodmed.com"
+				},
+				{
+					"email": "jane.parker@lakewoodmed.com",
+					"id": "jane.parker@lakewoodmed.com"
+				}
+			],
+			"scorecardResults": [],
+			"talktracks": [],
+			"teamUUID": "f1a2b3c4-d5e6-7890-abcd-1234567890ff",
+			"title": "Implementation Meeting",
+			"transcript": "Sarah Mitchell:\nThank you. Hi, Jane. Hey, Sarah. \nJane Parker:\nHow are you? \nSarah Mitchell:\nI'm good. I'm sorry. I had sent this to you in the morning, but it might not have registered on your updated calendar. I have verified that everything should be good in both production and staging. I removed it from both just to have no issues at all. Have you gotten a chance to connect with the clinicians in the last five minutes or so? \nJane Parker:\nI asked them to check, but I haven't heard any. Thing yet. Let me, I've got another one trying, so let me text her. \nSarah Mitchell:\nOkay. Yes, it should be good to go right now. And I am actually looking at the logs so I can check if they are able to attempt in real time and at their data. Gotcha. \nJane Parker:\nLet's see. I don't know if they work half days, so we may be hitting them going home. \nSarah Mitchell:\nSo, okay. I'm so sorry about this. It's because of them having self-serve access and having used their same domain name. And so now I'm able to cross-reference the users that you have sent me with the ones that we're seeing data for. I do want to go through that list when we have a sense to know which ones are new. \nJane Parker:\nWe had asked people to tell us who was using, and we even called all the managers. And then when Lisa called me this morning, I was like, oh, she wasn't on the list. So we probably have different lists. \nSarah Mitchell:\nThat's okay. I'm just, I'm just want to. I'm so sorry that this happened and we are able to resolve it. So I'll stay with you until. \nJane Parker:\nLet me get my list. Okay. \nSarah Mitchell:\nI can share it on the screen for you as well. Okay, perfect. So I will remove the John Doe, but it looks like, it looks like you have based on the data. I'll make this larger for us. \nJane Parker:\nShe is getting. I'll get feedback. Okay. This is a different screen, but still no. It says, sorry, there was an issue signing you in. Unsupported auth type undefined. \nSarah Mitchell:\nUnsupported auth type undefined. This might be because of the legacy license that it sounds like you guys had used. I had reached out to Maria to understand what the clinicians had used. Are you able to send me a screenshot of what that looks like? \nJane Parker:\nIs there a way to, um turn on our production and just go and they know what they're doing? They've used it. Um, can we just turn it on and live? \nSarah Mitchell:\nAnd yeah, yeah, we can. Um, I can, uh, try. And do, you know? If Tom is able to join us? I could test, let me see if we can. Okay, um, Um, otherwise, I could also make an account for you right now and try with you. \nJane Parker:\nOkay, um, because they were able to get all the way to the screen. It just basically said they didn't have access. It was like it was trying to work, but the switch wasn't on for Okay to log in. Let me see if I can get this. I think it would work. There's the current error. \nSarah Mitchell:\nOh, did you just email it? \nJane Parker:\nSarah's on here. So what we're thinking is she's turned everything off and it's still not working. We're like, if it was all rolling. We just like, we just go ahead and turn on our lab, since, you know, yeah, might as well. So what would you need from Tom? \nSarah Mitchell:\nI would love to test with you again. Since I did remove, um, the SSO from the environments in full. It might have a historical context that disrupts the ability for them to sign in. Because I've removed it already, so it might need to be completely removed from the system fresh. But if not, I can resolve it on my own. So I would want to add you right now and just give you a chance to test in the production environment. \nJane Parker:\nYeah, go ahead and add Jane. She can test it. \nSarah Mitchell:\nOkay. \nJane Parker:\nThere's nothing he needs to do on his end. Why don't you put it back? It worked for me. I was able to log in. So if she puts you in. Okay, great. I mean, might as well just turn her on, you know? \nSarah Mitchell:\nYeah. Let me go back in. And attempt that from our previous notes. Let me stop sharing here. Can you please remove the... \nJane Parker:\nI will go to, was it notes.vendorco.com, something like that. \nSarah Mitchell:\nYes. It'll be just a moment. Delete. \nJane Parker:\nWe got you up early today, didn't we? Because I got to tell you, I was like, oh, she's Pacific time. \nSarah Mitchell:\nNo, no, it's okay. I was up. I removed. \nJane Parker:\nSo when they log in, though, I know either two sites you had as a temporary site and then a production site. \nSarah Mitchell:\nAnd it worked perfect for Tom, who had tried in the test environment. But I might have to have our engineers remove that. I'm going to go back into the file that Tom sent me and then try and see if I can upload this on my own. Okay. \nJane Parker:\nOkay. \nSarah Mitchell:\nWhile I do this, I'll still share this for you. If you're able to tell me which ones are the new ones. I think you said you have three new. \nJane Parker:\nThe only one that should be new is Dr. Rivera. I really feel like the other one, Dr. Rivera and Dr. Foster should be new. \nSarah Mitchell:\nOkay. New, so existing. \nJane Parker:\nOkay. \nSarah Mitchell:\nPretty sure. \nJane Parker:\nAnd then I was going to send out, that's what I was going to work on today, was all the emails and stuff to everyone, inviting them to at least watch the training to see if they're interested. \nSarah Mitchell:\nYep, I can add them all to it. I will do that right now. \nJane Parker:\nAwesome. Thank you. That keeps me from having to do it. \nSarah Mitchell:\nNo problem. \nJane Parker:\nI'm looking through my email information. I'm always asked. I think that's it. \nSarah Mitchell:\nOkay, let me got to go back into your guys's secure file here and then I'll grab it. \nJane Parker:\nAnd do you know when you pulled the at Lakewood people? Did it, is it about the same list or did you find people that? \nSarah Mitchell:\nI can show that to you. \nJane Parker:\nI know we were one to one. \nSarah Mitchell:\nYeah, it'll be good to check. I can pull that for you now. \nJane Parker:\nYeah, but I'll let you finish here. My brain's going and I'm thinking ahead. \nSarah Mitchell:\nNo, no, of course. Okay, this is his. Okay, so the thing that we face with this is if we make it live in production right now. They will, uh, they will not be able to access their previous notes, so they do need to have their notes completed for the day. \nJane Parker:\nSo I didn't know any today because it didn't work, right. \nSarah Mitchell:\nSo So, but if they didn't complete their notes for the. Previous day Um, did you email me what that current error looks like? \nJane Parker:\nYes, you did. \nSarah Mitchell:\nOkay, perfect. Let me open this. Now there's an issue signing you in unsupported. I'll type undefined. \nJane Parker:\nOkay, I know three of them are off today. One might have been trying to finish her previous notes. That might be the problem. Okay, I see what you're saying, let me see. They couldn't get in, too, I couldn't get in this morning, so maybe that's why they were. \nSarah Mitchell:\nYeah. Okay. \nJane Parker:\nNo, she didn't say anything about not having a note. \nSarah Mitchell:\nOkay. Yes. So I think it might be too risky to make it live in production, knowing that, um, knowing that. It would lock them out of their current account. And I don't want to do that if they have outstanding notes that they haven't completed yet. \nJane Parker:\nBut if they can't get into the current one, right. I'm going to log in and look at their schedules because I can look at their schedules and see if they've completed their notes. \nSarah Mitchell:\nOh, OK. That would be good, too. I will keep messaging with an engineer about this. \nJane Parker:\nAnd then we might need to true up that list then, too. That way, I don't make sure I don't miss anyone. Because three of them didn't work today, which was awesome. \nSarah Mitchell:\nYes. Do you guys have Monday off or are they working on Monday? \nJane Parker:\nNo, they're working. \nSarah Mitchell:\nOkay. So we'll want it to be resolved before then. \nJane Parker:\nThey're not complete. \nSarah Mitchell:\nAnd which user sent you that screenshot? \nJane Parker:\nDr. Roberts and Lisa Chen. And they both have the same. Okay. \nSarah Mitchell:\nThose are the two that are working today? \nJane Parker:\nYes. \nSarah Mitchell:\nOkay. \nJane Parker:\nLooks like he's got his AI in. This is one from yesterday. He just hasn't completed them, perhaps. No, he's working through them. Okay. \nSarah Mitchell:\nSo I will get on, after this, I will get on a call with our engineers and see if we... I'm thinking what happened is by way of the self-service account that they set up. And do you know, did they do that through you, or did they do that on their own previously? \nJane Parker:\nThat's why I don't have an idea who's all on the list. Right, right. \nSarah Mitchell:\nSo them doing that has created an account for them. And when I created the SSO, I didn't provision them there. But it seems like their login is still being stuck. On their self-service account that they had created. So I'm just going to wipe that clean. But I do need an engineer to do that. So I'll resolve that for us and get back to you. So Lisa and Dr. Roberts, But then we, you want, I'll go ahead and open that existing account in case we need to make any changes to the list, as you said. Okay. \nJane Parker:\nYes. And they're going to bring up the list. \nSarah Mitchell:\nYes. \nJane Parker:\nThat's our current list. And you're going to bring up the list you have. Okay. So you have a separate list of who was impacted or who was added. \nSarah Mitchell:\nOh, I'm sorry. That's what you wanted me to. \nJane Parker:\nYeah. What you have as a list, because I think you pulled by domain or email. Yes. \nSarah Mitchell:\nLet me go ahead. So, you'd like to see all of your current active users. \nJane Parker:\nYes. Okay. \nSarah Mitchell:\nPerfect. \nJane Parker:\nYep. I got my little Valentine's card and it's one of those that you scratch, and then they gave me one that has little bracelets on it. \nSarah Mitchell:\nAnd I'm like, oh, that's adorable. Okay. So when I look at your data for this week, this is what I'm able to see. And I can update it here even once more. I'm on a call. \nJane Parker:\nOkay. I love you. You behave. I do. You got your jerseys and everything? Bring you a jacket because it might get cold. Love you. All right. My daughter was going to call me before she left. So I love you. Okay. So you have six users. \nSarah Mitchell:\nYes, so it looks like there is currently six users that have ever signed in underneath your access code. And so I can go ahead and go into our exports and see the active users. So if we look at this list here, let me make that to just your users. \nJane Parker:\nSo that's a little too many. \nSarah Mitchell:\nDoes Six sound about right, though? \nJane Parker:\nLet's see. Dr. Roberts, Dr. Adams. Dr. Roberts, Dr. Adams. Lisa Chen, now, I know, is using it. Dr. Hayes, Dr. Evans, Dr. Cooper. It might be. Dr. Patel, though, is on the list, but I'd be curious if she logged in. She says she uses it, but this is going to tell me who says they're using it, but they're not using it, too. \nSarah Mitchell:\nOkay. Do you know how long that they have been using it for? \nJane Parker:\nSome have been using it for quite some time. I mean, I've got some that are, I mean, like, today wrecked the world. They're like, what do I do? I don't have it. So, yeah. And so we've got some pretty seasoned users. There we go. And it's just getting the other ones adopted. I think if they would just start using it, they would see that it's a benefit. Like, I've got one provider. I'm like. She doesn't do well documenting her clinical decision making. I'm like, you would just try it. I promise you, you will like it. And I told her, I said, because our software is developing it. It's clunky. And I said, it's kind of like Android and iPhone. You've got to find the one that suits you. \nSarah Mitchell:\nRight, exactly. Is she on the list of users? No, she's not. \nJane Parker:\nWe're going to hopefully persuade her to the list. \nSarah Mitchell:\nOkay. I can show you through a gantt chart. I think I found a good way to do that. Yes. Well, I'm happy to do some one-on-one trainings. For any of those clinicians that might be a little bit more hesitant. Okay. Okay. \nJane Parker:\nSo, Dr. Hayes, Dr. Cooper, Lisa Chen, Dr. Evans, and Dr. Roberts. Yep. We're good. That is correct. \nSarah Mitchell:\nThis current list that you're checking out? Okay, good. \nJane Parker:\nSo I'm wondering if Chen's even using it because I have her on the list, but it is what it is. \nSarah Mitchell:\nChen? Yes. Yes, it looks like. \nJane Parker:\nYeah, but I have one on my list that says they're using it, but I'm beginning to wonder if they don't use it. \nSarah Mitchell:\nSo this list can actually show you who has been using it in what weeks. So it looks like we do have these six users that have been using it very regularly. So this shows you this week, for example. So you can see, and I'll minimize this so that we can see it even cleaner. \nJane Parker:\nAnd they're using it pretty consistently. Yeah. That makes sense. \nSarah Mitchell:\nYep. Yep. \nJane Parker:\nSo on my list, we need to remove Dr. Patel because she'll be charged the fee for it. And it doesn't look like she's been using it. I was told she's been using it, but I'll need to reach out to her. We need to take her off the list for now. \nSarah Mitchell:\nOkay. \nJane Parker:\nAnd I'll need to verify. \nSarah Mitchell:\nLet me do that. Live for us. Okay. So Dr. Patel. Uh, d-r-p-a-t-e-l. Yes, remove that user. \nJane Parker:\nYes, I'm assuming that she's not logging. I mean, the other question would be, is she logging in under a non-Lakewood domain? \nSarah Mitchell:\nThat would be the only, that would be the only thing, and so that's the the risk that we run with that migration. Um, so I would say, Um, I need to reach out to her. \nJane Parker:\nOkay, yeah, so I won't upload this today. \nSarah Mitchell:\nSo, right after this, I'm going to meet with one of our engineers and figure out how I can resolve the problem with their current self-serve access. I realize if they're working half day, this might not be resolved. They might not be able to tell us what's going on. But do you think, does Dr. Roberts Stay all day? \nJane Parker:\nNo, everybody's pretty much all your internists are half days a day. And go ahead and put Dr. Patel back on the list, and then I'll verify with Dr. Patel, too. But yeah, I might not have the ability to check today. Okay. We'll do the same Monday morning at 7.30. \nSarah Mitchell:\nYeah, we can do that. Let's see here. \nJane Parker:\nAnd I'll keep checking and get them to, you know, I mean, I can always say, if you can, at least try to log in, they could do it from their phone. They at least get tested. Yeah. \nSarah Mitchell:\nOkay. This helps. So this, this, um, do you know the, there was an issue signing you in? Do you know if that came from her phone or from her computer? \nJane Parker:\nUm, one looks like a computer, and one actually looks like a phone. Cause the screenshot had a background to it. So let me, she said. She did three attempts. One is from her laptop, her actual desktop. So I can see the background. And then Dr. Roberts uses his phone. He also uses his computer. Okay. \nSarah Mitchell:\nI think, yeah, if you're able to find out which one would the error and send over both errors that you saw, if it is on their phone or on their computer, that might be. \nJane Parker:\nI know one is definitely computer. \nSarah Mitchell:\nOkay. \nJane Parker:\nYes. \nSarah Mitchell:\nOkay. Perfect. The one that you did send me? \nJane Parker:\nYes. \nSarah Mitchell:\nOkay. I would recommend that they try signing in on their phone again, because that's what they're going to use to do the recording, unless they have been doing web recording on their computer. \nJane Parker:\nDr. Roberts does what I think he does use his laptop. \nSarah Mitchell:\nOh, interesting. Okay. Yeah. \nJane Parker:\nOkay. Well, keep working on it and let me know when I need to test and I'll see if I can find out for you. Okay. \nSarah Mitchell:\nOkay, perfect. Yeah. If you're able to find out if they can try on their phone and if it's still resolved, let me know. And I'll be working with an engineer in the meantime. \nJane Parker:\nOkay, great. Thank you. \nSarah Mitchell:\nThank you, Jane. \n",
+			"user": {
+				"botName": "Sarah's Notetaker",
+				"createdAt": "2024-05-28T19:48:24Z",
+				"email": "sarah@vendorco.com",
+				"firstName": "Sarah",
+				"joinOutsideHostMeetings": true,
+				"lastName": "Mitchell",
+				"primaryTeamUUID": "f1a2b3c4-d5e6-7890-abcd-1234567890ff",
+				"roles": null,
+				"seatType": "recording",
+				"settings": {
+					"autoCalculateCRMFields": true,
+					"dealsEnabled": true,
+					"joinWhenIAmHostAndAlone": true,
+					"joinWhenIAmHostWithPeers": true,
+					"realTimeCapabilitiesOFF": true
+				},
+				"teams": null,
+				"transcriptLang": "en",
+				"uuid": "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+			},
+			"userUUID": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+			"uuid": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+			"videoStatus": "IMPORTING",
+			"zoomMeetingJoinUrl": "https://redacted.zoom.us/j/00000000000",
+			"zoomMetadata": null
+		},
+		"id": "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+		"links": {
+			"self": "https://app.redacted.tech/conversations/b2c3d4e5-f6a7-8901-2345-67890abcdef0"
+		},
+		"type": "conversations"
+	},
+	"query": {},
+	"headers": {
+		"x-forwarded-port": "443",
+		"accept": "application/json",
+		"user-agent": "axios/1.7.7",
+		"content-length": "30069",
+		"x-amzn-trace-id": "Root=1-00000000-000000000000000000000000",
+		"content-type": "application/json",
+		"accept-encoding": "gzip, compress, deflate, br",
+		"x-forwarded-for": "0.0.0.0",
+		"x-forwarded-proto": "https",
+		"host": "00000000-0000-0000-0000-000000000000.trayapp.io"
+	}
+}
