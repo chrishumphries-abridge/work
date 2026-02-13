@@ -9,11 +9,20 @@ Shared Claude.md for the RevOps team — a living doc that gives Claude Code (an
 - The canonical shared version lives in Notion (team can edit there)
 - Local copy at `revops-claude.md` is for drafting and editing via Claude Code
 
-### IMPORTANT: Auto-sync rule
-**Every time `revops-claude.md` is edited locally, immediately push the full content to the Notion page using `mcp__notion__notion-update-page`.** Do not wait for the user to ask — sync is automatic on every edit.
+### IMPORTANT: Bidirectional sync rules
+
+**Before editing `revops-claude.md`:**
+1. Fetch the Notion page using `mcp__notion__notion-fetch` to get the latest version
+2. Update the local file with any changes the team made in Notion
+
+**After editing `revops-claude.md`:**
+1. Push the full content to Notion using `mcp__notion__notion-update-page`
+
+Both directions are automatic — do not wait for the user to ask.
 
 ## Status
+- [x] Scaffold project and skeleton structure
+- [x] Push skeleton to Notion
+- [x] Set up bidirectional sync rules
 - [ ] Draft initial content
 - [ ] Review with team
-- [ ] Push to Notion
-- [ ] Establish sync cadence
