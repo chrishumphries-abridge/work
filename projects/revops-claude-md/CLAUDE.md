@@ -8,7 +8,9 @@ Shared Claude.md for the RevOps team — a living doc that gives Claude Code (an
 - **Notion page ID**: `306c967b-df09-80ab-b0ca-e29406a00f25`
 - The canonical shared version lives in Notion (team can edit there)
 - Local copy at `revops-claude.md` is for drafting and editing via Claude Code
-- **Sync workflow**: Edit locally → push to Notion, or pull from Notion → update local
+
+### IMPORTANT: Auto-sync rule
+**Every time `revops-claude.md` is edited locally, immediately push the full content to the Notion page using `mcp__notion__notion-update-page`.** Do not wait for the user to ask — sync is automatic on every edit.
 
 ## Status
 - [ ] Draft initial content

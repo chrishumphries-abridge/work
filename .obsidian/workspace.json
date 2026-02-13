@@ -214,6 +214,7 @@
   },
   "active": "1fa8892f59aa3f85",
   "lastOpenFiles": [
+    "projects/revops-claude-md/revops-claude.md",
     "projects/revops-claude-md/CLAUDE.md",
     "projects/revops-claude-md",
     "archive/cko-ai-foundations/slides.md",
@@ -258,7 +259,6 @@
     "archive/ai-charter-roadmap/archive/TERRITORY_HOME_PAGE_FRONTEND.md",
     "archive/ai-charter-roadmap/ai_foundations/slides.md",
     "archive/ai-charter-roadmap/ai_foundations/README.md",
-    "archive/ai-charter-roadmap/CLAUDE.md",
-    "archive/ai-charter-roadmap/CKO_OVERVIEW.md"
+    "archive/ai-charter-roadmap/CLAUDE.md"
   ]
 }
