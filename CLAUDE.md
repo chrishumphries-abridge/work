@@ -30,14 +30,17 @@
 - **User**: Chris Humphries (ID: `1210002869511639`)
 - **Main Project**: RevOps & Systems/Analytics Request & Backlog Board (ID: `1209756254866607`)
 
-### chris-mcp (Tray.io: Notion + Google Calendar)
-- **Server name**: `chris-mcp`
-- **Notion**: AI Meeting Notes database
-  - **Data source ID**: `2a9c967b-df09-804a-a924-000b5e1a2d5d` (use this for queries)
+### Notion
+- **Server name**: `notion`
+- AI Meeting Notes database
+  - **Database ID**: `2a9c967b-df09-804a-a924-000b5e1a2d5d` (use this for queries)
   - Properties: Name (title with date), Action Items (rich_text)
   - Note: Transcription blocks inside pages are not accessible via API
+
+### chris-mcp (Tray.io: Google Calendar only)
+- **Server name**: `chris-mcp`
 - **Google Calendar**: chris.humphries@abridge.com
-- **Note**: Ignore the Asana tool in this server — use the dedicated Asana MCP instead
+- **Note**: Only use this server for Google Calendar. Use dedicated Asana and Notion MCP servers for those apps.
 
 ### GitHub (Backup)
 - **Repo**: `chrishumphries-abridge/work` (private)
