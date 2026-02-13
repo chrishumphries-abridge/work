@@ -1,3 +1,0 @@
-- bulk add new
-- bulk edit existing
-- hover and see memberships

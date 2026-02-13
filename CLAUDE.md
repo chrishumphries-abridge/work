@@ -17,7 +17,7 @@
 - **Note**: Ignore the Asana tool in this server — use the dedicated Asana MCP instead
 
 ### GitHub (Backup)
-- **Repo**: `chrishumphries-abridge/obsidian` (private)
+- **Repo**: `chrishumphries-abridge/work` (private)
 - Push regularly to keep work backed up
 
 ---
