@@ -36,6 +36,18 @@
             }
           },
           {
+            "id": "8c44c2f7816a0abc",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.11.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.11.7"
+            }
+          },
+          {
             "id": "d4b4a4a0e00626f9",
             "type": "leaf",
             "state": {
@@ -50,7 +62,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -212,7 +224,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "1fa8892f59aa3f85",
+  "active": "8c44c2f7816a0abc",
   "lastOpenFiles": [
     "projects/revops-claude-md/revops-claude.md",
     "projects/revops-claude-md/CLAUDE.md",
