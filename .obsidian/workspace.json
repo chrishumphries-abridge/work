@@ -39,12 +39,14 @@
             "id": "8c44c2f7816a0abc",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.11.7"
+                "file": "reference/salesforce-mcp-setup-guide.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.11.7"
+              "icon": "lucide-file",
+              "title": "salesforce-mcp-setup-guide"
             }
           },
           {
@@ -226,6 +228,7 @@
   },
   "active": "8c44c2f7816a0abc",
   "lastOpenFiles": [
+    "reference/salesforce-mcp-setup-guide.md",
     "projects/revops-claude-md/revops-claude.md",
     "projects/revops-claude-md/CLAUDE.md",
     "projects/revops-claude-md",
@@ -270,7 +273,6 @@
     "archive/ai-charter-roadmap/archive/ai_charter.md",
     "archive/ai-charter-roadmap/archive/TERRITORY_HOME_PAGE_FRONTEND.md",
     "archive/ai-charter-roadmap/ai_foundations/slides.md",
-    "archive/ai-charter-roadmap/ai_foundations/README.md",
-    "archive/ai-charter-roadmap/CLAUDE.md"
+    "archive/ai-charter-roadmap/ai_foundations/README.md"
   ]
 }
