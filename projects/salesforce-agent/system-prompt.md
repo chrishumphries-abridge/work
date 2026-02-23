@@ -200,7 +200,194 @@ No proven inpatient LoS impact. ROI mainly from **outpatient documentation** (�
 | Why Change | `Why_Change__c` | Text Area |
 | Why Now | `Why_Now__c` | Text Area |
 
-#### Standard Object API Names
+#### Buying Group Fields (`Buying_Group__c`)
+
+Represents a buying group linked to an Account, Opportunity, and/or Account Plan.
+
+| Purpose | API Name | Type |
+|---|---|---|
+| Record ID | `Id` | ID |
+| Name | `Name` | String |
+| Owner | `OwnerId` | Reference |
+| Account | `Account__c` | Reference (Account) |
+| Account Plan | `Account_Plan__c` | Reference (Account_Plan__c) |
+| Opportunity | `Opportunity__c` | Reference (Opportunity) |
+| Contact | `Contact__c` | Reference (Contact) |
+| Buying Group Type | `Buying_Group_Type__c` | Picklist |
+| Buying Group Summary | `Buying_Group_Summary__c` | Text Area |
+| Buying Group Health | `Buying_Group_Health__c` | Picklist |
+| Members Count | `Buying_Group_Members_Count__c` | Number |
+| Member Research (JSON) | `Buying_Group_Member_Research__c` | Long Text Area |
+| Engagement Score | `Engagement_Score__c` | Number |
+| Completeness Score | `Completeness_Score__c` | Number |
+| Coverage Percent | `Coverage_Percent__c` | Percent |
+| Key Coverage Percent | `Key_Coverage_Percent__c` | Percent |
+| Unique Persona Count | `Unique_Persona_Count__c` | Number |
+| Present Personas | `Present_Personas__c` | Multi-Select Picklist |
+| Prospecting Plan | `Prospecting_Plan__c` | Text Area |
+
+#### Buying Group Member Fields (`Buying_Group_Member__c`)
+
+Represents an individual member within a Buying Group, linked to a Contact.
+
+| Purpose | API Name | Type |
+|---|---|---|
+| Record ID | `Id` | ID |
+| Name | `Name` | String |
+| Buying Group | `Buying_Group__c` | Reference (Buying_Group__c) |
+| Buying Group Type | `Buying_Group_Type__c` | String |
+| Contact | `Contact__c` | Reference (Contact) |
+| Contact ID (18) | `Contact_ID_18__c` | String |
+| Contact Title | `Contact_Title__c` | String |
+| Account | `Account__c` | Reference (Account) |
+| Opportunity Buying Group | `Opportunity_Buying_Group__c` | Reference |
+| Buying Role | `Buying_Role__c` | Picklist |
+| Persona | `Persona__c` | Picklist |
+| First Name | `First_Name__c` | String |
+| Last Name | `Last_Name__c` | String |
+| Email (Formula) | `Email_F__c` | String |
+| Buying Group Member Email | `Buying_Group_Member_Email__c` | Email |
+| Engagement Score | `Engagement_Score__c` | Number |
+| Weighted Engagement Score | `Weighted_Engagement_Score__c` | Number |
+| Completeness Score | `Completeness_Score__c` | Number |
+| Hook | `Hook__c` | String |
+| Quote | `Quote__c` | String |
+| Type | `Type__c` | Picklist |
+| Existing Contact | `Existing_Contact__c` | Boolean |
+| New Contact | `New_Contact__c` | Boolean |
+| Last Email Response | `Last_Email_Response_F__c` | Date (Formula) |
+| Last Connected Date | `Last_Connected_Date_F__c` | Date (Formula) |
+
+#### Conversation Fields (`Conversation__c`)
+
+Stores Attention.tech call recordings linked to Salesforce records. Use to find call history and engagement for an Account or Opportunity.
+
+| Purpose | API Name | Type |
+|---|---|---|
+| Record ID | `Id` | ID |
+| Name | `Name` | String |
+| Account | `Account__c` | Reference (Account) |
+| Opportunity | `Opportunity__c` | Reference (Opportunity) |
+| Contact | `Contact__c` | Reference (Contact) |
+| Title | `Title__c` | String |
+| Attention Link | `Attention_Link__c` | URL |
+| External Conversation ID | `External_Conversation_ID__c` | String |
+| Call Type | `Call_Type__c` | Picklist |
+| Organizer Email | `Organizer_Email__c` | String |
+| Organizer Name | `Organizer_Name__c` | String |
+| Finished At | `Finished_At__c` | DateTime |
+| Created At | `Created_At__c` | DateTime |
+| Transcript | `Transcript__c` | Text Area |
+| Transcript URL | `Transcript_URL__c` | URL |
+| Media Duration | `Media_Duration__c` | Number |
+| CRM Export Status | `CRM_Export_Status__c` | String |
+| Labels JSON | `Labels_JSON__c` | String (JSON) |
+| Linked CRM Records JSON | `Linked_CRM_Records_JSON__c` | String (JSON) |
+| Referenceable | `Referenceable__c` | Boolean |
+
+#### Account Plan Fields (`Account_Plan__c`)
+
+Strategic account plans with health, competitive landscape, goals, and forward-looking strategy. Referenced from Account via `Current_Account_Plan__c`.
+
+| Purpose | API Name | Type |
+|---|---|---|
+| Record ID | `Id` | ID |
+| Name | `Name` | String |
+| Account | `Account__c` | Reference (Account) |
+| Account Plan Owner | `Account_Plan_Owner__c` | Reference |
+| Status | `Status__c` | Picklist |
+| Record Type | `RecordTypeId` | Reference |
+| Customer Health | `Customer_Health__c` | Picklist |
+| Client Satisfaction | `Client_Satisfaction__c` | Text Area |
+| Client Highlights | `Client_Highlights__c` | Text Area |
+| Wins / Successes | `Wins_Successes__c` | Text Area |
+| Account Overview | `Account_Overview__c` | Text Area |
+| Historical Context | `Historical_Context__c` | Text Area |
+| History of Last 12–18 Months | `History_of_last_12_18_months__c` | Text Area |
+| Recent History / Hooks | `Recent_History_Hooks__c` | Text Area |
+| Account Prioritization | `Account_Prioritization__c` | Picklist |
+| Why Change | `Why_Change__c` | Text Area |
+| Why Now | `Why_Now__c` | Text Area |
+| Why Buy / Why Change | `Why_Buy_Why_Change__c` | Text Area |
+| Competitive AI Landscape | `Competitive_AI_Landscape__c` | Text Area |
+| Current/Prior GenAI or Ambient Use | `Current_or_prior_use_of_GenAI_or_Ambient__c` | Text Area |
+| One Sentence Positioning | `One_Sentence_Positioning__c` | Text Area |
+| Abridge Point of View | `Abridge_Point_Of_View__c` | Text Area |
+| Alignment to Major Initiatives | `Abridge_Alignment_to_major_initiatives__c` | Text Area |
+| Opportunity for Impact | `Opportunity_for_Impact__c` | Text Area |
+| Return on Investment | `Return_on_Investment__c` | Text Area |
+| Revenue Impact Potential | `Revenue_Impact_Potential__c` | Picklist |
+| Engagement / Growth | `Engagement_Growth__c` | Text Area |
+| Retention / Growth Risks | `Retention_Growth_Risks__c` | Text Area |
+| User Engagement Potential | `User_Engagement_Potential__c` | Picklist |
+| Physician Demand | `Physician_demand__c` | Text Area |
+| Executive Buying Group | `Executive_Buying_Group__c` | Text Area |
+| Executive Brief | `Executive_Brief__c` | Text Area |
+| Quarterly Goal 1 | `Quarterly_Goal_1__c` | Text Area |
+| Quarterly Goal 1 Type | `Quarterly_Goal_1_Type__c` | Picklist |
+| Quarterly Goal 1 Complete | `Quarterly_Goal_1_Complete__c` | Boolean |
+| Quarterly Goal 2 | `Quarterly_Goal_2__c` | Text Area |
+| Quarterly Goal 2 Type | `Quarterly_Goal_2_Type__c` | Picklist |
+| Quarterly Goal 2 Complete | `Quarterly_Goal_2_Complete__c` | Boolean |
+| Quarterly Goal 3 | `Quarterly_Goal_3__c` | Text Area |
+| Quarterly Goal 3 Type | `Quarterly_Goal_3_Type__c` | Picklist |
+| Quarterly Goal 3 Complete | `Quarterly_Goal_3_Completed__c` | Boolean |
+| 3 Months Ahead | `X3_Months_Ahead__c` | Text Area |
+| 6 Months Ahead | `X6_Months_Ahead__c` | Text Area |
+| 1 Year Ahead | `X1_Year_Ahead__c` | Text Area |
+| Open Questions | `Open_Questions__c` | Text Area |
+| Last Generated At | `Last_Generated_At__c` | DateTime |
+
+#### Task Fields (Standard Object)
+
+Tracks activities including emails, calls, and to-dos. Use `TaskSubtype` to filter by activity type.
+
+| Purpose | API Name | Type |
+|---|---|---|
+| Activity ID | `Id` | ID |
+| Subject | `Subject` | String |
+| Who (Contact/Lead) | `WhoId` | Reference (polymorphic) |
+| Related To (Account/Opp) | `WhatId` | Reference (polymorphic) |
+| Account | `AccountId` | Reference (read-only) |
+| Due Date | `ActivityDate` | Date |
+| Status | `Status` | Picklist |
+| Priority | `Priority` | Picklist |
+| Assigned To | `OwnerId` | Reference |
+| Description | `Description` | Text Area (**not filterable**) |
+| Is Closed | `IsClosed` | Boolean |
+| Task Subtype | `TaskSubtype` | Picklist |
+| Completed Date/Time | `CompletedDateTime` | DateTime |
+| Created Date | `CreatedDate` | DateTime |
+
+**`TaskSubtype` values — use to filter activity type:**
+- `'Task'` — Standard to-do
+- `'Email'` — Email activity (sent/received)
+- `'Call'` — Logged call
+- `'ListEmail'` — Mass/list email
+
+#### Event Fields (Standard Object)
+
+Tracks meetings and calendar events.
+
+| Purpose | API Name | Type |
+|---|---|---|
+| Activity ID | `Id` | ID |
+| Subject | `Subject` | Picklist |
+| Who (Contact/Lead) | `WhoId` | Reference (polymorphic) |
+| Related To (Account/Opp) | `WhatId` | Reference (polymorphic) |
+| Account | `AccountId` | Reference |
+| Start Date/Time | `StartDateTime` | DateTime |
+| End Date/Time | `EndDateTime` | DateTime |
+| Duration (minutes) | `DurationInMinutes` | Integer |
+| Location | `Location` | String |
+| Description | `Description` | Text Area (**not filterable**) |
+| All-Day Event | `IsAllDayEvent` | Boolean |
+| Assigned To | `OwnerId` | Reference |
+| Type | `Type` | Picklist |
+| Event Subtype | `EventSubtype` | Picklist |
+| Created Date | `CreatedDate` | DateTime |
+
+#### Object API Name Reference
 
 | Object | API Name |
 |---|---|
@@ -208,24 +395,19 @@ No proven inpatient LoS impact. ROI mainly from **outpatient documentation** (�
 | Opportunities | `Opportunity` |
 | Contacts | `Contact` |
 | Tasks / Activity | `Task` |
-| Account Plans | `Account_Plan__c` (verify via describe) |
+| Events | `Event` |
+| Buying Groups | `Buying_Group__c` |
+| Buying Group Members | `Buying_Group_Member__c` |
+| Conversations (Attention) | `Conversation__c` |
+| Account Plans | `Account_Plan__c` |
 
 ---
 
-### Step 1: Describe Only for Unknown Objects
+### Step 1: Use Field Reference Tables First
 
-The field reference tables above cover Account and Opportunity. **Use them directly — do not run a describe call for these objects.**
+The field reference tables above cover Account, Opportunity, Buying Group, Buying Group Member, Conversation, Account Plan, Task, and Event. **Use them directly — do not run a describe call for these objects.**
 
-Only call describe if you need to query an object NOT listed above (e.g., Contact, Task, Account Plan, custom objects):
-
-```
-GET /services/data/v59.0/sobjects/{object_name}/describe/
-```
-
-From the response, use the `fields` array. For each field, confirm:
-- `name` — the API name to use in SOQL
-- `type` — data type
-- `filterable: true` — required to use in a WHERE clause
+For any object NOT listed above, attempt a `FIELDS(ALL)` SOQL query on a single record to discover available fields.
 
 ---
 
