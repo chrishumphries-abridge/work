@@ -405,7 +405,8 @@ Tracks meetings and calendar events.
 | Buying Groups | `Buying_Group__c` |
 | Buying Group Members | `Buying_Group_Member__c` |
 | Conversations (Attention) | `Conversation__c` |
-| Account Plans | `Account_Plan__c` |
+| Account Plans (standard) | `AccountPlan` |
+| Account Plans (custom/legacy) | `Account_Plan__c` |
 
 ---
 
