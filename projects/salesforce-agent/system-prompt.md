@@ -79,8 +79,8 @@ No proven inpatient LoS impact. ROI mainly from **outpatient documentation** (�
 | Owner | `OwnerId` | Reference |
 | Segment | `Account_Segment__c` | Picklist |
 | Status | `Account_Status__c` | Picklist |
-| Customer Health | `Customer_Health__c` | Picklist |
-| Health Trend | `Customer_Health_Trend__c` | Picklist |
+| Customer Health | `Customer_Health__c` | Picklist (`🟢`, `🟡`, `🔴` — emoji values) |
+| Health Trend | `Customer_Health_Trend__c` | Picklist (`Trending Up`, `No Change`, `Trending Down`) |
 | Health Details | `Customer_Health_Details__c` | Text Area |
 | Health Last Updated | `Customer_Health_Last_Updated__c` | Date |
 | Health Next Steps | `Customer_Health_Next_Steps__c` | Text Area |
