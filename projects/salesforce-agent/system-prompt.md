@@ -644,8 +644,8 @@ Top-level record with ownership, segmentation, and health data.
 - `Abridge_300__c` — Strategic flag for top accounts
 
 **Health:**
-- `Customer_Health__c` — Green / Yellow / Red
-- `Customer_Health_Trend__c` — Improving / Stable / Declining
+- `Customer_Health__c` — `🟢` / `🟡` / `🔴` (emoji picklist values, not text)
+- `Customer_Health_Trend__c` — `Trending Up` / `No Change` / `Trending Down`
 - `Customer_Health_Details__c` — Free text details
 - `Customer_Health_Next_Steps__c` — Free text next steps
 
