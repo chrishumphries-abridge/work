@@ -277,7 +277,7 @@ Stores Attention.tech call recordings linked to Salesforce records. Use to find 
 | Organizer Name | `Organizer_Name__c` | String |
 | Finished At | `Finished_At__c` | DateTime |
 | Created At | `Created_At__c` | DateTime |
-| Transcript | `Transcript__c` | Text Area |
+| Transcript (call summary) | `Transcript__c` | Text Area |
 | Transcript URL | `Transcript_URL__c` | URL |
 | Media Duration | `Media_Duration__c` | Number |
 | CRM Export Status | `CRM_Export_Status__c` | String |
