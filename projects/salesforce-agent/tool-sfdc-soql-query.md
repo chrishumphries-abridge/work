@@ -21,6 +21,9 @@ Executes a SOQL query against Salesforce and returns matching records.
 | Email activities on Task | `TaskSubtype = 'Email'` | Filtering by `Subject LIKE '%Email%'` |
 | Account Plan (standard) | `AccountPlan` | `Account_Plan__c` (that's the legacy custom object) |
 | Attention call links | `Attention_Link__c` on `Conversation__c` | Constructing URLs manually |
+| Customer Health uses **emojis** | `Customer_Health__c IN ('🟡', '🔴')` | `Customer_Health__c IN ('Yellow', 'Red')` |
+| Conversation date field | `Finished_At__c` | `Date__c` (doesn't exist) |
+| Health trend values | `'Trending Up'`, `'No Change'`, `'Trending Down'` | `'Improving'`, `'Stable'`, `'Declining'` |
 
 ### Partial Name Matching
 
