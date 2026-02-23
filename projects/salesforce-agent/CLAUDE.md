@@ -1,7 +1,7 @@
 # Salesforce Agent — Project Context
 
 ## Summary
-Direct Salesforce SOQL access via MCP tool (`ct_salesforce_soql_query_896b9cdd` on `chris-mcp`). Claude Code queries Salesforce directly — no LLM middleman.
+Direct Salesforce SOQL access via MCP tool (`ct_salesforce_soql_query_896b9cdd` on `chris-mcp`). Claude Code queries Salesforce directly — no LLM middleman. The tool returns Salesforce error messages directly on failure, enabling self-correction without discovery queries.
 
 ## History
 Originally a Tray.io-hosted agent with LLM middleware (Feb 2026). The Tray agent wrapped SOQL queries inside its own agent tooling, adding two LLM inference calls per query. Replaced with a direct SOQL connector for speed and accuracy.
