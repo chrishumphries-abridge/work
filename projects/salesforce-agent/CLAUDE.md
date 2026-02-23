@@ -1,29 +1,19 @@
 # Salesforce Agent — Project Context
 
 ## Summary
-Tray.io MCP server (`chris-mcp`) that exposes a Salesforce agent for natural language queries against the Abridge Salesforce org. Used from Claude Code and Claude Desktop.
+Direct Salesforce SOQL access via MCP tool (`ct_salesforce_soql_query_896b9cdd` on `chris-mcp`). Claude Code queries Salesforce directly — no LLM middleman.
 
-## Architecture
-- **MCP Server**: `chris-mcp` (Tray.io hosted)
-- **Tools**:
-  - `ct_salesforce_agent` — Natural language Salesforce queries (SOQL generation + execution)
-  - `ct_at_describe_salesforce_object` — Returns object metadata/schema from Salesforce REST API describe endpoint
-- **Flow**: Claude Code/Desktop → MCP → Tray.io workflow → Salesforce REST API → Response
+## History
+Originally a Tray.io-hosted agent with LLM middleware (Feb 2026). The Tray agent wrapped SOQL queries inside its own agent tooling, adding two LLM inference calls per query. Replaced with a direct SOQL connector for speed and accuracy.
 
-## Key Issue (Resolved)
-The agent was using wrong field API names in SOQL despite running describe calls. Root cause: the LLM was inferring field names from label-like hints in the system prompt instead of using actual API names from the describe response. Fix: hardcoded field reference tables in the system prompt for Account and Opportunity objects.
+**Key issue solved:** The Tray agent hallucinated field API names despite running describe calls. Root cause: template placeholders and label-like hints in the system prompt overrode describe results. Fixed by hardcoding field reference tables.
 
-## Files
-- `system-prompt.md` — The full system prompt for the Salesforce agent (deployed in Tray.io)
-- `CLAUDE.md` — This file
+## Current Reference Locations
+- **SOQL reference** (field tables, query patterns, gotchas): `/Users/chris/work/reference/salesforce-soql-reference.md`
+- **Sales context** (ROI, competitors): `/Users/chris/work/reference/abridge-sales-context.md`
+- **Main CLAUDE.md router**: See "chris-mcp" section under MCP Servers
 
-## Status
-- System prompt v2 with field reference tables: in progress
-- Tray workflow: operational
-- Describe tool: operational (returns first field only — needs Tray-side fix to return full schema)
-
-## Notes
-- The describe tool currently only returns the first field from the schema. The Salesforce agent tool works around this by interpreting the describe internally.
-- `NextStep` is a standard field (no `__c`) — top source of SOQL errors
-- `Future_Task_Date_RU__c` is the actual "Next Activity Date" — not `NextActivityDate`
-- No `Is_Renewal__c` boolean exists — use `Renewal_Count__c` to filter renewals
+## Deprecated Files (kept for history)
+- `system-prompt.md` — Original Tray agent system prompt. Content migrated to reference files.
+- `tool-describe-sfdc-object.md` — Deprecated; use `FIELDS(ALL)` for undocumented objects.
+- `tool-sfdc-soql-query.md` — Content migrated to SOQL reference file.
