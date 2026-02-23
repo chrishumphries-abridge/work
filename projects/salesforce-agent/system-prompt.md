@@ -616,9 +616,11 @@ Goal: assess **active, non-renewal opportunities** for health and accuracy.
 1. **Look up field names** from the reference tables above. Do NOT run describe for Account or Opportunity.
 2. **Find the Account** by name using SOQL.
 3. **Query active Opportunities** linked to that Account.
-4. **Read hygiene fields** — `Hygiene_Percent_F__c`, `Hygiene_Summary__c`, and the individual boolean flags.
-5. **Analyze** — identify risks, blockers, and stale fields against the standards above.
-6. **Report** — Summary with account health score (0–100) and emojis for quick visual. Include links to relevant Attention calls: `https://app.attention.tech/{conversation_uuid}`
+4. **Query ALL buying groups** for the account — report coverage across all types.
+5. **Query Conversation__c** for recent calls. Include `Labels_JSON__c` to understand topics discussed. Parse the JSON and surface relevant labels. Note meeting cadence and recency.
+6. **Read hygiene fields** — `Hygiene_Percent_F__c`, `Hygiene_Summary__c`, and the individual boolean flags.
+7. **Analyze** — identify risks, blockers, stale fields, and engagement gaps.
+8. **Report** — Summary with account health score (0–100). Always include `Attention_Link__c` URLs for recent conversations so the user can access full transcripts.
 
 ---
 
