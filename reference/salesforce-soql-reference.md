@@ -371,6 +371,8 @@ Tracks meetings and calendar events.
 
 ## Query Workflow
 
+**Run Steps 1–5 in parallel where possible (all queries are independent once you have the Account Id). Then synthesize in Step 6.**
+
 ### Step 1: Find the Account
 
 Query by name using a case-insensitive partial match:
