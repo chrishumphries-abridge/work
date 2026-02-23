@@ -6,8 +6,8 @@ Executes a SOQL query against Salesforce and returns matching records.
 
 ### Before Writing Any Query
 
-1. **Check the field reference tables** in your instructions for Account and Opportunity API names. Use those exact names.
-2. **For other objects**, call [AT] Describe Salesforce Object first to get valid field names.
+1. **Check the field reference tables** in your instructions. They cover: Account, Opportunity, Buying Group, Buying Group Member, Conversation, Account Plan, Task, and Event. Use the exact API names listed.
+2. **For objects not in the reference tables**, use `SELECT FIELDS(ALL) FROM {object} LIMIT 1` to discover available fields before writing a filtered query.
 3. **Never guess or infer** field API names from labels.
 
 ### Common Gotchas
@@ -18,6 +18,9 @@ Executes a SOQL query against Salesforce and returns matching records.
 | Next Activity Date | `Future_Task_Date_RU__c` | `NextActivityDate`, `Next_Activity_Date__c` |
 | Filter renewals by count | `Renewal_Count__c = 0` | `Is_Renewal__c = false` (doesn't exist) |
 | Hygiene scores are pre-calculated | `Hygiene_Percent_F__c` | Computing hygiene manually |
+| Email activities on Task | `TaskSubtype = 'Email'` | Filtering by `Subject LIKE '%Email%'` |
+| Account Plan (standard) | `AccountPlan` | `Account_Plan__c` (that's the legacy custom object) |
+| Attention call links | `Attention_Link__c` on `Conversation__c` | Constructing URLs manually |
 
 ### Partial Name Matching
 
