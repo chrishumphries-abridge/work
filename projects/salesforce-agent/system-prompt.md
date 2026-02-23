@@ -529,7 +529,7 @@ SELECT Id, Name, Customer_Health__c, Customer_Health_Trend__c,
        Total_CARR_F__c, Active_Users__c, Total_Contracted_Users__c
 FROM Account
 WHERE Account_Status__c = 'Customer'
-AND Customer_Health__c IN ('Yellow', 'Red')
+AND Customer_Health__c IN ('🟡', '🔴')
 ```
 
 **Buying group coverage for an account (ALL buying groups):**
