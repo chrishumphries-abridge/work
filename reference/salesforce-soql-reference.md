@@ -510,10 +510,17 @@ LIMIT 10
 ```
 
 > **Maximizing value from Conversation__c:**
-> - **Always include `Transcript__c`** — contains a call summary. Use it to extract key takeaways, stakeholders, pain points, decisions, and next steps.
+> - **Always include `Transcript__c`** — contains a call summary. This is your richest intelligence source. Don't just summarize it — **mine it** for:
+>   - **People & roles**: Extract every named person and their title/role. Map them to buying group personas even if no buying group exists in SFDC yet.
+>   - **Competitors mentioned**: Any vendor names (DAX, Suki, DeepScribe, Freed, Heidi, Ambience, etc.) — note whether they're currently in use, being evaluated, or were tried and failed.
+>   - **Current tech stack**: EHR vendor, other tools in use, planned migrations.
+>   - **Pain points & quotes**: Specific problems stated by stakeholders. Pull direct quotes when they convey urgency or priorities (e.g., "80-90% reduction in charting burden").
+>   - **Concerns & objections**: Template fit, integration requirements, timeline dependencies, budget constraints.
+>   - **Decision process**: Who makes the final call? What's the evaluation process? What needs to happen before a decision?
+>   - **Next steps from the call**: What was agreed to at the end? Compare this to the actual `NextStep` field — are they aligned?
 > - **Always include `Labels_JSON__c`** — structured metadata (products discussed, call type, topics). Parse and surface relevant labels.
 > - **Always include `Attention_Link__c`** — direct link to full transcript and recording.
-> - **Flag engagement gaps.** If most recent conversation is >30 days old for an active customer, flag it.
+> - **Flag engagement gaps.** If most recent conversation is >30 days old for an active customer, flag it. If there are no conversations for a prospect with an open opportunity, flag that too.
 
 **Email activity for an account (last 30 days):**
 ```sql
