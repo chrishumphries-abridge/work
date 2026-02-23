@@ -440,6 +440,28 @@ Then validate against these standards:
 | Close | +1–30 days |
 | Closed Won | Signature date |
 
+### Step 4: Query Buying Groups, Conversations, and Activity
+
+Run these in parallel:
+
+- **Buying Groups** — all types for the account (see Common Query Patterns below)
+- **Conversations** — recent calls with `Transcript__c` (see Common Query Patterns below)
+- **Email activity** — Tasks with `TaskSubtype = 'Email'`
+- **Events** — upcoming and recent meetings
+
+### Step 5: Mine Transcript Intelligence
+
+For each conversation with a non-empty `Transcript__c`:
+- Extract named people, titles, and roles → map to buying group personas
+- Extract competitors mentioned → cross-reference with `Competitor__c` on the opp
+- Extract current tech stack, planned migrations, and timeline dependencies
+- Extract specific pain points, concerns, and direct quotes
+- Extract agreed next steps → compare to `NextStep` field for follow-through
+
+### Step 6: Synthesize
+
+Combine all data into an account summary following the Account Summary Guidelines (see below). Don't just report fields — make a health judgment, identify gaps, and recommend actions.
+
 ---
 
 ## Common Query Patterns
