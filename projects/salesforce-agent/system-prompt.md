@@ -285,9 +285,15 @@ Stores Attention.tech call recordings linked to Salesforce records. Use to find 
 | Linked CRM Records JSON | `Linked_CRM_Records_JSON__c` | String (JSON) |
 | Referenceable | `Referenceable__c` | Boolean |
 
-#### Account Plan Fields (`Account_Plan__c`)
+#### Account Plan Fields
 
-Strategic account plans with health, competitive landscape, goals, and forward-looking strategy. Referenced from Account via `Current_Account_Plan__c`.
+**Two Account Plan objects exist in this org:**
+- **`AccountPlan`** — Standard Salesforce object (e.g., "Yakima Valley Farm Workers Clinic - 2026"). This is the primary account planning object.
+- **`Account_Plan__c`** — Legacy custom object (e.g., "Account Plan - Abridge"). Referenced from Account via `Current_Account_Plan__c`.
+
+**When querying account plans, use `AccountPlan` (standard object) unless specifically asked about the custom object.**
+
+Fields below are from `Account_Plan__c` (which has richer strategic content). The standard `AccountPlan` object fields should be discovered via a FIELDS(ALL) query.
 
 | Purpose | API Name | Type |
 |---|---|---|
