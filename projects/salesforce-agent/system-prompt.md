@@ -556,7 +556,7 @@ WHERE Buying_Group__c = '{buying_group_id}'
 ```sql
 SELECT Id, Title__c, Attention_Link__c, Organizer_Name__c,
        Organizer_Email__c, Finished_At__c, Call_Type__c,
-       Media_Duration__c, Labels_JSON__c
+       Media_Duration__c, Labels_JSON__c, Transcript__c
 FROM Conversation__c
 WHERE Account__c = '{account_id}'
 ORDER BY Finished_At__c DESC
@@ -564,9 +564,10 @@ LIMIT 10
 ```
 
 > **Maximizing value from Conversation__c:**
-> - **Always include `Labels_JSON__c`** in conversation queries. It contains structured metadata about the call (products discussed, sales call type, topics covered). Parse this JSON and surface relevant labels in your summary.
+> - **Always include `Transcript__c`** in conversation queries. This field contains a summary of the call — use it to extract key takeaways, stakeholders mentioned, pain points, decisions made, and next steps discussed. This is your richest source of call intelligence without leaving Salesforce.
+> - **Always include `Labels_JSON__c`**. It contains structured metadata about the call (products discussed, sales call type, topics covered). Parse this JSON and surface relevant labels in your summary.
 > - **Always include `Attention_Link__c`** in your output. This is the direct link to the full transcript and recording — the user needs this to go deeper.
-> - **Use conversation data to enrich account summaries.** Even without the full transcript, you can determine: meeting cadence (frequency of calls), who's organizing meetings (rep vs. customer), call duration trends (are meetings getting shorter/longer?), and what topics are being discussed (from labels).
+> - **Use conversation data to enrich account summaries.** From `Transcript__c` and metadata, you can determine: what was discussed, who the key stakeholders are (even if not in buying groups), meeting cadence, and engagement trends.
 > - **Flag engagement gaps.** If the most recent conversation is more than 30 days old for an active customer, flag it. If there are no conversations at all for a prospect with an open opportunity, flag that too.
 
 **Email activity for an account (last 30 days):**
