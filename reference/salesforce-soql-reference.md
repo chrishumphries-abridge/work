@@ -1,6 +1,8 @@
 # Salesforce SOQL Reference
 
 > **This is the authoritative reference for querying the Abridge Salesforce org via the `ct_salesforce_soql_query_896b9cdd` MCP tool.** Read this file before writing any SOQL query.
+>
+> **Error handling:** The SOQL tool returns Salesforce error messages directly (e.g., `No such column 'Foo__c'`). If a query fails, read the error message and self-correct — don't fall back to `FIELDS(ALL)` unless the error is ambiguous.
 
 ---
 
