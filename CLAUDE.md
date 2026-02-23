@@ -37,10 +37,20 @@
   - Properties: Name (title with date), Action Items (rich_text)
   - Note: Transcription blocks inside pages are not accessible via API
 
-### chris-mcp (Tray.io: Google Calendar only)
+### chris-mcp (Tray.io: Google Calendar + Salesforce SOQL)
 - **Server name**: `chris-mcp`
 - **Google Calendar**: chris.humphries@abridge.com
-- **Note**: Only use this server for Google Calendar. Use dedicated Asana and Notion MCP servers for those apps.
+- **Salesforce SOQL**: `ct_salesforce_soql_query_896b9cdd` — executes raw SOQL against Abridge production org
+- **BEFORE writing any SOQL query**, read: `reference/salesforce-soql-reference.md`
+  - Contains field API name tables, query patterns, and gotchas. **Do not guess field names.**
+- **Quick gotchas** (most common SOQL errors):
+  - `NextStep` is a standard field (no `__c`)
+  - `Future_Task_Date_RU__c` is "Next Activity Date" (not `NextActivityDate`)
+  - No `Is_Renewal__c` — use `Renewal_Count__c` to filter renewals
+  - `Customer_Health__c` values are emojis: `🟢`, `🟡`, `🔴` (not text)
+  - `Finished_At__c` on Conversation__c (not `Date__c`)
+- **Sales context** (ROI, competitors): `reference/abridge-sales-context.md`
+- **Note**: Use dedicated Asana and Notion MCP servers for those apps.
 
 ### GitHub (Backup)
 - **Repo**: `chrishumphries-abridge/work` (private)
