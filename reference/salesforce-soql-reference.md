@@ -588,3 +588,35 @@ LIMIT 20
 * **Pipeline hygiene:** update `NextStep` weekly (Fri EOD), keep `Future_Task_Date_RU__c` current.
 * **Use these field reference tables** — for unlisted objects, use `SELECT FIELDS(ALL) FROM {object} LIMIT 1`.
 * **Stalled Deal Checklist:** What changed since last week → current blocker + mitigation → internal asks to get back on track.
+
+---
+
+## Account Summary Guidelines
+
+When asked to summarize or assess an account, produce an **actionable brief**, not a data dump. Follow these principles:
+
+### Think Like a Rep
+- **Synthesize a health assessment** even when `Customer_Health__c` is blank. Use opportunity stage, engagement recency, transcript signals, and hygiene scores to make a judgment call (🟢/🟡/🔴 with a one-line rationale).
+- **Infer buying groups from transcripts** when none exist in SFDC. Map people mentioned in calls to buying roles (Champion, Economic Buyer, Detractor, etc.) and flag who's missing (e.g., "CMO not yet engaged").
+- **Track competitors from every source** — `Competitor__c` on the opp, but also names mentioned in call transcripts. Note whether competitors are currently in use, being evaluated, or were tried and failed.
+
+### Extract, Don't Summarize
+- Pull **specific names, titles, and roles** from `Transcript__c` — not just "stakeholders were engaged."
+- Pull **direct quotes** that convey urgency, priorities, or concerns.
+- Identify the **current tech stack** (EHR, other AI tools) and any planned migrations that gate the deal.
+- Note **decision process and timeline** — who decides, what's the trigger, what are the dependencies.
+
+### Surface What's Missing
+- Compare call next steps to the `NextStep` field — are they aligned or has follow-through dropped?
+- Flag **engagement gaps**: days since last email, days since last call, stale next activity dates.
+- Flag **SFDC hygiene gaps**: missing competitors, empty buying groups, no contact roles — but frame them as action items, not just complaints.
+
+### Output Format
+Keep it scannable. Use this structure:
+
+1. **Account Overview** — key facts table (owner, segment, CARR, health, EMR)
+2. **Health Summary** — synthesized assessment with emoji + one-line rationale
+3. **Buying Group Summary** — who's engaged (from SFDC + transcripts), who's missing, C-level status
+4. **Active Opportunities** — stage, CARR, close date, next step, hygiene flags
+5. **Recent Activity** — call intelligence (mined from transcripts), email cadence, upcoming events
+6. **Assessment & Recommended Actions** — what's working, what's at risk, specific next moves
