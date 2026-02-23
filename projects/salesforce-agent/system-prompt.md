@@ -532,6 +532,57 @@ WHERE Account_Status__c = 'Customer'
 AND Customer_Health__c IN ('Yellow', 'Red')
 ```
 
+**Buying group coverage for an account (ALL buying groups):**
+```sql
+SELECT Id, Name, Buying_Group_Type__c, Coverage_Percent__c,
+       Key_Coverage_Percent__c, Buying_Group_Members_Count__c,
+       Engagement_Score__c, Buying_Group_Health__c
+FROM Buying_Group__c
+WHERE Account__c = '{account_id}'
+```
+
+> **IMPORTANT:** Accounts have multiple buying groups (e.g., Clinical Notes, Nursing, Revenue Cycle). When reporting buying group coverage for an account, **always query and present ALL buying groups**, not just one. Never report a single buying group's coverage as the account-level number. Summarize across all types to give an accurate picture.
+
+**Buying group members for a specific buying group:**
+```sql
+SELECT Id, Name__c, Buying_Role__c, Persona__c, Contact_Title__c,
+       Email_F__c, Engagement_Score__c, Weighted_Engagement_Score__c,
+       Completeness_Score__c, Last_Email_Response_F__c, Last_Connected_Date_F__c
+FROM Buying_Group_Member__c
+WHERE Buying_Group__c = '{buying_group_id}'
+```
+
+**Recent Attention conversations for an account:**
+```sql
+SELECT Id, Title__c, Attention_Link__c, Organizer_Name__c,
+       Finished_At__c, Call_Type__c, Media_Duration__c
+FROM Conversation__c
+WHERE Account__c = '{account_id}'
+ORDER BY Finished_At__c DESC
+LIMIT 10
+```
+
+**Email activity for an account (last 30 days):**
+```sql
+SELECT Id, Subject, ActivityDate, Status, OwnerId, WhoId
+FROM Task
+WHERE AccountId = '{account_id}'
+AND TaskSubtype = 'Email'
+AND ActivityDate = LAST_N_DAYS:30
+ORDER BY ActivityDate DESC
+LIMIT 20
+```
+
+**Recent meetings/events for an account:**
+```sql
+SELECT Id, Subject, StartDateTime, EndDateTime, OwnerId, WhoId, Type
+FROM Event
+WHERE AccountId = '{account_id}'
+AND StartDateTime = LAST_N_DAYS:30
+ORDER BY StartDateTime DESC
+LIMIT 20
+```
+
 ---
 
 ## Salesforce Forecasting Guide
